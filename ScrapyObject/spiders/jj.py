@@ -5,7 +5,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 # scrapy startproject ScrapyObject
 # 创建爬虫
-# scrapy genspider jj www.755pu.com
+# scrapy genspider msp www.7msp8.com
 # 运行爬虫
 # sudo scrapy crawl jj -o jj.json
 #https://www.755pu.com/
@@ -22,7 +22,9 @@ class JjSpider(scrapy.Spider):
     def parse(self, response):
         content = get_data(response)
         video_url = re.findall(
-            r'[a-zA-z]+://[^\s]*(?i)AVI|[a-zA-z]+://[^\s]*(?i)MOV|[a-zA-z]+://[^\s]*(?i)WMV|[a-zA-z]+://[^\s]*(?i)3GP|[a-zA-z]+://[^\s]*(?i)MKV|[a-zA-z]+://[^\s]*(?i)FLV|[a-zA-z]+://[^\s]*(?i)RMVB|[a-zA-z]+://[^\s]*(?i)MP4|[a-zA-z]+://[^\s]*(?i)M3u8',
+            r'[a-zA-z]+://[^\s]*(?i)AVI|[a-zA-z]+://[^\s]*(?i)MOV|[a-zA-z]+://[^\s]*(?i)WMV|[a-zA-z]+://[^\s]*('
+            r'?i)3GP|[a-zA-z]+://[^\s]*(?i)MKV|[a-zA-z]+://[^\s]*(?i)FLV|[a-zA-z]+://[^\s]*(?i)RMVB|[a-zA-z]+://['
+            r'^\s]*(?i)MP4|[a-zA-z]+://[^\s]*(?i)M3u8',
             content)
         if len(video_url):
             item = VideoBean()
