@@ -12,7 +12,7 @@ class JjtextSpider(scrapy.Spider):
     name = 'jjText'
 
     def start_requests(self):
-        f = open(r"/home/linux/jj1.json", "r", encoding='UTF-8')  # 设置文件对象
+        f = open(r"/home/iori/jj1.json", "r", encoding='UTF-8')  # 设置文件对象
         str = f.read()  # 将txt文件的所有内容读入到字符串str中
         f.close()  # 将文件关闭
         inp_dict = json.loads(str, object_hook=VideoBean)
