@@ -35,11 +35,15 @@ class MspSpider(scrapy.Spider):
             title_prefix = response.xpath('/html/head/title/text()').extract()[0]
             item['name'] = title_prefix[:-21]
             item['url'] = response.xpath("//link[@rel='canonical']/@ href").extract()[0]
-            item['tags'] = response.xpath("//meta[@property='video:tag']/@ content").extract()[0]
-            item['pUrl'] = response.xpath("//video[@id='player']/@ poster").extract()[0]
-            item['vUrl'] = video_url[0]
-            self.i = self.i + 1
-            yield item
+            tag = response.xpath("//meta[@property='video:tag']/@ content").extract()[0]
+        if len(tag) == 0:
+            item['tags'] = "综合"
+        else:
+            item['tags'] = tag
+        item['pUrl'] = response.xpath("//video[@id='player']/@ poster").extract()[0]
+        item['vUrl'] = video_url[0]
+        self.i = self.i + 1
+        yield item
 
         # 从结果中提取所有url
         url_list = get_url(content)
