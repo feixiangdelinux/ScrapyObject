@@ -29,6 +29,8 @@ class JjSpider(scrapy.Spider):
         if len(video_url):
             item = VideoBean()
             item['id'] = self.i
+            item['e'] = ''
+            item['i'] = '0'
             title_prefix = response.xpath('/html/head/title/text()').extract()[0]
             title_prefix = title_prefix.replace(" ", "")
             if "-下载地址" in title_prefix:
@@ -37,8 +39,6 @@ class JjSpider(scrapy.Spider):
                 item['name'] = title_prefix
             item['url'] = split_joint('https://www.' + self.website + '.com/',
                                       response.xpath("//li[@id='nav-index']/a/@ href").extract()[-1])
-            item['e'] = ''
-            item['i'] = '0'
             item['tags'] = ''
             item['pUrl'] = ''
             item['vUrl'] = video_url[-1]
