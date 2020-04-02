@@ -7,11 +7,10 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 创建爬虫
 # scrapy genspider msp www.7msp8.com
 # 运行爬虫
-# sudo scrapy crawl jj -o jj.json
-#https://www.755pu.com/
+# scrapy crawl jj -o jj.json
 class JjSpider(scrapy.Spider):
     name = 'jj'
-    website = '5674pp'
+    website = '2678mo'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/']
 
@@ -47,7 +46,7 @@ class JjSpider(scrapy.Spider):
 
         pUrl = response.xpath("//a[@class='video-pic loading']/@ data-original").extract()
         url = response.xpath("//a[@class='video-pic loading']/@ href").extract()
-        name = response.xpath("//a[@class='video-pic loading']/@ title").extract()
+        name = response.xpath("//h5[@class='text-overflow']/a[@target='_blank']/text()").extract()
         types = response.xpath("//a[@data='order-addtime']/text()").extract()
         if len(pUrl):
             for k in pUrl:
@@ -75,5 +74,7 @@ class JjSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            full_url = split_joint('https://www.' + self.website + '.com/', url)
-            yield scrapy.Request(full_url, callback=self.parse)
+            if not url.endswith('.css'):
+                full_url = split_joint('https://www.' + self.website + '.com/', url)
+                print(full_url)
+                yield scrapy.Request(full_url, callback=self.parse)

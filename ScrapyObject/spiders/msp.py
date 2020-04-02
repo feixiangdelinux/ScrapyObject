@@ -45,9 +45,9 @@ class MspSpider(scrapy.Spider):
         self.i = self.i + 1
         yield item
 
-        # 从结果中提取所有url
-        url_list = get_url(content)
-        # 把url添加到请求队列中
-        for url in url_list:
-            full_url = split_joint('http://www.' + self.website + '.com/', url)
-            yield scrapy.Request(full_url, callback=self.parse)
+        # # 从结果中提取所有url
+        # url_list = get_url(content)
+        # # 把url添加到请求队列中
+        # for url in url_list:
+        #     full_url = split_joint('http://www.' + self.website + '.com/', url)
+        #     yield scrapy.Request(full_url, callback=self.parse)
