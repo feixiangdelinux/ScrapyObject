@@ -6,13 +6,12 @@ import scrapy
 from ScrapyObject.items import VideoBean, VideoInfo
 
 # 运行爬虫
-# sudo scrapy crawl jjText -o jjText.json
-# scrapy crawl jjText -o jjText.json
-class JjtextSpider(scrapy.Spider):
-    name = 'jjText'
+# scrapy crawl buzzText -o buzzText.json
+class BuzzTextSpider(scrapy.Spider):
+    name = 'buzzText'
 
     def start_requests(self):
-        f = open(r"/home/ccg/jj1.json", "r", encoding='UTF-8')  # 设置文件对象
+        f = open(r"/home/ccg/buzz1.json", "r", encoding='UTF-8')  # 设置文件对象
         str = f.read()  # 将txt文件的所有内容读入到字符串str中
         f.close()  # 将文件关闭
         inp_dict = json.loads(str, object_hook=VideoBean)

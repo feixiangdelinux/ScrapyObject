@@ -4,13 +4,13 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 
 # 创建爬虫
-# scrapy genspider zzhmtyn http://zzhmtyn188.com
-# 运行爬虫
+# scrapy genspider buzz http://www.8144051.buzz
+# 运行爬虫ok
 # scrapy crawl zzhmtyn -o zzhmtyn.json
 class ZzhmtynSpider(scrapy.Spider):
     name = 'zzhmtyn'
     website = 'zzhmtyn188'
-    allowed_domains = ['www.' + website + '.com']
+    allowed_domains = [website + '.com']
     start_urls = ['http://www.' + website + '.com/']
 
     def __init__(self):
@@ -19,49 +19,39 @@ class ZzhmtynSpider(scrapy.Spider):
 
     def parse(self, response):
         content = get_data(response)
-        video_url = re.findall(
-            r'[a-zA-z]+://[^\s]*(?i)AVI|[a-zA-z]+://[^\s]*(?i)MOV|[a-zA-z]+://[^\s]*(?i)WMV|[a-zA-z]+://[^\s]*('
-            r'?i)3GP|[a-zA-z]+://[^\s]*(?i)MKV|[a-zA-z]+://[^\s]*(?i)FLV|[a-zA-z]+://[^\s]*(?i)RMVB|[a-zA-z]+://['
-            r'^\s]*(?i)MP4|[a-zA-z]+://[^\s]*(?i)M3u8',
-            content)
+        video_url = response.xpath("//div[@id='content_jr']//script[@type='text/javascript']/@ src").extract()
         if len(video_url):
             item = VideoBean()
             item['id'] = self.i
             item['e'] = ''
             item['i'] = '0'
-            title_prefix = response.xpath('/html/head/title/text()').extract()[0]
-            if "-" in title_prefix:
-                item['name'] = title_prefix[:title_prefix.index("-")]
-            else:
-                item['name'] = title_prefix
+            title_prefix = response.xpath("//span[@class='cat_pos_l']//a/text()").extract()
+            item['name'] = title_prefix[-1]
             item['url'] = response.url
             item['tags'] = ''
             item['pUrl'] = ''
-            item['vUrl'] = video_url[-1]
+            item['vUrl'] = split_joint('http://' + self.website + '.com/', video_url[0])
             self.i = self.i + 1
             yield item
         else:
-            pUrl = response.xpath("//img[@class='pic l']/@ src").extract()
-            if len(pUrl):
-                url = response.xpath("//a[@title='第1集']/@ href").extract()[0]
-                print(url)
-                name = response.xpath("//img[@class='pic l']/@ alt").extract()[0]
-                tags = response.xpath("//a[@target='_blank']/text()").extract()[0]
+            url = response.xpath("//a[@title='在线播放']/@ href").extract()
+            if len(url):
+                title_prefix = response.xpath("//span[@class='cat_pos_l']//a/text()").extract()
+                pUrl = response.xpath("//dt//img/@ src").extract()
                 item = VideoBean()
                 item['id'] = self.i
                 item['e'] = ''
                 item['i'] = '0'
-                item['name'] = name
-                item['url'] = 'http://www.' + self.website + '.com' + url
-                item['tags'] = tags
+                item['name'] = title_prefix[-1]
+                item['url'] = split_joint('http://' + self.website + '.com/', url[0])
+                item['tags'] = title_prefix[-2]
                 item['pUrl'] = pUrl[0]
                 item['vUrl'] = ''
                 self.i = self.i + 1
                 yield item
-
         # 从结果中提取所有url
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            full_url = split_joint('http://www.' + self.website + '.com/', url)
+            full_url = split_joint('http://' + self.website + '.com/', url)
             yield scrapy.Request(full_url, callback=self.parse)

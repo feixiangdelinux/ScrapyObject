@@ -5,12 +5,12 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 # scrapy startproject ScrapyObject
 # 创建爬虫
-# scrapy genspider msp www.7msp8.com
-# 运行爬虫
+# scrapy genspider msp www.7mx2.com
+# 运行爬虫ok
 # scrapy crawl jj -o jj.json
 class JjSpider(scrapy.Spider):
     name = 'jj'
-    website = '2678mo'
+    website = '3345li'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/']
 
@@ -76,5 +76,4 @@ class JjSpider(scrapy.Spider):
         for url in url_list:
             if not url.endswith('.css'):
                 full_url = split_joint('https://www.' + self.website + '.com/', url)
-                print(full_url)
                 yield scrapy.Request(full_url, callback=self.parse)
