@@ -11,8 +11,8 @@ class GanSpider(scrapy.Spider):
     name = 'gan'
     website = '734gan'
     allowed_domains = ['www.' + website + '.com']
-    # start_urls = ['https://www.' + website + '.com/']
-    start_urls = ['https://www.734gan.com/video/2020-6/51702.html']
+    start_urls = ['https://www.' + website + '.com/']
+    # start_urls = ['https://www.734gan.com/video/2020-6/51702.html']
 
     def __init__(self):
         global website

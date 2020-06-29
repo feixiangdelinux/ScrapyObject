@@ -7,6 +7,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider gan www.734gan.com
 # 运行爬虫ok
 # scrapy crawl buzz -o buzz.json
+# 没问题
 class BuzzSpider(scrapy.Spider):
     name = 'buzz'
     website = '8144051'

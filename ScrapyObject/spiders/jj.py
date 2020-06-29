@@ -8,6 +8,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider msp www.7mx2.com
 # 运行爬虫ok
 # scrapy crawl jj -o jj.json
+# 没问题
 class JjSpider(scrapy.Spider):
     name = 'jj'
     website = '3345li'

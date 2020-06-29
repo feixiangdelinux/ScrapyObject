@@ -12,7 +12,6 @@ class MspSpider(scrapy.Spider):
     name = 'msp'
     allowed_domains = ['www.' + website + '.com']
     # start_urls = ['http://www.' + website + '.com/']
-
     start_urls = [
         'http://www.7mx2.com/8712/%E5%9B%BD%E5%86%85%E6%8D%A2%E5%A6%BB%E4%BF%B1%E4%B9%90%E9%83%A8%E6%B5%81%E5%87%BA%E8%A7%86%E9%A2%91-%E5%B7%A8%E4%B9%B3%E5%B0%91%E5%A6%87%E6%9C%8D%E4%BE%8D%E7%9C%9F%E5%85%A8%E9%9D%A2-%E6%B4%97%E6%B5%B4%E5%8F%A3%E4%BA%A4-%E8%B6%85%E5%88%BA%E6%BF%80/']
 

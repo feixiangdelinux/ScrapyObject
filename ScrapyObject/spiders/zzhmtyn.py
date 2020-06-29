@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 
 # 创建爬虫
-# scrapy genspider buzz http://www.8144051.buzz
+# scrapy genspider oumeidy oumeidy1.com
 # 运行爬虫ok
 # scrapy crawl zzhmtyn -o zzhmtyn.json
 class ZzhmtynSpider(scrapy.Spider):
