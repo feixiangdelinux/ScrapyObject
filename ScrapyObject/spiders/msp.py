@@ -7,6 +7,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider zzhmtyn www.7mx2.com
 # 运行爬虫
 # scrapy crawl msp -o msp.json
+# 不能用
 class MspSpider(scrapy.Spider):
     website = '7mx2'
     name = 'msp'

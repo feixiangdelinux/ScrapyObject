@@ -13,6 +13,7 @@ class ScrapyobjectItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
+
 class VideoBean(scrapy.Item):
     id = scrapy.Field()
     name = scrapy.Field()
@@ -23,17 +24,14 @@ class VideoBean(scrapy.Item):
     pUrl = scrapy.Field()
     vUrl = scrapy.Field()
 
-    # def __eq__(self, other):
-    #     if isinstance(other, VideoBean):
-    #         return self.vUrl == other.vUrl
-    #     else:
-    #         return False
-    #
-    # def __hash__(self):
-    #     return hash(self.vUrl)
-
 
 class VideoInfo(scrapy.Item):
     id = scrapy.Field()
     status = scrapy.Field()
+    vUrl = scrapy.Field()
+
+
+class ZzhmtynInfo(scrapy.Item):
+    id = scrapy.Field()
+    url = scrapy.Field()
     vUrl = scrapy.Field()
