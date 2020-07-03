@@ -4,9 +4,10 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 
 # 创建爬虫gan
-# scrapy genspider gan www.734gan.com
+# scrapy genspider GanText www.734gan.com
 # 运行爬虫ok
 # scrapy crawl gan -o gan.json
+# GanTextSpider
 class GanSpider(scrapy.Spider):
     name = 'gan'
     website = '734gan'
