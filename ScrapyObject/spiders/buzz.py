@@ -70,5 +70,4 @@ class BuzzSpider(scrapy.Spider):
         for url in url_list:
             if not url.endswith('.css'):
                 full_url = split_joint('http://www.' + self.website + '.buzz/', url)
-                print(full_url)
                 yield scrapy.Request(full_url, callback=self.parse)
