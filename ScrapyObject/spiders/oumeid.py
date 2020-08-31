@@ -10,7 +10,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # OumeidTextSpider
 class OumeidSpider(scrapy.Spider):
     name = 'oumeid'
-    website = 'oumeidy1'
+    website = 'oumeidy2'
     allowed_domains = ['www.' + website + '.com']
     # start_urls = ['http://www.' + website + '.com/']
     start_urls = ['http://www.oumeidy1.com/vod-13608.html']

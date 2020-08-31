@@ -4,13 +4,13 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 
 # 创建爬虫gan
-# scrapy genspider gan www.734gan.com
+# scrapy genspider qp www.q22p.cc
 # 运行爬虫ok
 # scrapy crawl buzz -o buzz.json
 # 没问题
 class BuzzSpider(scrapy.Spider):
     name = 'buzz'
-    website = '8144051'
+    website = '9466797'
     allowed_domains = ['www.' + website + '.buzz']
     start_urls = ['http://www.' + website + '.buzz/']
 
