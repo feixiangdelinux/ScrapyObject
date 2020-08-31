@@ -12,7 +12,7 @@ class OumeidTextSpider(scrapy.Spider):
     name = 'oumeidtext'
 
     def start_requests(self):
-        f = open(r"/home/ccg/oumeid.json", "r", encoding='UTF-8')  # 设置文件对象
+        f = open(r"E:\oumeid.json", "r", encoding='UTF-8')  # 设置文件对象
         str = f.read()  # 将txt文件的所有内容读入到字符串str中
         f.close()  # 将文件关闭
         inp_dict = json.loads(str, object_hook=VideoBean)
