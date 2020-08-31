@@ -9,7 +9,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy crawl msp -o msp.json
 # 不能用
 class MspSpider(scrapy.Spider):
-    website = '7mx2'
+    website = '7mx3'
     name = 'msp'
     allowed_domains = ['www.' + website + '.com']
     # start_urls = ['http://www.' + website + '.com/']

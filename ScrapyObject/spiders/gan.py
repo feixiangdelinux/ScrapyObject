@@ -10,7 +10,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # GanTextSpider
 class GanSpider(scrapy.Spider):
     name = 'gan'
-    website = '734gan'
+    website = '849gan'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/']
     # start_urls = ['https://www.734gan.com/video/2020-6/51702.html']
