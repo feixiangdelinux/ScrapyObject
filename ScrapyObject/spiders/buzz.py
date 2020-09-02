@@ -10,11 +10,11 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 没问题
 class BuzzSpider(scrapy.Spider):
     name = 'buzz'
-    website = '9466797'
+    website = '4651862'
     allowed_domains = ['www.' + website + '.buzz']
     start_urls = ['http://www.' + website + '.buzz/']
 
-    # start_urls = ['http://www.3520625.buzz/html/crdongman/']
+    # start_urls = ['http://www.9466797.buzz/html/crdongman/']
 
     def __init__(self):
         global website
