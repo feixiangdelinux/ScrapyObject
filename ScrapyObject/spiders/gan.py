@@ -7,7 +7,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider GanText www.734gan.com
 # 运行爬虫ok
 # scrapy crawl gan -o gan.json
-# GanTextSpider
+# 网站关闭
 class GanSpider(scrapy.Spider):
     name = 'gan'
     website = '849gan'
@@ -61,5 +61,8 @@ class GanSpider(scrapy.Spider):
         # 把url添加到请求队列中
         for url in url_list:
             if not url.endswith('.css') and 'javascript' not in url:
-                full_url = split_joint('https://www.' + self.website + '.com/', url)
-                yield scrapy.Request(full_url, callback=self.parse)
+                if url.startswith('/'):
+                    full_url = split_joint('https://www.' + self.website + '.com/', url)
+                    yield scrapy.Request(full_url, callback=self.parse)
+                else:
+                    yield scrapy.Request(url, callback=self.parse)

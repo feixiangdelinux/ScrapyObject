@@ -7,11 +7,13 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider oumeidy oumeidy1.com
 # 运行爬虫ok
 # scrapy crawl zzhmtyn -o zzhmtyn.json
+# 未完成
 class ZzhmtynSpider(scrapy.Spider):
     name = 'zzhmtyn'
     website = 'zzhmtyn188'
     allowed_domains = [website + '.com']
-    start_urls = ['http://www.' + website + '.com/']
+    # start_urls = ['http://www.' + website + '.com/']
+    start_urls = ['http://zzhmtyn188.com/video/14891.html?14891-0-0']
 
     def __init__(self):
         global website
@@ -53,5 +55,8 @@ class ZzhmtynSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            full_url = split_joint('http://' + self.website + '.com/', url)
-            yield scrapy.Request(full_url, callback=self.parse)
+            if url.startswith('/'):
+                full_url = split_joint('http://' + self.website + '.com/', url)
+                yield scrapy.Request(full_url, callback=self.parse)
+            else:
+                yield scrapy.Request(url, callback=self.parse)

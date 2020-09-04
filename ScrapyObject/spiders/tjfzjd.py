@@ -12,9 +12,8 @@ class TjfzjdSpider(scrapy.Spider):
     website = 'tjfzjd'
     allowed_domains = ['www.' + website + '.com']
     # start_urls = ['http://www.tjfzjd.com/']
-    start_urls = ['http://www.tjfzjd.com/index.php/vod/type/id/7.html']
-
-    # start_urls = ['http://www.tjfzjd.com/index.php/vod/play/id/133541/sid/1/nid/1.html']
+    # start_urls = ['http://www.tjfzjd.com/index.php/vod/type/id/7.html']
+    start_urls = ['http://www.tjfzjd.com/index.php/vod/play/id/133541/sid/1/nid/1.html']
 
     def __init__(self):
         global website
@@ -23,7 +22,7 @@ class TjfzjdSpider(scrapy.Spider):
     def parse(self, response):
         content = get_data(response)
         video_url = re.findall(
-            r'http.*?M3U8|http.*?MP4|http.*?WMV|http.*?MOV|http.*?AVI|http.*?MKV|http.*?FLV|http.*?RMVB|http.*?3GP',
+            r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
             content, re.IGNORECASE)
         if len(video_url):
             if '\\' in video_url[0]:
@@ -38,11 +37,14 @@ class TjfzjdSpider(scrapy.Spider):
                 item['vUrl'] = video_url[0].replace("\\/", "/")
                 self.i = self.i + 1
                 yield item
-        pUrl = response.xpath("//a[@class='cover']//img/@ src").extract()
-        if len(pUrl):
+        tags = response.xpath("//div[@class='title']//h1/text()").extract()
+        if len(tags):
             name = response.xpath("//a[@class='cover']//img/@ alt").extract()
-            tags = response.xpath("//div[@class='title']//h1/text()").extract()
+            print(name)
+            pUrl = response.xpath("//a[@class='cover']//img/@ src").extract()
+            print(tags)
             url = response.xpath("//a[@class='cover']/@ href").extract()
+            print(url)
             for k in pUrl:
                 id_list = pUrl.index(k)
                 item = VideoBean()
@@ -50,9 +52,20 @@ class TjfzjdSpider(scrapy.Spider):
                 item['e'] = ''
                 item['i'] = '0'
                 item['name'] = name[id_list]
-                item['url'] = url[id_list]
+                item['url'] = split_joint('http://www.' + self.website + '.com/', url[id_list])
                 item['tags'] = tags[0]
-                item['pUrl'] = split_joint('http://www.' + self.website + '.buzz/', k)
+                item['pUrl'] = split_joint('http://www.' + self.website + '.com/', k)
                 item['vUrl'] = ''
                 self.i = self.i + 1
                 yield item
+        # 从结果中提取所有url
+        url_list = get_url(content)
+        # 把url添加到请求队列中
+        for url in url_list:
+            if not url.endswith('.css') and '#' not in url and not url.endswith(
+                    '.') and url != '/' and 'javascript' not in url and not url.endswith('.m3u8'):
+                if url.startswith('/'):
+                    full_url = split_joint('http://www.' + self.website + '.com/', url)
+                    yield scrapy.Request(full_url, callback=self.parse)
+                else:
+                    yield scrapy.Request(url, callback=self.parse)

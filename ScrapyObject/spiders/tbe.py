@@ -3,16 +3,19 @@ from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
 
-# 创建爬虫gan
-# scrapy genspider qp www.q22p.cc
+# 创建爬虫
+# scrapy genspider tbe www.tbe7.com
 # 运行爬虫ok
-# scrapy crawl qp -o qp.json
-# 没问题
-class QpSpider(scrapy.Spider):
-    name = 'qp'
-    website = 'q22p'
-    allowed_domains = ['www.' + website + '.cc']
-    start_urls = ['http://www.' + website + '.cc']
+# scrapy crawl tbe -o tbe.json
+# ok
+class TbeSpider(scrapy.Spider):
+    name = 'tbe'
+    website = 'tbe7'
+    allowed_domains = [website + '.com']
+    start_urls = ['http://www.tbe7.com/']
+    # start_urls = ['http://tbe7.com/index.php/vod/detail/id/7831.html']
+    # start_urls = ['http://tbe7.com/index.php/vod/play/id/7831/sid/1/nid/1.html']
+    # start_urls = ['http://tbe7.com/index.php/vod/play/id/7831/sid/2/nid/1.html']
 
     def __init__(self):
         global website
@@ -20,23 +23,23 @@ class QpSpider(scrapy.Spider):
 
     def parse(self, response):
         content = get_data(response)
-        pUrl = response.xpath("//div[@class='detail-pic fn-left']//img/@ src").extract()
+        pUrl = response.xpath("//div[@class='media']//img/@ src").extract()
         if len(pUrl):
-            urls = response.xpath("//div[@class='video_list fn-clear']//a/@ href").extract()
-            tags = response.xpath("//ul[@class='bread-crumbs']//li//a/text()").extract()[-2]
-            name = response.xpath("//div[@class='detail-title fn-clear']//h1/text()").extract()[0]
+            urls = response.xpath("//dt[@class='playurl2']//a/@ href").extract()
+            tags = response.xpath("//div[@class='media']//dt/text()").extract()[-2][4:]
+            name = response.xpath("//div[@class='media']//dt/text()").extract()[2][3:]
             for k in urls:
                 item = VideoBean()
                 item['id'] = self.i
                 item['e'] = ''
                 item['i'] = '0'
                 item['name'] = name
-                item['url'] = split_joint('http://www.' + self.website + '.cc/', k)
+                item['url'] = split_joint('http://' + self.website + '.com/', k)
                 if len(tags):
                     item['tags'] = tags
                 else:
                     item['tags'] = '综合'
-                item['pUrl'] = split_joint('http://www.' + self.website + '.cc/', pUrl[0])
+                item['pUrl'] = pUrl[0]
                 item['vUrl'] = ''
                 self.i = self.i + 1
                 yield item
@@ -45,12 +48,11 @@ class QpSpider(scrapy.Spider):
             content,
             re.IGNORECASE)
         if len(video_url):
-            name = response.xpath("//ul[@class='bread-crumbs']//li/text()").extract()[0]
             item = VideoBean()
             item['id'] = self.i
             item['e'] = ''
             item['i'] = '0'
-            item['name'] = name[:-6]
+            item['name'] = ''
             item['url'] = response.url
             item['tags'] = ''
             item['pUrl'] = ''
@@ -61,10 +63,10 @@ class QpSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if not url.endswith('.css') and 'javascript' not in url:
+            if not url.endswith('.css') and not url.endswith(
+                    '.ico') and url != '/' and 'javascript' not in url and '<a' not in url:
                 if url.startswith('/'):
-                    full_url = split_joint('http://www.' + self.website + '.cc/', url)
-                    if not full_url.startswith('http://www.q22p.cc/index.php/vod/show'):
-                        yield scrapy.Request(full_url, callback=self.parse)
+                    full_url = split_joint('http://' + self.website + '.com/', url)
+                    yield scrapy.Request(full_url, callback=self.parse)
                 else:
                     yield scrapy.Request(url, callback=self.parse)

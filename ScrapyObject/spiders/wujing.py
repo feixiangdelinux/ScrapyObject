@@ -7,6 +7,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider wujing www.wujing365.com
 # 运行爬虫ok
 # scrapy crawl wujing -o wujing.json
+# ok
 class WujingSpider(scrapy.Spider):
     name = 'wujing'
     website = 'wujing365'
@@ -40,9 +41,8 @@ class WujingSpider(scrapy.Spider):
                 self.i = self.i + 1
                 yield item
         video_url = re.findall(
-            r'http.*?M3U8|http.*MP4|http.*WMV|http.*MOV|http.*AVI|http.*MKV|http.*FLV|http.*RMVB|http.*3GP', content,
+            r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP', content,
             re.IGNORECASE)
-
         if len(video_url):
             item = VideoBean()
             item['id'] = self.i
@@ -61,5 +61,8 @@ class WujingSpider(scrapy.Spider):
         for url in url_list:
             if not url.endswith('.css') and not url.endswith(
                     '.ico') and url != '/' and 'javascript' not in url and '<a' not in url:
-                full_url = split_joint('http://www.' + self.website + '.com/', url)
-                yield scrapy.Request(full_url, callback=self.parse)
+                if url.startswith('/'):
+                    full_url = split_joint('http://www.' + self.website + '.com/', url)
+                    yield scrapy.Request(full_url, callback=self.parse)
+                else:
+                    yield scrapy.Request(url, callback=self.parse)

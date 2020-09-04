@@ -5,13 +5,13 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 # scrapy startproject ScrapyObject
 # 创建爬虫
-# scrapy genspider msp www.7mx2.com
+# scrapy genspider msp www.c777j.com
 # 运行爬虫ok
 # scrapy crawl jj -o jj.json
 # 没问题
 class JjSpider(scrapy.Spider):
     name = 'jj'
-    website = 'c777j'
+    website = 'z777k'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/']
 
@@ -75,6 +75,9 @@ class JjSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if not url.endswith('.css'):
-                full_url = split_joint('https://www.' + self.website + '.com/', url)
-                yield scrapy.Request(full_url, callback=self.parse)
+            if not url.endswith('.css') and 'javascript' not in url:
+                if url.startswith('/'):
+                    full_url = split_joint('https://www.' + self.website + '.com/', url)
+                    yield scrapy.Request(full_url, callback=self.parse)
+                else:
+                    yield scrapy.Request(url, callback=self.parse)

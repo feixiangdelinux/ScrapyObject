@@ -46,7 +46,6 @@ class SistersSpider(scrapy.Spider):
                 info = response.xpath("//div[@class='box cat_pos clearfix']//a/text()").extract()
                 url = response.xpath("//a[@target='_blank' and @title='在线播放']/@ href").extract()
                 for k in url:
-                    print(k)
                     item = VideoBean()
                     item['id'] = self.i
                     item['e'] = ''
@@ -63,5 +62,8 @@ class SistersSpider(scrapy.Spider):
         # 把url添加到请求队列中
         for url in url_list:
             if not url.endswith('.css') and '"' not in url and 'www.' not in url:
-                full_url = split_joint('http://' + self.website + '/', url)
-                yield scrapy.Request(full_url, callback=self.parse)
+                if url.startswith('/'):
+                    full_url = split_joint('http://' + self.website + '/', url)
+                    yield scrapy.Request(full_url, callback=self.parse)
+                else:
+                    yield scrapy.Request(url, callback=self.parse)

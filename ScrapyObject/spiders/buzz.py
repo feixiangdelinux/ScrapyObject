@@ -3,18 +3,21 @@ from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
 
-# 创建爬虫gan
+# 创建爬虫
 # scrapy genspider qp www.q22p.cc
 # 运行爬虫ok
 # scrapy crawl buzz -o buzz.json
-# 没问题
+# 可以
+
+
+
+
 class BuzzSpider(scrapy.Spider):
     name = 'buzz'
-    website = '4651862'
+    website = '9648552'
     allowed_domains = ['www.' + website + '.buzz']
-    start_urls = ['http://www.' + website + '.buzz/']
-
-    # start_urls = ['http://www.9466797.buzz/html/crdongman/']
+    # start_urls = ['http://www.' + website + '.buzz/']
+    start_urls = ['http://www.9648552.buzz/html/crdongman/']
 
     def __init__(self):
         global website
@@ -68,6 +71,9 @@ class BuzzSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if not url.endswith('.css'):
-                full_url = split_joint('http://www.' + self.website + '.buzz/', url)
-                yield scrapy.Request(full_url, callback=self.parse)
+            if not url.endswith('.css') and 'javascript' not in url:
+                if url.startswith('/'):
+                    full_url = split_joint('http://www.' + self.website + '.buzz/', url)
+                    yield scrapy.Request(full_url, callback=self.parse)
+                else:
+                    yield scrapy.Request(url, callback=self.parse)

@@ -7,7 +7,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider izhrb www.iz2hrb.top
 # 运行爬虫ok
 # scrapy crawl izhrb -o izhrb.json
-# scrapy genspider sundki www.sundki.com
+# 可以
 class IzhrbSpider(scrapy.Spider):
     name = 'izhrb'
     website = 'iz2hrb'
@@ -78,3 +78,5 @@ class IzhrbSpider(scrapy.Spider):
                 elif url.startswith('?'):
                     full_url = split_joint(response.url[:response.url.index('?')], url)
                     yield scrapy.Request(full_url, callback=self.parse)
+                else:
+                    yield scrapy.Request(url, callback=self.parse)

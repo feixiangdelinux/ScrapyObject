@@ -7,13 +7,14 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider sisters http://23.244.60.225:1979/vod-play-id-37034-src-1-num-1.html
 # 运行爬虫ok
 # scrapy crawl oumeid -o oumeid.json
-# OumeidTextSpider
+# ok
 class OumeidSpider(scrapy.Spider):
     name = 'oumeid'
     website = 'oumeidy2'
     allowed_domains = ['www.' + website + '.com']
     # start_urls = ['http://www.' + website + '.com/']
-    start_urls = ['http://www.oumeidy1.com/vod-13608.html']
+    # start_urls = ['http://oumeidy2.com/']
+    start_urls = ['http://www.oumeidy2.com/thread-32.html']
 
     def __init__(self):
         global website
@@ -22,7 +23,7 @@ class OumeidSpider(scrapy.Spider):
     def parse(self, response):
         content = get_data(response)
         video_url = re.findall(
-            r'http.*M3U8|http.*MP4|http.*WMV|http.*MOV|http.*AVI|http.*MKV|http.*FLV|http.*RMVB|http.*3GP',
+            r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
             content, re.IGNORECASE)
         if len(video_url):
             tags = response.xpath("//li[@class='active']//a/text()").extract()[0]
@@ -47,5 +48,8 @@ class OumeidSpider(scrapy.Spider):
         # 把url添加到请求队列中
         for url in url_list:
             if not url.endswith('.css') and '#' not in url and not url.endswith('.'):
-                full_url = split_joint('http://www.' + self.website + '.com/', url)
-                yield scrapy.Request(full_url, callback=self.parse)
+                if url.startswith('/'):
+                    full_url = split_joint('http://www.' + self.website + '.com/', url)
+                    yield scrapy.Request(full_url, callback=self.parse)
+                else:
+                    yield scrapy.Request(url, callback=self.parse)
