@@ -8,13 +8,9 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 运行爬虫ok
 # scrapy crawl buzz -o buzz.json
 # 可以
-
-
-
-
 class BuzzSpider(scrapy.Spider):
     name = 'buzz'
-    website = '9648552'
+    website = '2366717'
     allowed_domains = ['www.' + website + '.buzz']
     # start_urls = ['http://www.' + website + '.buzz/']
     start_urls = ['http://www.9648552.buzz/html/crdongman/']
@@ -34,7 +30,6 @@ class BuzzSpider(scrapy.Spider):
             item['e'] = ''
             item['i'] = '0'
             title_prefix = response.xpath('/html/head/title/text()').extract()[0]
-            print(title_prefix)
             if "-" in title_prefix:
                 item['name'] = title_prefix[:title_prefix.index("-")]
             else:
