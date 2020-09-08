@@ -10,10 +10,10 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 可以
 class BuzzSpider(scrapy.Spider):
     name = 'buzz'
-    website = '2366717'
+    website = '6547184'
     allowed_domains = ['www.' + website + '.buzz']
-    # start_urls = ['http://www.' + website + '.buzz/']
-    start_urls = ['http://www.9648552.buzz/html/crdongman/']
+    start_urls = ['http://www.' + website + '.buzz/']
+    # start_urls = ['http://www.9648552.buzz/html/crdongman/']
 
     def __init__(self):
         global website
@@ -47,18 +47,18 @@ class BuzzSpider(scrapy.Spider):
             pUrl = response.xpath("//div[@class='post']//a//img/@ src").extract()
             if len(pUrl):
                 for k in pUrl:
-                    id_list = pUrl.index(k)
+                    position = pUrl.index(k)
                     item = VideoBean()
                     item['id'] = self.i
                     item['e'] = ''
                     item['i'] = '0'
-                    item['name'] = name[id_list]
-                    item['url'] = split_joint('http://www.' + self.website + '.buzz/', url[id_list])
+                    item['name'] = name[position]
+                    item['url'] = split_joint('http://www.' + self.website + '.buzz/', url[position])
                     if len(tag):
                         item['tags'] = tag[0]
                     else:
                         item['tags'] = '综合'
-                    item['pUrl'] = pUrl[id_list]
+                    item['pUrl'] = pUrl[position]
                     item['vUrl'] = ''
                     self.i = self.i + 1
                     yield item

@@ -44,11 +44,11 @@ class IzhrbSpider(scrapy.Spider):
                 item = VideoBean()
                 item['id'] = self.i
                 item['name'] = name[id_list]
-                item['url'] = url[id_list]
+                item['url'] = split_joint('http://www.' + self.website + '.top/', url[id_list])
                 item['e'] = ""
                 item['i'] = '0'
-                item['tags'] = ""
                 item['pUrl'] = k
+                item['tags'] = ""
                 item['vUrl'] = ''
                 self.i = self.i + 1
                 yield item
@@ -60,11 +60,11 @@ class IzhrbSpider(scrapy.Spider):
             item['id'] = self.i
             item['e'] = ''
             item['i'] = '0'
-            item['name'] = ''
             item['url'] = response.url
             item['tags'] = tag[-1]
-            item['pUrl'] = ''
             item['vUrl'] = split_joint(video_prefix[-1].replace('m3u8path="', '').replace('";', ''), video_url[0])
+            item['name'] = ''
+            item['pUrl'] = ''
             self.i = self.i + 1
             yield item
         # 从结果中提取所有url

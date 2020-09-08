@@ -11,9 +11,15 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 没问题
 class JjSpider(scrapy.Spider):
     name = 'jj'
-    website = 'z777k'
+    website = 's888r'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/']
+
+    # start_urls = ['https://www.p888v.com/vod/html9/html22/36459.html']
+    # start_urls = ['https://www.s888r.com/vod/html1/', 'https://www.s888r.com/vod/html1/',
+    #               'https://www.s888r.com/vod/html9/', 'https://www.s888r.com/vod/html16/',
+    #               'https://www.s888r.com/vod/html17/', 'https://www.s888r.com/vod/html26/index_2.html',
+    #               'https://www.s888r.com/vod/html27/',]
 
     def __init__(self):
         global website
@@ -44,7 +50,6 @@ class JjSpider(scrapy.Spider):
             item['vUrl'] = video_url[-1]
             self.i = self.i + 1
             yield item
-
         pUrl = response.xpath("//a[@class='video-pic loading']/@ data-original").extract()
         url = response.xpath("//a[@class='video-pic loading']/@ href").extract()
         name = response.xpath("//h5[@class='text-overflow']/a[@target='_blank']/text()").extract()
@@ -62,12 +67,7 @@ class JjSpider(scrapy.Spider):
                     item['tags'] = types[0]
                 else:
                     item['tags'] = "综合"
-                if len(k):
-                    item['pUrl'] = k
-                else:
-                    item['pUrl'] = "https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5" \
-                                   "%2C92%2C30/sign=425563eef436afc31a013737d27080a1" \
-                                   "/3bf33a87e950352a87460b265043fbf2b2118bfc.jpg "
+                item['pUrl'] = k
                 item['vUrl'] = ''
                 self.i = self.i + 1
                 yield item
@@ -75,7 +75,7 @@ class JjSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if not url.endswith('.css') and 'javascript' not in url:
+            if url.endswith('.html'):
                 if url.startswith('/'):
                     full_url = split_joint('https://www.' + self.website + '.com/', url)
                     yield scrapy.Request(full_url, callback=self.parse)
