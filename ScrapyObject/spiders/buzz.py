@@ -10,7 +10,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 可以
 class BuzzSpider(scrapy.Spider):
     name = 'buzz'
-    website = '6547184'
+    website = '0851593'
     allowed_domains = ['www.' + website + '.buzz']
     start_urls = ['http://www.' + website + '.buzz/']
     # start_urls = ['http://www.9648552.buzz/html/crdongman/']
