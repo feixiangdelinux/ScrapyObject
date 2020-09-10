@@ -13,10 +13,8 @@ class JjSpider(scrapy.Spider):
     name = 'jj'
     website = 'p777t'
     allowed_domains = ['www.' + website + '.com']
-    # start_urls = ['https://www.' + website + '.com/']
-
-    start_urls = ['https://www.p777t.com/pic/html28/']
-
+    start_urls = ['https://www.' + website + '.com/']
+    # start_urls = ['https://www.p777t.com/pic/html28/']
     # start_urls = ['https://www.s888r.com/vod/html1/', 'https://www.s888r.com/vod/html1/',
     #               'https://www.s888r.com/vod/html9/', 'https://www.s888r.com/vod/html16/',
     #               'https://www.s888r.com/vod/html17/', 'https://www.s888r.com/vod/html26/index_2.html',
@@ -82,5 +80,4 @@ class JjSpider(scrapy.Spider):
                     full_url = split_joint('https://www.' + self.website + '.com/', url)
                     yield scrapy.Request(full_url, callback=self.parse)
                 else:
-                    print(url)
                     yield scrapy.Request(url, callback=self.parse)
