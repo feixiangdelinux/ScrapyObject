@@ -11,11 +11,11 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 没问题
 class JjSpider(scrapy.Spider):
     name = 'jj'
-    website = 's888r'
+    website = 'p777t'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/']
 
-    # start_urls = ['https://www.p888v.com/vod/html9/html22/36459.html']
+    # start_urls = ['https://www.p777t.com/']
     # start_urls = ['https://www.s888r.com/vod/html1/', 'https://www.s888r.com/vod/html1/',
     #               'https://www.s888r.com/vod/html9/', 'https://www.s888r.com/vod/html16/',
     #               'https://www.s888r.com/vod/html17/', 'https://www.s888r.com/vod/html26/index_2.html',

@@ -8,6 +8,8 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 运行爬虫ok
 # scrapy crawl izhrb -o izhrb.json
 # 可以
+
+# IzhrbText
 class IzhrbSpider(scrapy.Spider):
     name = 'izhrb'
     website = 'iz2hrb'
