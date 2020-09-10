@@ -13,9 +13,10 @@ class JjSpider(scrapy.Spider):
     name = 'jj'
     website = 'p777t'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['https://www.' + website + '.com/']
+    # start_urls = ['https://www.' + website + '.com/']
 
-    # start_urls = ['https://www.p777t.com/']
+    start_urls = ['https://www.p777t.com/pic/html28/']
+
     # start_urls = ['https://www.s888r.com/vod/html1/', 'https://www.s888r.com/vod/html1/',
     #               'https://www.s888r.com/vod/html9/', 'https://www.s888r.com/vod/html16/',
     #               'https://www.s888r.com/vod/html17/', 'https://www.s888r.com/vod/html26/index_2.html',
@@ -54,7 +55,7 @@ class JjSpider(scrapy.Spider):
         url = response.xpath("//a[@class='video-pic loading']/@ href").extract()
         name = response.xpath("//h5[@class='text-overflow']/a[@target='_blank']/text()").extract()
         types = response.xpath("//a[@data='order-addtime']/text()").extract()
-        if len(pUrl):
+        if len(pUrl) and len(name):
             for k in pUrl:
                 id_list = pUrl.index(k)
                 item = VideoBean()
@@ -75,9 +76,11 @@ class JjSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if url.endswith('.html'):
+            if not url.endswith(
+                    '.css') and 'javascript' not in url and '#' not in url and '"' not in url and '+' not in url and url != '/':
                 if url.startswith('/'):
                     full_url = split_joint('https://www.' + self.website + '.com/', url)
                     yield scrapy.Request(full_url, callback=self.parse)
                 else:
+                    print(url)
                     yield scrapy.Request(url, callback=self.parse)
