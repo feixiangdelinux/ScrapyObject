@@ -5,13 +5,13 @@ import scrapy
 
 from ScrapyObject.items import VideoBean, VideoInfo
 
+
 # 运行爬虫
-# scrapy crawl oumeidtext -o oumeidtext.json
-class OumeidTextSpider(scrapy.Spider):
-    name = 'oumeidtext'
+# scrapy crawl izhrbText -o oumeidText.json
+class LeguatvSpider(scrapy.Spider):
+    name = 'leguatvText'
 
     def start_requests(self):
-        # f = open(r"E:\oumeid.json", "r", encoding='UTF-8')  # 设置文件对象
         f = open(r"/home/ccg/oumeid.json", "r", encoding='UTF-8')  # 设置文件对象
         str = f.read()  # 将txt文件的所有内容读入到字符串str中
         f.close()  # 将文件关闭

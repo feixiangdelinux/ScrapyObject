@@ -12,7 +12,8 @@ class QpSpider(scrapy.Spider):
     name = 'qp'
     website = 'q22p'
     allowed_domains = ['www.' + website + '.cc']
-    start_urls = ['http://www.' + website + '.cc']
+    # start_urls = ['http://www.' + website + '.cc']
+    start_urls = ['http://www.q22p.cc/index.php/vod/detail/id/259139.html']
 
     def __init__(self):
         global website
@@ -25,12 +26,15 @@ class QpSpider(scrapy.Spider):
             urls = response.xpath("//div[@class='video_list fn-clear']//a/@ href").extract()
             tags = response.xpath("//ul[@class='bread-crumbs']//li//a/text()").extract()[-2]
             name = response.xpath("//div[@class='detail-title fn-clear']//h1/text()").extract()[0]
+            neme_two = response.xpath("//div[@class='video_list fn-clear']//a/text()").extract()
+
             for k in urls:
+                position = urls.index(k)
                 item = VideoBean()
                 item['id'] = self.i
                 item['e'] = ''
                 item['i'] = '0'
-                item['name'] = name
+                item['name'] = name + neme_two[position]
                 item['url'] = split_joint('http://www.' + self.website + '.cc/', k)
                 if len(tags):
                     item['tags'] = tags
@@ -57,14 +61,14 @@ class QpSpider(scrapy.Spider):
             item['vUrl'] = video_url[0].replace("\\/", "/")
             self.i = self.i + 1
             yield item
-        # 从结果中提取所有url
-        url_list = get_url(content)
-        # 把url添加到请求队列中
-        for url in url_list:
-            if not url.endswith('.css') and 'javascript' not in url:
-                if url.startswith('/'):
-                    full_url = split_joint('http://www.' + self.website + '.cc/', url)
-                    if not full_url.startswith('http://www.q22p.cc/index.php/vod/show'):
-                        yield scrapy.Request(full_url, callback=self.parse)
-                else:
-                    yield scrapy.Request(url, callback=self.parse)
+        # # 从结果中提取所有url
+        # url_list = get_url(content)
+        # # 把url添加到请求队列中
+        # for url in url_list:
+        #     if not url.endswith('.css') and 'javascript' not in url:
+        #         if url.startswith('/'):
+        #             full_url = split_joint('http://www.' + self.website + '.cc/', url)
+        #             if not full_url.startswith('http://www.q22p.cc/index.php/vod/show'):
+        #                 yield scrapy.Request(full_url, callback=self.parse)
+        #         else:
+        #             yield scrapy.Request(url, callback=self.parse)
