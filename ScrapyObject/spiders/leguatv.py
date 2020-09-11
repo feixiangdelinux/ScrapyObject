@@ -13,6 +13,7 @@ class LeguatvSpider(scrapy.Spider):
     website = 'leguatv'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.leguatv.com/']
+    # start_urls = ['https://www.leguatv.com/d/158562.html']
 
     def __init__(self):
         global website
@@ -24,15 +25,17 @@ class LeguatvSpider(scrapy.Spider):
             r'[a-zA-z]+:[^\s]*\.AVI|[a-zA-z]+:[^\s]*\.MOV|[a-zA-z]+:[^\s]*\.WMV|[a-zA-z]+:[^\s]*\.3GP|[a-zA-z]+:[^\s]*\.MKV|[a-zA-z]+:[^\s]*\.FLV|[a-zA-z]+:[^\s]*\.RMVB|[a-zA-z]+:[^\s]*\.MP4|[a-zA-z]+:[^\s]*\.M3U8',
             content, re.IGNORECASE)
         url = response.xpath("//ul[@class='content_playlist list_scroll clearfix']//li//a/@ href").extract()
+        neme_two = response.xpath("//ul[@class='content_playlist list_scroll clearfix']//li//a/text()").extract()
         if len(url):
             name = response.xpath("//a[@class='vodlist_thumb lazyload']/@ title").extract()
             pUrl = response.xpath("//a[@class='vodlist_thumb lazyload']/@ data-original").extract()
             for k in url:
+                position = url.index(k)
                 item = VideoBean()
                 item['id'] = self.i
                 item['e'] = ''
                 item['i'] = '0'
-                item['name'] = name[0]
+                item['name'] = name[0] + neme_two[position]
                 item['url'] = split_joint('https://www.' + self.website + '.com/', k)
                 item['tags'] = ''
                 item['pUrl'] = pUrl[0]
