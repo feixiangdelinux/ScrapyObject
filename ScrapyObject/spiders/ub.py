@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
+
+
 # 创建爬虫
-# scrapy genspider ub www.ub81.com
+# scrapy genspider ub www.ub81.me
 # 运行爬虫ok
 # scrapy crawl ub -o ub.json
+# https://ub22.me/
 class UbSpider(scrapy.Spider):
     name = 'ub'
-    website = 'ub76'
-    allowed_domains = [website + '.com']
-    start_urls = ['https://ub76.com/']
-    # start_urls = ['https://ub76.com/vodplayhtml/11941/index_1_1.html']
-    # start_urls = ['https://ub76.com/vodtypehtml/12/']
-    # start_urls = ['https://ub76.com/template/9999ak/helpme/android.html']
+    website = 'ub22'
+    allowed_domains = [website + '.me']
+    start_urls = ['https://' + website + '.me']
+
+    # start_urls = ['https://ub22.me/vodplayhtml/11941/index_1_1.html']
+    # start_urls = ['https://ub22.me/vodtypehtml/12/']
+    # start_urls = ['https://ub22.me/template/9999ak/helpme/android.html']
 
     def __init__(self):
         global website
@@ -62,11 +66,9 @@ class UbSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if not url.endswith(
-                    '.css') and url != '/' and '"' not in url and '\'' not in url and 'javascript' not in url and '#' not in url:
-                print(url)
+            if not url.endswith('.css') and url != '/' and '"' not in url and '\'' not in url and 'javascript' not in url and '#' not in url:
                 if url.startswith('/'):
-                    full_url = split_joint('https://' + self.website + '.com/', url)
+                    full_url = split_joint('https://' + self.website + '.me/', url)
                     yield scrapy.Request(full_url, callback=self.parse)
                 else:
                     yield scrapy.Request(url, callback=self.parse)
