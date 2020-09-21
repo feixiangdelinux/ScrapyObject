@@ -12,8 +12,9 @@ class QpSpider(scrapy.Spider):
     name = 'qp'
     website = 'q22p'
     allowed_domains = ['www.' + website + '.cc']
-    # start_urls = ['http://www.' + website + '.cc']
-    start_urls = ['http://www.q22p.cc/index.php/vod/detail/id/259139.html']
+    start_urls = ['http://www.' + website + '.cc']
+
+    # start_urls = ['http://www.q22p.cc/index.php/vod/detail/id/259139.html']
 
     def __init__(self):
         global website
@@ -61,14 +62,12 @@ class QpSpider(scrapy.Spider):
             item['vUrl'] = video_url[0].replace("\\/", "/")
             self.i = self.i + 1
             yield item
-        # # 从结果中提取所有url
-        # url_list = get_url(content)
-        # # 把url添加到请求队列中
-        # for url in url_list:
-        #     if not url.endswith('.css') and 'javascript' not in url:
-        #         if url.startswith('/'):
-        #             full_url = split_joint('http://www.' + self.website + '.cc/', url)
-        #             if not full_url.startswith('http://www.q22p.cc/index.php/vod/show'):
-        #                 yield scrapy.Request(full_url, callback=self.parse)
-        #         else:
-        #             yield scrapy.Request(url, callback=self.parse)
+        # 从结果中提取所有url
+        url_list = get_url(content)
+        # 把url添加到请求队列中
+        for url in url_list:
+            if url.endswith('.html') and url.startswith('/'):
+                full_url = split_joint('http://www.' + self.website + '.cc/', url)
+                yield scrapy.Request(full_url, callback=self.parse)
+            elif url.startswith('http') or url.startswith('www'):
+                yield scrapy.Request(url, callback=self.parse)

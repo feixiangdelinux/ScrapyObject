@@ -41,7 +41,8 @@ class WujingSpider(scrapy.Spider):
                 self.i = self.i + 1
                 yield item
         video_url = re.findall(
-            r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP', content,
+            r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
+            content,
             re.IGNORECASE)
         if len(video_url):
             item = VideoBean()
@@ -59,10 +60,8 @@ class WujingSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if not url.endswith('.css') and not url.endswith(
-                    '.ico') and url != '/' and 'javascript' not in url and '<a' not in url:
-                if url.startswith('/'):
-                    full_url = split_joint('http://www.' + self.website + '.com/', url)
-                    yield scrapy.Request(full_url, callback=self.parse)
-                else:
-                    yield scrapy.Request(url, callback=self.parse)
+            if url.endswith('.html') and url.startswith('/'):
+                full_url = split_joint('http://www.' + self.website + '.com/', url)
+                yield scrapy.Request(full_url, callback=self.parse)
+            elif url.startswith('http') or url.startswith('www'):
+                yield scrapy.Request(url, callback=self.parse)

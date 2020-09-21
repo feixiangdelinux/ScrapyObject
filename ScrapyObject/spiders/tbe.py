@@ -63,10 +63,8 @@ class TbeSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if not url.endswith('.css') and not url.endswith(
-                    '.ico') and url != '/' and 'javascript' not in url and '<a' not in url:
-                if url.startswith('/'):
-                    full_url = split_joint('http://' + self.website + '.com/', url)
-                    yield scrapy.Request(full_url, callback=self.parse)
-                else:
-                    yield scrapy.Request(url, callback=self.parse)
+            if url.endswith('.html') and url.startswith('/'):
+                full_url = split_joint('http://' + self.website + '.com/', url)
+                yield scrapy.Request(full_url, callback=self.parse)
+            elif url.startswith('http') or url.startswith('www'):
+                yield scrapy.Request(url, callback=self.parse)

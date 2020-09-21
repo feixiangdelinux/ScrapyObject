@@ -12,8 +12,9 @@ class ZzhmtynSpider(scrapy.Spider):
     name = 'zzhmtyn'
     website = 'zzhmtyn188'
     allowed_domains = [website + '.com']
-    # start_urls = ['http://www.' + website + '.com/']
-    start_urls = ['http://zzhmtyn188.com/video/14891.html?14891-0-0']
+    start_urls = ['http://www.' + website + '.com/']
+
+    # start_urls = ['http://zzhmtyn188.com/video/14891.html?14891-0-0']
 
     def __init__(self):
         global website
@@ -55,8 +56,8 @@ class ZzhmtynSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if url.startswith('/'):
+            if url.endswith('.html') and url.startswith('/'):
                 full_url = split_joint('http://' + self.website + '.com/', url)
                 yield scrapy.Request(full_url, callback=self.parse)
-            else:
+            elif url.startswith('http') or url.startswith('www'):
                 yield scrapy.Request(url, callback=self.parse)

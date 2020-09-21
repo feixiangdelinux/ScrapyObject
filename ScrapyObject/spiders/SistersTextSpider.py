@@ -7,9 +7,10 @@ from ScrapyObject.items import VideoBean, VideoInfo
 
 
 # 运行爬虫
-# scrapy crawl sistertext -o sistertext.json
+# 所需时间925秒
+# scrapy crawl sisterText -o sisterText.json
 class SistersTextSpider(scrapy.Spider):
-    name = 'sistertext'
+    name = 'sisterText'
 
     def start_requests(self):
         f = open(r"E:\sisters1.json", "r", encoding='UTF-8')  # 设置文件对象

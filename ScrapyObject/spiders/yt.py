@@ -8,6 +8,8 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider yt www.yt152.com
 # 运行爬虫ok
 # scrapy crawl yt -o yt.json
+# https://www.acb9276ce215.com/index/home.html
+# scrapy genspider acb www.acb9276ce215.com
 class YtSpider(scrapy.Spider):
     name = 'yt'
     website = 'yt152'
@@ -57,9 +59,8 @@ class YtSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if url.endswith('.html'):
-                if url.startswith('/'):
-                    full_url = split_joint('http://www.' + self.website + '.com/', url)
-                    yield scrapy.Request(full_url, callback=self.parse)
-                else:
-                    yield scrapy.Request(url, callback=self.parse)
+            if url.endswith('.html') and url.startswith('/'):
+                full_url = split_joint('http://www.' + self.website + '.com/', url)
+                yield scrapy.Request(full_url, callback=self.parse)
+            elif url.startswith('http') or url.startswith('www'):
+                yield scrapy.Request(url, callback=self.parse)

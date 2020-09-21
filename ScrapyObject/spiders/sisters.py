@@ -13,9 +13,9 @@ class SistersSpider(scrapy.Spider):
     name = 'sisters'
     website = '23.244.60.225:1979'
     allowed_domains = ['23.244.60.225']
-    # start_urls = ['http://' + website]
-    start_urls = ['http://23.244.60.225:1979/vod-play-id-37034-src-1-num-1.html/']
+    start_urls = ['http://' + website]
 
+    # start_urls = ['http://23.244.60.225:1979/vod-play-id-37034-src-1-num-1.html/']
     # start_urls = ['http://23.244.60.225:1979/vod-detail-id-37034.html']
     # start_urls = ['http://23.244.60.225:1979/vod-type-id-1-pg-1.html']
     def __init__(self):
@@ -61,9 +61,8 @@ class SistersSpider(scrapy.Spider):
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
-            if not url.endswith('.css') and '"' not in url and 'www.' not in url:
-                if url.startswith('/'):
-                    full_url = split_joint('http://' + self.website + '/', url)
-                    yield scrapy.Request(full_url, callback=self.parse)
-                else:
-                    yield scrapy.Request(url, callback=self.parse)
+            if url.endswith('.html') and url.startswith('/'):
+                full_url = split_joint('http://' + self.website + '/', url)
+                yield scrapy.Request(full_url, callback=self.parse)
+            elif url.startswith('http') or url.startswith('www'):
+                yield scrapy.Request(url, callback=self.parse)
