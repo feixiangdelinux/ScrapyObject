@@ -12,9 +12,9 @@ class TbeSpider(scrapy.Spider):
     name = 'tbe'
     website = 'tbe7'
     allowed_domains = [website + '.com']
-    start_urls = ['http://www.tbe7.com/']
+    # start_urls = ['http://www.tbe7.com/']
     # start_urls = ['http://tbe7.com/index.php/vod/detail/id/7831.html']
-    # start_urls = ['http://tbe7.com/index.php/vod/play/id/7831/sid/1/nid/1.html']
+    start_urls = ['http://tbe7.com/index.php/vod/play/id/7831/sid/1/nid/1.html']
     # start_urls = ['http://tbe7.com/index.php/vod/play/id/7831/sid/2/nid/1.html']
 
     def __init__(self):
@@ -43,10 +43,7 @@ class TbeSpider(scrapy.Spider):
                 item['vUrl'] = ''
                 self.i = self.i + 1
                 yield item
-        video_url = re.findall(
-            r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
-            content,
-            re.IGNORECASE)
+        video_url = re.findall(r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',content,re.IGNORECASE)
         if len(video_url):
             item = VideoBean()
             item['id'] = self.i

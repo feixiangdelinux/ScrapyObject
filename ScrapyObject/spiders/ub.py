@@ -7,13 +7,12 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider ub www.ub81.me
 # 运行爬虫ok
 # scrapy crawl ub -o ub.json
-# https://ub33.me/
+# https://ub55.me/
 class UbSpider(scrapy.Spider):
     name = 'ub'
-    website = 'ub33'
+    website = 'ub55'
     allowed_domains = [website + '.me']
     start_urls = ['https://' + website + '.me']
-
     # start_urls = ['https://ub33.me/vodplayhtml/11941/index_1_1.html']
     # start_urls = ['https://ub33.me/vodtypehtml/12/']
     # start_urls = ['https://ub33.me/template/9999ak/helpme/android.html']

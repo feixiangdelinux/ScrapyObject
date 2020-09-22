@@ -7,12 +7,13 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider wujing www.wujing365.com
 # 运行爬虫ok
 # scrapy crawl wujing -o wujing.json
-# ok
 class WujingSpider(scrapy.Spider):
     name = 'wujing'
     website = 'wujing365'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['http://www.' + website + '.com']
+
+    # start_urls = ['http://www.wujing365.com/']
 
     def __init__(self):
         global website

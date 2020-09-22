@@ -8,6 +8,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider uniwa www.uniwa.cc
 # 运行爬虫ok
 # scrapy crawl uniwa -o uniwa.json
+# 耗时5小时
 class UniwaSpider(scrapy.Spider):
     name = 'uniwa'
     website = 'uniwa'
@@ -27,7 +28,6 @@ class UniwaSpider(scrapy.Spider):
             content, re.IGNORECASE)
         name = response.xpath("//div[@class='video-title']//h2/text()").extract()
         if len(video_url) and len(name):
-            print(video_url)
             tag = response.xpath("//p[@class='data ms-p margin-0']//a/text()").extract()
             item = VideoBean()
             item['id'] = self.i
