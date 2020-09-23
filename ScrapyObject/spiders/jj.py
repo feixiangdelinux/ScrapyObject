@@ -11,7 +11,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 没问题
 class JjSpider(scrapy.Spider):
     name = 'jj'
-    website = 'n888d'
+    website = 'd888p'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/']
     # start_urls = ['https://www.n888d.com/vod/html1/']

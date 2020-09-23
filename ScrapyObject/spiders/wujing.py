@@ -12,8 +12,8 @@ class WujingSpider(scrapy.Spider):
     website = 'wujing365'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['http://www.' + website + '.com']
-
-    # start_urls = ['http://www.wujing365.com/']
+    # start_urls = ['http://www.wujing365.com/?m=vod-type-id-1-pg-5.html']
+    # start_urls = ['http://www.wujing365.com/?m=vod-detail-id-2470.html']
 
     def __init__(self):
         global website
@@ -21,26 +21,22 @@ class WujingSpider(scrapy.Spider):
 
     def parse(self, response):
         content = get_data(response)
-        pUrl = response.xpath("//div[@class='media']//img/@ src").extract()
+        pUrl = response.xpath("//dt//img/@ src").extract()
         if len(pUrl):
-            urls = response.xpath("//dt[@class='playurl2']//a/@ href").extract()
-            tags = response.xpath("//div[@class='media']//dt/text()").extract()[-2][4:]
-            name = response.xpath("//div[@class='media']//dt/text()").extract()[2][3:]
-            for k in urls:
-                item = VideoBean()
-                item['id'] = self.i
-                item['e'] = ''
-                item['i'] = '0'
-                item['name'] = name
-                item['url'] = split_joint('http://www.' + self.website + '.com/', k)
-                if len(tags):
-                    item['tags'] = tags
-                else:
-                    item['tags'] = '综合'
-                item['pUrl'] = split_joint('http://www.' + self.website + '.com/', pUrl[0])
-                item['vUrl'] = ''
-                self.i = self.i + 1
-                yield item
+            urls = response.xpath("//div[@class='playBar']//ul//li//a/@ href").extract()
+            tags = response.xpath("//div[@class='position']//a/text()").extract()
+            name = response.xpath("//dt//img/@ alt").extract()
+            item = VideoBean()
+            item['id'] = self.i
+            item['e'] = ''
+            item['i'] = '0'
+            item['name'] = name[0]
+            item['url'] = split_joint('http://www.' + self.website + '.com/', urls[0])
+            item['tags'] = tags[-2]
+            item['pUrl'] = pUrl[0]
+            item['vUrl'] = ''
+            self.i = self.i + 1
+            yield item
         video_url = re.findall(
             r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
             content,
@@ -50,11 +46,11 @@ class WujingSpider(scrapy.Spider):
             item['id'] = self.i
             item['e'] = ''
             item['i'] = '0'
-            item['name'] = ''
             item['url'] = response.url
+            item['vUrl'] = video_url[0].replace("\\/", "/")
+            item['name'] = ''
             item['tags'] = ''
             item['pUrl'] = ''
-            item['vUrl'] = video_url[0].replace("\\/", "/")
             self.i = self.i + 1
             yield item
         # 从结果中提取所有url

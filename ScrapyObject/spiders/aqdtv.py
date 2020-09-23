@@ -13,7 +13,6 @@ class AqdtvSpider(scrapy.Spider):
     website = 'aqdtv131'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.aqdtv131.com/']
-
     # start_urls = ['https://www.aqdtv131.com/videos/play/9407']
 
     def __init__(self):
@@ -26,7 +25,6 @@ class AqdtvSpider(scrapy.Spider):
             r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
             content, re.IGNORECASE)
         pUrl = re.findall(r'pic : \'.*?\'', content, re.IGNORECASE)
-        # print(pUrl[0][7:-1])
         if len(video_url) and len(pUrl):
             name = response.xpath("//ol[@class='breadcrumb']//li/text()").extract()
             tags = response.xpath("//ol[@class='breadcrumb']//li//a/text()").extract()

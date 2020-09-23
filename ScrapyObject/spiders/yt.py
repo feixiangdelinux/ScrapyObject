@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import urllib
+
 from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
@@ -8,15 +10,14 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider yt www.yt152.com
 # 运行爬虫ok
 # scrapy crawl yt -o yt.json
-# https://www.acb9276ce215.com/index/home.html
-# scrapy genspider acb www.acb9276ce215.com
 class YtSpider(scrapy.Spider):
     name = 'yt'
     website = 'yt152'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['http://www.yt152.com/']
-    # start_urls = ['http://www.yt152.com/vod-play-id-151818-src-1-num-1.html']
-    # start_urls = ['http://www.yt152.com/vod-type-id-42-pg-1.html']
+    # start_urls = ['http://www.yt152.com/']
+    start_urls = ['http://www.yt152.com/vod-play-id-200411-src-1-num-1.html']
+
+    # start_urls = ['http://www.yt152.com/vod-type-id-16-pg-6.html']
 
     def __init__(self):
         global website
@@ -26,18 +27,19 @@ class YtSpider(scrapy.Spider):
         content = get_data(response)
         video_url = re.findall(r'http.*?\.M3U8', content, re.IGNORECASE)
         if len(video_url):
-            tag = response.xpath("//div[@style='margin-top:3px;']//a/text()").extract()
-            item = VideoBean()
-            item['id'] = self.i
-            item['e'] = ''
-            item['i'] = '0'
-            item['url'] = response.url
-            item['tags'] = tag[1]
-            item['vUrl'] = video_url[0]
-            item['name'] = ''
-            item['pUrl'] = ''
-            self.i = self.i + 1
-            yield item
+            if '\'' not in video_url[0] and video_url[0].startswith('http'):
+                tag = response.xpath("//div[@style='margin-top:3px;']//a/text()").extract()
+                item = VideoBean()
+                item['id'] = self.i
+                item['e'] = ''
+                item['i'] = '0'
+                item['url'] = response.url
+                item['tags'] = tag[1]
+                item['vUrl'] = urllib.parse.unquote(video_url[0])
+                item['name'] = ''
+                item['pUrl'] = ''
+                self.i = self.i + 1
+                yield item
         url = response.xpath("//div[@class='col-xs-6 col-md-3 col-lg-3']//div//a/@ href").extract()
         name = response.xpath("//img[@style='max-height:126px;']/@ alt").extract()
         if len(url) and len(name):
@@ -49,7 +51,10 @@ class YtSpider(scrapy.Spider):
                 item['e'] = ''
                 item['i'] = '0'
                 item['url'] = split_joint('http://www.' + self.website + '.com/', url[position])
-                item['name'] = name[position]
+                if '|' in name[position]:
+                    item['name'] = name[position][:name[position].index("|")]
+                else:
+                    item['name'] = name[position]
                 item['pUrl'] = pUrl[position]
                 item['tags'] = ''
                 item['vUrl'] = ''
