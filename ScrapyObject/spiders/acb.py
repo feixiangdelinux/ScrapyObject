@@ -7,12 +7,13 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider acb www.acb9276ce215.com
 # 运行爬虫
 # scrapy crawl acb -o acb.json
-# AcbText
 class AcbSpider(scrapy.Spider):
     name = 'acb'
     website = 'aea3b92f6415'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/index/home.html']
+    # start_urls = ['https://www.aea3b92f6415.com/shipin/play-105481.html']
+    # start_urls = ['https://www.aea3b92f6415.com/shipin/list-%E4%BA%9A%E6%B4%B2%E6%97%A0%E7%A0%81.html']
 
     def __init__(self):
         global website
@@ -62,10 +63,14 @@ class AcbSpider(scrapy.Spider):
                         item['vUrl'] = str_re1[3] + str_re1[0]
                         self.i = self.i + 1
                         yield item
-        name = response.xpath("//li[@class='content-item']//a/@ title").extract()
+        name = response.xpath("//a[@class='tupian-pic loading']/@ title").extract()
         tag = response.xpath("//div[@class='box cat_pos clearfix']//span//a/text()").extract()
+        url = response.xpath("//a[@class='tupian-pic loading']/@ href").extract()
+        print(len(name))
+        print(len(tag))
+        print(len(url))
+        print(tag)
         if len(name) and len(tag):
-            url = response.xpath("//li[@class='content-item']//a/@ href").extract()
             for k in name:
                 position = name.index(k)
                 item = VideoBean()

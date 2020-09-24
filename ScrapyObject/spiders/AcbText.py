@@ -25,14 +25,12 @@ class AcbTextSpider(scrapy.Spider):
 
     def parse(self, response):
         if 200 == response.status:
-            lens = int.from_bytes(response.headers['Content-Length'], byteorder='big', signed=False)
-            if lens != 0:
-                item = VideoInfo()
-                item['id'] = self.i
-                item['status'] = 1
-                if response.meta.get('redirect_urls') is None:
-                    item['vUrl'] = response.url
-                else:
-                    item['vUrl'] = response.meta.get('redirect_urls')[0]
-                self.i = self.i + 1
-                yield item
+            item = VideoInfo()
+            item['id'] = self.i
+            item['status'] = 1
+            if response.meta.get('redirect_urls') is None:
+                item['vUrl'] = response.url
+            else:
+                item['vUrl'] = response.meta.get('redirect_urls')[0]
+            self.i = self.i + 1
+            yield item

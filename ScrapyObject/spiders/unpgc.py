@@ -2,23 +2,30 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 
-# https://www.jkwhu8.de/play.x?stype=mlmoviehd&movieid=2686
+# https://www.unpgc8.top/play.x?stype=mlmoviehd&movieid=2686
 # 创建爬虫
-# scrapy genspider jkwhu www.jkwhu8.de
+# scrapy genspider unpgc www.unpgc8.top
 # 运行爬虫
-# scrapy crawl jkwhu -o jkwhu.json
-class JkwhuSpider(scrapy.Spider):
+# scrapy crawl unpgc -o unpgc.json
+
+# http://www.tyt89.com/hhlu/22/5.html
+# 创建爬虫
+# scrapy genspider unpgc www.unpgc8.top
+# 运行爬虫
+# scrapy crawl unpgc -o unpgc.json
+class UnpgcSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'jkwhu8'
+    website = 'unpgc8'
     # 后缀
-    suffix = '.de/'
-    name = 'jkwhu'
-    allowed_domains = ['www.jkwhu8.de']
-    start_urls = ['https://www.jkwhu8.de/home.htm']
-    # start_urls = ['https://www.jkwhu8.de/play.x?stype=mlmoviehd&movieid=2686']
-    # start_urls = ['https://www.jkwhu8.de/mlmovielisthd.x?classid=2&page=4']
+    suffix = '.top/'
+    name = 'unpgc'
+    allowed_domains = ['www.unpgc8.top']
+    start_urls = ['https://www.unpgc8.top/home.htm']
+
+    # start_urls = ['https://www.unpgc8.top/mlmovielisthd.x?classid=5']
+    # start_urls = ['https://www.unpgc8.top/play.x?stype=mlmoviehd&movieid=1854']
 
     def __init__(self):
         self.i = 0
