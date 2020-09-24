@@ -1,10 +1,43 @@
+# -*- coding: utf-8 -*-
 import re
 from posixpath import normpath
 from urllib.parse import urljoin, urlparse, urlunparse
 
+import chardet
 import scrapy
 from bs4 import BeautifulSoup
-import chardet
+
+from ScrapyObject.items import VideoBean
+
+
+def format_url_one(video_url):
+    """ 格式化url
+    """
+    return video_url.replace("\\/", "/")
+
+
+def get_video_item(id, name='', url='', tags='', purl='', vurl=''):
+    """ 获取视频数据
+    """
+    item = VideoBean()
+    item['id'] = id
+    item['e'] = ''
+    item['i'] = '0'
+    item['name'] = name
+    item['url'] = url
+    item['tags'] = tags
+    item['pUrl'] = purl
+    item['vUrl'] = vurl
+    return item
+
+
+def get_video_url_one(content):
+    """ 获取视频地址
+    """
+    return re.findall(
+        r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
+        content, re.IGNORECASE)
+
 
 # 得到返回结果
 def get_data(response):

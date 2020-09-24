@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
-from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
-# http://www.uniwa.cc/Static/Home/VideoJS/?Play=https://991video.com/new/dm/2018-08/30/ZTjyUq0/ZTjyUq0.m3u8
-# https://www.acb9276ce215.com/index/home.html
+
+# https://www.aea3b92f6415.com/index/home.html
 # 创建爬虫
 # scrapy genspider acb www.acb9276ce215.com
 # 运行爬虫
 # scrapy crawl acb -o acb.json
 class AcbSpider(scrapy.Spider):
     name = 'acb'
-    website = 'aea67fb64caa'
+    website = 'aea3b92f6415'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/index/home.html']
 
-    # start_urls = ['https://www.ad1ba98e10bd.com/index/home.html']
-    # start_urls = ['https://www.acb9276ce215.com/shipin/play-111975.html']
-    # start_urls = ['https://www.acb9276ce215.com/shipin/list-%E5%9B%BD%E4%BA%A7%E7%B2%BE%E5%93%81-3.html']
     def __init__(self):
         global website
         self.i = 1
@@ -82,7 +78,6 @@ class AcbSpider(scrapy.Spider):
                 item['vUrl'] = ''
                 self.i = self.i + 1
                 yield item
-
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:
