@@ -8,7 +8,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # http://www.yt152.com/
 # 创建爬虫
 # scrapy genspider yt www.yt152.com
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl yt -o yt.json
 class YtSpider(scrapy.Spider):
     name = 'yt'

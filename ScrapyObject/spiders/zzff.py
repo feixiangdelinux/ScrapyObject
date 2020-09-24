@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 # 创建爬虫
 # scrapy genspider zzff www.zzff6.com
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl zzff -o zzff.json
 class ZzffSpider(scrapy.Spider):
     name = 'zzff'

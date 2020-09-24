@@ -3,7 +3,7 @@ from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 # 创建爬虫
 # scrapy genspider zx www.zx9000.com
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl zx -o zx.json
 class ZxSpider(scrapy.Spider):
     name = 'zx'

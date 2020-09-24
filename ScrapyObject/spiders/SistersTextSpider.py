@@ -7,7 +7,6 @@ from ScrapyObject.items import VideoBean, VideoInfo
 
 
 # 运行爬虫
-# 所需时间925秒
 # scrapy crawl sisterText -o sisterText.json
 class SistersTextSpider(scrapy.Spider):
     name = 'sisterText'

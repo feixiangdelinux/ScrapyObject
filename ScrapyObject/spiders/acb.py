@@ -2,11 +2,11 @@
 from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
-
+# http://www.uniwa.cc/Static/Home/VideoJS/?Play=https://991video.com/new/dm/2018-08/30/ZTjyUq0/ZTjyUq0.m3u8
 # https://www.acb9276ce215.com/index/home.html
 # 创建爬虫
 # scrapy genspider acb www.acb9276ce215.com
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl acb -o acb.json
 class AcbSpider(scrapy.Spider):
     name = 'acb'
@@ -82,7 +82,7 @@ class AcbSpider(scrapy.Spider):
                 item['vUrl'] = ''
                 self.i = self.i + 1
                 yield item
-        # 从结果中提取所有url
+
         url_list = get_url(content)
         # 把url添加到请求队列中
         for url in url_list:

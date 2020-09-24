@@ -7,7 +7,6 @@ from ScrapyObject.items import VideoBean, VideoInfo
 
 # 运行爬虫
 # scrapy crawl fqypzxxxText -o fqypzxxxText.json
-# dmTextSpider
 class FqypzxxxTextSpider(scrapy.Spider):
     name = 'fqypzxxxText'
 

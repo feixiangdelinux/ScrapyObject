@@ -7,7 +7,6 @@ from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import get_data
 
 
-# scrapy genspider zzhmtyntwo zzhmtyntwo.com
 # 运行爬虫
 # scrapy crawl zzhmtyntwo -o zzhmtyntwo.json
 class ZzhmtyntwoSpider(scrapy.Spider):

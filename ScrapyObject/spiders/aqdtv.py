@@ -6,7 +6,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # https://www.aqdtv131.com/
 # 创建爬虫
 # scrapy genspider aqdtv www.aqdtv131.com
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl aqdtv -o aqdtv.json
 class AqdtvSpider(scrapy.Spider):
     name = 'aqdtv'

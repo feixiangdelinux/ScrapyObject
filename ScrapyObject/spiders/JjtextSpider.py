@@ -7,7 +7,6 @@ from ScrapyObject.items import VideoBean, VideoInfo
 
 # 运行爬虫
 # sudo scrapy crawl jjText -o jjText.json
-# scrapy crawl jjText -o jjText.json
 class JjtextSpider(scrapy.Spider):
     name = 'jjText'
 

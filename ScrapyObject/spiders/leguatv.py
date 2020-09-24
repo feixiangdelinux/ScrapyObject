@@ -5,9 +5,8 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 # 创建爬虫
 # scrapy genspider leguatv www.leguatv.com
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl leguatv -o leguatv.json
-
 class LeguatvSpider(scrapy.Spider):
     name = 'leguatv'
     website = 'leguatv'

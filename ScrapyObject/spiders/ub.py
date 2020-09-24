@@ -5,9 +5,8 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 # 创建爬虫
 # scrapy genspider ub www.ub81.me
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl ub -o ub.json
-# https://ub55.me/
 class UbSpider(scrapy.Spider):
     name = 'ub'
     website = 'ub55'

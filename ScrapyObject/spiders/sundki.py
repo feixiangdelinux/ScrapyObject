@@ -7,7 +7,6 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider sundki www.sundki.com
 # 运行爬虫ok
 # scrapy crawl sundki -o sundki.json
-# ok
 class SundkiSpider(scrapy.Spider):
     name = 'sundki'
     website = 'sundki'

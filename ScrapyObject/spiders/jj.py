@@ -6,9 +6,9 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy startproject ScrapyObject
 # 创建爬虫
 # scrapy genspider msp www.c777j.com
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl jj -o jj.json
-# 没问题
+# ok
 class JjSpider(scrapy.Spider):
     name = 'jj'
     website = 'd888p'

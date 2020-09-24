@@ -6,9 +6,8 @@ from ScrapyObject.spiders.utils.url_utils import *
 # http://www.uniwa.cc/
 # 创建爬虫
 # scrapy genspider uniwa www.uniwa.cc
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl uniwa -o uniwa.json
-# 耗时5小时
 class UniwaSpider(scrapy.Spider):
     name = 'uniwa'
     website = 'uniwa'

@@ -3,17 +3,18 @@ from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
 
+# http://www.840mm.com
 # 创建爬虫
-# scrapy genspider wujing www.wujing365.com
+# scrapy genspider mm www.840mm.com
 # 运行爬虫
-# scrapy crawl wujing -o wujing.json
-class WujingSpider(scrapy.Spider):
-    name = 'wujing'
-    website = 'wujing365'
+# scrapy crawl mm -o mm.json
+class MmSpider(scrapy.Spider):
+    name = 'mm'
+    website = '840mm'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['http://www.' + website + '.com']
-    # start_urls = ['http://www.wujing365.com/?m=vod-type-id-1-pg-5.html']
-    # start_urls = ['http://www.wujing365.com/?m=vod-detail-id-2470.html']
+    start_urls = ['http://www.840mm.com/']
+    # start_urls = ['http://www.840mm.com/play/index148687-0-0.html']
+    # start_urls = ['http://www.840mm.com/view/index111192.html']
 
     def __init__(self):
         global website
@@ -21,36 +22,35 @@ class WujingSpider(scrapy.Spider):
 
     def parse(self, response):
         content = get_data(response)
-        pUrl = response.xpath("//dt//img/@ src").extract()
-        if len(pUrl):
-            urls = response.xpath("//div[@class='playBar']//ul//li//a/@ href").extract()
-            tags = response.xpath("//div[@class='position']//a/text()").extract()
-            name = response.xpath("//dt//img/@ alt").extract()
-            item = VideoBean()
-            item['id'] = self.i
-            item['e'] = ''
-            item['i'] = '0'
-            item['name'] = name[0]
-            item['url'] = split_joint('http://www.' + self.website + '.com/', urls[0])
-            item['tags'] = tags[-2]
-            item['pUrl'] = pUrl[0]
-            item['vUrl'] = ''
-            self.i = self.i + 1
-            yield item
         video_url = re.findall(
             r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
-            content,
-            re.IGNORECASE)
+            content, re.IGNORECASE)
         if len(video_url):
             item = VideoBean()
             item['id'] = self.i
             item['e'] = ''
             item['i'] = '0'
-            item['url'] = response.url
-            item['vUrl'] = video_url[0].replace("\\/", "/")
             item['name'] = ''
+            item['url'] = response.url
             item['tags'] = ''
             item['pUrl'] = ''
+            item['vUrl'] = video_url[0]
+            self.i = self.i + 1
+            yield item
+        pUrl = response.xpath("//div[@class='col-md-9']//img/@ src").extract()
+        name = response.xpath("//div[@class='col-md-9']//img/@ title").extract()
+        url = response.xpath("//a[@target='_self']/@ href").extract()
+        tags = response.xpath("//div[@class='info']//p//a/text()").extract()
+        if len(pUrl):
+            item = VideoBean()
+            item['id'] = self.i
+            item['e'] = ''
+            item['i'] = '0'
+            item['name'] = name[0]
+            item['url'] = split_joint('http://www.' + self.website + '.com/', url[0])
+            item['tags'] = tags[0]
+            item['pUrl'] = pUrl[0]
+            item['vUrl'] = ''
             self.i = self.i + 1
             yield item
         # 从结果中提取所有url

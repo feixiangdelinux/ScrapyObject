@@ -7,9 +7,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider izhrb www.iz2hrb.top
 # 运行爬虫ok
 # scrapy crawl izhrb -o izhrb.json
-# 可以
-
-# IzhrbText
+# ok
 class IzhrbSpider(scrapy.Spider):
     name = 'izhrb'
     website = 'iz2hrb'

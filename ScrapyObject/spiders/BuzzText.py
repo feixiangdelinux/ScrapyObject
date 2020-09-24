@@ -8,7 +8,6 @@ from ScrapyObject.items import VideoBean, VideoInfo
 
 # 运行爬虫
 # scrapy crawl buzzText -o buzzText.json
-#   YtText
 class BuzzTextSpider(scrapy.Spider):
     name = 'buzzText'
 

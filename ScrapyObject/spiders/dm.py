@@ -5,8 +5,9 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 # 创建爬虫
 # scrapy genspider dm www.dm528.com
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl dm -o dm.json
+# ok
 class DmSpider(scrapy.Spider):
     name = 'dm'
     website = 'dm528'

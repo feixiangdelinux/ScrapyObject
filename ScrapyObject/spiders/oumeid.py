@@ -5,7 +5,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 # 创建爬虫
 # scrapy genspider sisters http://23.244.60.225:1979/vod-play-id-37034-src-1-num-1.html
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl oumeid -o oumeid.json
 # ok
 class OumeidSpider(scrapy.Spider):

@@ -5,9 +5,8 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 # 创建爬虫gan
 # scrapy genspider qp www.q22p.cc
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl qp -o qp.json
-# 没问题
 class QpSpider(scrapy.Spider):
     name = 'qp'
     website = 'q22p'

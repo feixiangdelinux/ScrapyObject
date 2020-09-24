@@ -6,7 +6,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # https://www.bws6.com/
 # 创建爬虫
 # scrapy genspider bws www.bws6.com
-# 运行爬虫ok
+# 运行爬虫
 # scrapy crawl bws -o bws.json
 class BwsSpider(scrapy.Spider):
     name = 'bws'

@@ -7,7 +7,6 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider tbe www.tbe7.com
 # 运行爬虫ok
 # scrapy crawl tbe -o tbe.json
-# ok
 class TbeSpider(scrapy.Spider):
     name = 'tbe'
     website = 'tbe7'
