@@ -7,6 +7,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider acb www.acb9276ce215.com
 # 运行爬虫
 # scrapy crawl acb -o acb.json
+# AcbText
 class AcbSpider(scrapy.Spider):
     name = 'acb'
     website = 'aea3b92f6415'
