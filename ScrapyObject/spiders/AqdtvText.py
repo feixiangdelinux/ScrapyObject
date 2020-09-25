@@ -7,13 +7,15 @@ from ScrapyObject.items import VideoBean, VideoInfo
 
 
 # 运行爬虫
-# scrapy crawl acbText -o acbText.json
-class AcbTextSpider(scrapy.Spider):
-    name = 'acbText'
+# AcbText
+# scrapy crawl aqdtvText -o aqdtvText.json
+# AqdtvText
+class AqdtvTextSpider(scrapy.Spider):
+    name = 'aqdtvText'
 
     def start_requests(self):
-        f = open(r"/home/ccg/acb1.json", "r", encoding='UTF-8')  # 设置文件对象
-        # f = open(r"E:\acb1.json", "r", encoding='UTF-8')  # 设置文件对象
+        # f = open(r"/home/ccg/aqdtv1.json", "r", encoding='UTF-8')  # 设置文件对象
+        f = open(r"E:\aqdtv1.json", "r", encoding='UTF-8')  # 设置文件对象
         str = f.read()  # 将txt文件的所有内容读入到字符串str中
         f.close()  # 将文件关闭
         inp_dict = json.loads(str, object_hook=VideoBean)

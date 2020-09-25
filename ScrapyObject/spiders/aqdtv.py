@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
 
@@ -9,44 +8,41 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 运行爬虫
 # scrapy crawl aqdtv -o aqdtv.json
 class AqdtvSpider(scrapy.Spider):
-    name = 'aqdtv'
+    # 前缀
+    prefix = 'https://www.'
+    # 中缀
     website = 'aqdtv131'
+    # 后缀
+    suffix = '.com/'
+    name = 'aqdtv'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['https://www.aqdtv131.com/']
-    # start_urls = ['https://www.aqdtv131.com/videos/play/9407']
+    # start_urls = ['https://www.aqdtv131.com/']
+    # start_urls = ['https://www.aqdtv131.com/videos/play/9508']
+    start_urls = ['https://www.aqdtv131.com/videos/play/1']
 
     def __init__(self):
-        global website
-        self.i = 1
+        self.i = 0
 
     def parse(self, response):
+        # 获取字符串类型的网页内容
         content = get_data(response)
-        video_url = re.findall(
-            r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
-            content, re.IGNORECASE)
-        pUrl = re.findall(r'pic : \'.*?\'', content, re.IGNORECASE)
-        if len(video_url) and len(pUrl):
+        # 从网页中提取url链接
+        url_list = get_url(content)
+        # 整理视频数据
+        video_url = get_video_url_one(content)
+        pic_url = re.findall(r'pic : \'.*?\'', content, re.IGNORECASE)
+        if len(video_url) and len(pic_url):
             name = response.xpath("//ol[@class='breadcrumb']//li/text()").extract()
             tags = response.xpath("//ol[@class='breadcrumb']//li//a/text()").extract()
-            item = VideoBean()
-            item['id'] = self.i
-            item['e'] = ''
-            item['i'] = '0'
-            item['name'] = name[0]
-            item['url'] = response.url
-            item['tags'] = tags[-1]
-            item['pUrl'] = pUrl[0][7:-1]
-            item['vUrl'] = video_url[0]
             self.i = self.i + 1
-            yield item
-        # 从结果中提取所有url
-        url_list = get_url(content)
-        # 把url添加到请求队列中
+            yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl=pic_url[0][7:-1],
+                                 vurl=video_url[0])
+        # 提取url
         for url in url_list:
             if not url.endswith(
                     '.css') and url != '/' and '"' not in url and 'www.' not in url and 'javascript' not in url:
                 if url.startswith('/'):
-                    full_url = split_joint('https://www.' + self.website + '.com/', url)
+                    full_url = split_joint(self.prefix + self.website + self.suffix, url)
                     yield scrapy.Request(full_url, callback=self.parse)
                 elif url.startswith('http') or url.startswith('www'):
                     yield scrapy.Request(url, callback=self.parse)
