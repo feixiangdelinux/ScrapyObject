@@ -16,8 +16,8 @@ class AcbTextSpider(scrapy.Spider):
     file_name = 'baihuzu1'
 
     def start_requests(self):
-        # f = open("/home/ccg/" + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
-        f = open('E:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
+        f = open("/home/ccg/" + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
+        # f = open('E:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
         str = f.read()  # 将txt文件的所有内容读入到字符串str中
         f.close()  # 将文件关闭
         inp_dict = json.loads(str, object_hook=VideoBean)

@@ -62,7 +62,6 @@ class AcbSpider(scrapy.Spider):
         # 提取url
         for url in url_list:
             if url.endswith('.html') and url.startswith('/'):
-                full_url = split_joint(self.prefix + self.website + self.suffix, url)
-                yield scrapy.Request(full_url, callback=self.parse)
+                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
             elif url.startswith('http') or url.startswith('www'):
                 yield scrapy.Request(url, callback=self.parse)
