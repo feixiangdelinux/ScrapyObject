@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
 
@@ -7,36 +6,33 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy genspider dm www.dm528.com
 # 运行爬虫
 # scrapy crawl dm -o dm.json
-# ok
 class DmSpider(scrapy.Spider):
-    name = 'dm'
+    # 前缀
+    prefix = 'http://www.'
+    # 中缀
     website = 'dm528'
+    # 后缀
+    suffix = '.com/'
+    name = 'dm'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['http://www.dm528.com/']
-    # start_urls = ['http://www.dm528.com/?m=vod-play-id-13600-src-1-num-1.html']
+    start_urls = [prefix + website + suffix]
+
+    # start_urls = ['http://www.dm528.com/']
 
     def __init__(self):
-        global website
-        self.i = 1
+        self.i = 0
 
     def parse(self, response):
+        # 获取字符串类型的网页内容
         content = get_data(response)
-        video_url = re.findall(
-            r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
-            content,
-            re.IGNORECASE)
+        # 从网页中提取url链接
+        url_list = get_url(content)
+        # 整理视频数据
+        video_url = get_video_url_one(content)
         if len(video_url) and '"' not in video_url[0]:
-            item = VideoBean()
-            item['id'] = self.i
-            item['e'] = ''
-            item['i'] = '0'
-            item['url'] = response.url
-            item['vUrl'] = video_url[0].replace("\\/", "/")
-            item['name'] = ''
-            item['tags'] = ''
-            item['pUrl'] = ''
             self.i = self.i + 1
-            yield item
+            yield get_video_item(id=self.i, url=response.url, vurl=video_url[0].replace("\\/", "/"))
+        # 整理图片数据
         pUrl = response.xpath("//div[@class='thumbnail']//img/@ src").extract()
         if len(pUrl):
             urls = response.xpath("//div[@class='thumbnail']//a/@ href").extract()
@@ -44,24 +40,14 @@ class DmSpider(scrapy.Spider):
             name = response.xpath("//div[@class='thumbnail']//img/@ title").extract()
             for k in pUrl:
                 position = pUrl.index(k)
-                item = VideoBean()
-                item['id'] = self.i
-                item['e'] = ''
-                item['i'] = '0'
-                item['name'] = name[position]
-                item['url'] = split_joint('http://www.' + self.website + '.com/', urls[position])
-                item['tags'] = tags[0][2:]
-                item['pUrl'] = pUrl[position]
-                item['vUrl'] = ''
                 self.i = self.i + 1
-                yield item
-        # 从结果中提取所有url
-        url_list = get_url(content)
-        # 把url添加到请求队列中
+                yield get_video_item(id=self.i, name=name[position].strip(),
+                                     url=split_joint(self.prefix + self.website + self.suffix, urls[position]),
+                                     tags=tags[0][2:],
+                                     purl=pUrl[position])
+        # 提取url
         for url in url_list:
-            if url.endswith('.html'):
-                if url.startswith('/'):
-                    full_url = split_joint('http://www.' + self.website + '.com/', url)
-                    yield scrapy.Request(full_url, callback=self.parse)
-                else:
-                    yield scrapy.Request(url, callback=self.parse)
+            if url.endswith('.html') and url.startswith('/'):
+                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+            elif url.startswith('http') or url.startswith('www'):
+                yield scrapy.Request(url, callback=self.parse)

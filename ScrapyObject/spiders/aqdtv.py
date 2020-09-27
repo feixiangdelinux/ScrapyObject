@@ -11,14 +11,13 @@ class AqdtvSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'aqdtv131'
+    website = 'aqdtv106'
     # 后缀
     suffix = '.com/'
     name = 'aqdtv'
     allowed_domains = ['www.' + website + '.com']
-    # start_urls = ['https://www.aqdtv131.com/']
-    # start_urls = ['https://www.aqdtv131.com/videos/play/9508']
-    start_urls = ['https://www.aqdtv131.com/videos/play/1']
+    start_urls = [prefix + website + suffix]
+    # start_urls = ['https://www.aqdtv106.com/']
 
     def __init__(self):
         self.i = 0

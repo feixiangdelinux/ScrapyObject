@@ -35,7 +35,7 @@ class XfSpider(scrapy.Spider):
             item['url'] = response.url
             item['tags'] = ''
             item['pUrl'] = ''
-            item['vUrl'] = video_url[0].replace("\\/", "/")
+            item['vUrl'] = format_url_one(video_url[0])
             self.i = self.i + 1
             yield item
         url = response.xpath("//p[@class='play-list']//a/@ href").extract()

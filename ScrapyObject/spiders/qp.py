@@ -58,7 +58,7 @@ class QpSpider(scrapy.Spider):
             item['url'] = response.url
             item['tags'] = ''
             item['pUrl'] = ''
-            item['vUrl'] = video_url[0].replace("\\/", "/")
+            item['vUrl'] = format_url_one(video_url[0])
             self.i = self.i + 1
             yield item
         # 从结果中提取所有url

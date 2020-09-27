@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
 from posixpath import normpath
-from urllib.parse import urljoin, urlparse, urlunparse
 from urllib import parse
+from urllib.parse import urljoin, urlparse, urlunparse
+
 import chardet
 import scrapy
 from bs4 import BeautifulSoup
@@ -14,10 +15,13 @@ def format_url_one(video_url):
     """ 格式化url
     """
     return video_url.replace("\\/", "/")
+
+
 def format_url_two(video_url):
     """ 格式化url
     """
     return parse.unquote(video_url)
+
 
 def get_video_item(id, name='', url='', tags='', purl='', vurl=''):
     """ 获取视频数据

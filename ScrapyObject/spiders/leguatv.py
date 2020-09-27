@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
 
@@ -12,6 +11,7 @@ class LeguatvSpider(scrapy.Spider):
     website = 'leguatv'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.leguatv.com/']
+
     # start_urls = ['https://www.leguatv.com/d/158562.html']
 
     def __init__(self):
@@ -52,7 +52,7 @@ class LeguatvSpider(scrapy.Spider):
             item['url'] = response.url
             item['tags'] = tag[-1]
             item['pUrl'] = ''
-            item['vUrl'] = video_url[0].replace("\\/", "/")
+            item['vUrl'] = format_url_one(video_url[0])
             self.i = self.i + 1
             yield item
         # 从结果中提取所有url

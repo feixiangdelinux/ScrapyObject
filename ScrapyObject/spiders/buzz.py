@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
 
@@ -9,66 +8,57 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy crawl buzz -o buzz.json
 # ok
 class BuzzSpider(scrapy.Spider):
+    # 前缀
+    prefix = 'http://www.'
+    # 中缀
+    website = '6066919'
+    # 后缀
+    suffix = '.buzz/'
     name = 'buzz'
-    website = '0851593'
     allowed_domains = ['www.' + website + '.buzz']
-    start_urls = ['http://www.' + website + '.buzz/']
-    # start_urls = ['http://www.9648552.buzz/html/crdongman/']
+
+    start_urls = [prefix + website + suffix]
+    # start_urls = ['http://www.6066919.buzz/']
 
     def __init__(self):
-        global website
-        self.i = 1
+        self.i = 0
 
     def parse(self, response):
+        # 获取字符串类型的网页内容
         content = get_data(response)
-        video_url = re.findall(
-            r'[a-zA-z]+://[^\s]*AVI|[a-zA-z]+://[^\s]*MOV|[a-zA-z]+://[^\s]*WMV|[a-zA-z]+://[^\s]*3GP|[a-zA-z]+://[^\s]*MKV|[a-zA-z]+://[^\s]*FLV|[a-zA-z]+://[^\s]*RMVB|[a-zA-z]+://[^\s]*MP4|[a-zA-z]+://[^\s]*M3U8',
-            content, re.IGNORECASE)
-        if len(video_url):
-            item = VideoBean()
-            item['id'] = self.i
-            item['e'] = ''
-            item['i'] = '0'
-            title_prefix = response.xpath('/html/head/title/text()').extract()[0]
-            if "-" in title_prefix:
-                item['name'] = title_prefix[:title_prefix.index("-")]
-            else:
-                item['name'] = title_prefix
-            item['url'] = response.url
-            item['tags'] = ''
-            item['pUrl'] = ''
-            item['vUrl'] = video_url[-1]
-            self.i = self.i + 1
-            yield item
-        else:
-            tag = response.xpath("//li[@class='n1']//b/text()").extract()
-            name = response.xpath("//div[@class='post']//a/@ title").extract()
-            url = response.xpath("//div[@class='post']//a/@ href").extract()
-            pUrl = response.xpath("//div[@class='post']//a//img/@ src").extract()
-            if len(pUrl):
-                for k in pUrl:
-                    position = pUrl.index(k)
-                    item = VideoBean()
-                    item['id'] = self.i
-                    item['e'] = ''
-                    item['i'] = '0'
-                    item['name'] = name[position]
-                    item['url'] = split_joint('http://www.' + self.website + '.buzz/', url[position])
-                    if len(tag):
-                        item['tags'] = tag[0]
-                    else:
-                        item['tags'] = '综合'
-                    item['pUrl'] = pUrl[position]
-                    item['vUrl'] = ''
-                    self.i = self.i + 1
-                    yield item
-        # 从结果中提取所有url
+        # 从网页中提取url链接
         url_list = get_url(content)
-        # 把url添加到请求队列中
-        for url in url_list:
-            if not url.endswith('.css') and 'javascript' not in url:
-                if url.startswith('/'):
-                    full_url = split_joint('http://www.' + self.website + '.buzz/', url)
-                    yield scrapy.Request(full_url, callback=self.parse)
+        # 整理视频数据
+        video_url = get_video_url_one(content)
+        if len(video_url):
+            self.i = self.i + 1
+            if response.url.endswith('/'):
+                yield get_video_item(id=self.i, url=response.url[:-1], vurl=format_url_two(video_url[0]))
+            else:
+                yield get_video_item(id=self.i, url=response.url, vurl=format_url_two(video_url[0]))
+        # 整理图片数据
+        tags = response.xpath("//li[@class='n1']//b/text()").extract()
+        name = response.xpath("//div[@class='post']//a/@ title").extract()
+        url = response.xpath("//div[@class='post']//a/@ href").extract()
+        pUrl = response.xpath("//div[@class='post']//a//img/@ src").extract()
+        if len(pUrl):
+            for k in pUrl:
+                position = pUrl.index(k)
+                self.i = self.i + 1
+                if len(tags):
+                    yield get_video_item(id=self.i, name=name[position],
+                                         url=split_joint(self.prefix + self.website + self.suffix, url[position]),
+                                         tags=tags[0], purl=pUrl[position])
                 else:
-                    yield scrapy.Request(url, callback=self.parse)
+                    yield get_video_item(id=self.i, name=name[position],
+                                         url=split_joint(self.prefix + self.website + self.suffix, url[position]),
+                                         tags='综合', purl=pUrl[position])
+
+        # 提取url
+        for url in url_list:
+            if url.endswith('.html') and url.startswith('/'):
+                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+            elif url.endswith('/') and url.startswith('/'):
+                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+            elif url.startswith('http') or url.startswith('www'):
+                yield scrapy.Request(url, callback=self.parse)

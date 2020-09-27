@@ -47,7 +47,7 @@ class WujingSpider(scrapy.Spider):
             item['e'] = ''
             item['i'] = '0'
             item['url'] = response.url
-            item['vUrl'] = video_url[0].replace("\\/", "/")
+            item['vUrl'] = format_url_one(video_url[0])
             item['name'] = ''
             item['tags'] = ''
             item['pUrl'] = ''

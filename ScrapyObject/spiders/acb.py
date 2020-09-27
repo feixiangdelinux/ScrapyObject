@@ -16,8 +16,8 @@ class AcbSpider(scrapy.Spider):
     suffix = '.com/'
     name = 'acb'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['https://www.' + website + '.com/index/home.html']
-    # start_urls = ['https://www.aea3b92f6415.com/shipin/play-113142.html']
+    start_urls = [prefix + website + '.com/index/home.html']
+    # start_urls = ['https://www.b276b8042fbd.com/index/home.html']
 
     def __init__(self):
         self.i = 0
@@ -33,9 +33,9 @@ class AcbSpider(scrapy.Spider):
         # 整理视频数据
         video_url_one = get_video_url_one(content)
         if len(video_url_one) and len(name) and len(tags):
-            l2 = list(set(video_url_one))
+            final_video_url = list(set(video_url_one))
             self.i = self.i + 1
-            for k in l2:
+            for k in final_video_url:
                 yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1],
                                      purl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5',
                                      vurl=k)

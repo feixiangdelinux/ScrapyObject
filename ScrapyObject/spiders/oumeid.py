@@ -40,7 +40,7 @@ class OumeidSpider(scrapy.Spider):
             item['url'] = response.url
             item['tags'] = tags
             item['pUrl'] = pic
-            item['vUrl'] = video_url[0].replace("\\/", "/")
+            item['vUrl'] = format_url_one(video_url[0])
             self.i = self.i + 1
             yield item
         # 从结果中提取所有url
