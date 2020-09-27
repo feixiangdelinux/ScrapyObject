@@ -10,12 +10,12 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy crawl bws -o bws.json
 class BwsSpider(scrapy.Spider):
     name = 'bws'
-    website = 'bws6'
+    website = 'bwc7'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['https://www.bws6.com/index/home.html']
-    # start_urls = ['https://www.bws6.com/shipin/list-%E5%8A%A8%E6%BC%AB%E7%94%B5%E5%BD%B1-2.html']
-    # start_urls = ['https://www.bws6.com/shipin/92059.html']
-    # start_urls = ['https://www.bws6.com/shipin/play-92059.html?road=1']
+    start_urls = ['https://www.bwc7.com/index/home.html']
+    # start_urls = ['https://www.bwc7.com/shipin/list-%E5%8A%A8%E6%BC%AB%E7%94%B5%E5%BD%B1-2.html']
+    # start_urls = ['https://www.bwc7.com/shipin/92059.html']
+    # start_urls = ['https://www.bwc7.com/shipin/play-92059.html?road=1']
 
     def __init__(self):
         global website
