@@ -11,7 +11,7 @@ class AcbSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'aea3b92f6415'
+    website = 'b276b8042fbd'
     # 后缀
     suffix = '.com/'
     name = 'acb'
@@ -37,7 +37,7 @@ class AcbSpider(scrapy.Spider):
             self.i = self.i + 1
             for k in l2:
                 yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1],
-                                     purl='https://jsjs.qcyn72.com/10/assets/images/default/loading/235x140.jpg',
+                                     purl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5',
                                      vurl=k)
         if len(video_url):
             if 'var video' in video_url[0]:
@@ -47,17 +47,17 @@ class AcbSpider(scrapy.Spider):
                     if 'https://' in str_re1[1]:
                         self.i = self.i + 1
                         yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1],
-                                             purl='https://jsjs.qcyn72.com/10/assets/images/default/loading/235x140.jpg',
+                                             purl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5',
                                              vurl=str_re1[1] + str_re1[0])
                     if 'https://' in str_re1[2]:
                         self.i = self.i + 1
                         yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1],
-                                             purl='https://jsjs.qcyn72.com/10/assets/images/default/loading/235x140.jpg',
+                                             purl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5',
                                              vurl=str_re1[2] + str_re1[0])
                     if 'https://' in str_re1[3]:
                         self.i = self.i + 1
                         yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1],
-                                             purl='https://jsjs.qcyn72.com/10/assets/images/default/loading/235x140.jpg',
+                                             purl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5',
                                              vurl=str_re1[3] + str_re1[0])
         # 提取url
         for url in url_list:

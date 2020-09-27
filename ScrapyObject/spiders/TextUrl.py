@@ -12,9 +12,12 @@ from ScrapyObject.items import VideoBean, VideoInfo
 # AqdtvText
 class AcbTextSpider(scrapy.Spider):
     name = 'acbText'
-    # scrapy crawl acbText -o baihuzuText.json
-    file_name = 'baihuzu1'
-
+    # # scrapy crawl acbText -o baihuzuText.json
+    # file_name = 'baihuzu1'
+    # scrapy crawl acbText -o gbText.json
+    # file_name = 'gb1'
+    # scrapy crawl acbText -o huText.json
+    file_name = 'hu1'
     def start_requests(self):
         f = open("/home/ccg/" + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
         # f = open('E:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象

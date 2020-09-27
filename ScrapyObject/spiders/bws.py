@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from ScrapyObject.items import VideoBean
 from ScrapyObject.spiders.utils.url_utils import *
 
 
@@ -9,44 +8,43 @@ from ScrapyObject.spiders.utils.url_utils import *
 # 运行爬虫
 # scrapy crawl bws -o bws.json
 class BwsSpider(scrapy.Spider):
+    # 前缀
+    prefix = 'https://www.'
+    # 中缀
+    website = 'bwj7'
+    # 后缀
+    suffix = '.com/'
     name = 'bws'
-    website = 'bwc7'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['https://www.bwc7.com/index/home.html']
-    # start_urls = ['https://www.bwc7.com/shipin/list-%E5%8A%A8%E6%BC%AB%E7%94%B5%E5%BD%B1-2.html']
-    # start_urls = ['https://www.bwc7.com/shipin/92059.html']
-    # start_urls = ['https://www.bwc7.com/shipin/play-92059.html?road=1']
+    start_urls = ['https://www.' + website + '.com/index/home.html']
+
+    # start_urls = ['https://www.bwj7.com/index/home.html']
+    # start_urls = ['https://www.bwj7.com/shipin/list-%E4%BA%9A%E6%B4%B2%E7%94%B5%E5%BD%B1-2.html']
+    # start_urls = ['https://www.bwj7.com/shipin/91782.html']
 
     def __init__(self):
-        global website
-        self.i = 1
+        self.i = 0
 
     def parse(self, response):
+        # 获取字符串类型的网页内容
         content = get_data(response)
-        video_url = re.findall(r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',content, re.IGNORECASE)
-        tags = response.xpath("//div[@class='pull-left text-left margin_left_10 pull-left-mobile2']//div//p/text()").extract()
+        # 从网页中提取url链接
+        url_list = get_url(content)
+        # 整理视频数据
+        video_url = get_video_url_one(content)
+        tags = response.xpath(
+            "//div[@class='pull-left text-left margin_left_10 pull-left-mobile2']//div//p/text()").extract()
         if len(video_url) and len(tags):
             name = response.xpath('/html/head/title/text()').extract()
-            pUrl = response.xpath("//div[@class='pull-left pull-left-mobile1']//div//img/@ data-original").extract()
-            for k in video_url:
-                item = VideoBean()
-                item['id'] = self.i
-                item['e'] = ''
-                item['i'] = '0'
-                item['name'] = name[0].strip()
-                item['url'] = response.url
-                item['tags'] = tags[0][3:]
-                item['pUrl'] = pUrl[0]
-                item['vUrl'] = k
+            pic_url = response.xpath("//div[@class='pull-left pull-left-mobile1']//div//img/@ data-original").extract()
+            l2 = list(set(video_url))
+            for k in l2:
                 self.i = self.i + 1
-                yield item
-        # 从结果中提取所有url
-        url_list = get_url(content)
-        # 把url添加到请求队列中
+                yield get_video_item(id=self.i, name=name[0].strip(), url=response.url, tags=tags[0][3:],
+                                     purl=pic_url[0], vurl=k)
+        # 提取url
         for url in url_list:
             if url.endswith('.html') and url.startswith('/'):
-                full_url = split_joint('https://www.' + self.website + '.com/', url)
-                yield scrapy.Request(full_url, callback=self.parse)
+                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
             elif url.startswith('http') or url.startswith('www'):
                 yield scrapy.Request(url, callback=self.parse)
-

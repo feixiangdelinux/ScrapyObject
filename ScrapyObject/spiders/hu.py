@@ -51,7 +51,6 @@ class HuSpider(scrapy.Spider):
             if not url.endswith(
                     '.css') and url != '/' and '"' not in url and '\'' not in url and 'javascript' not in url and '#' not in url:
                 if url.startswith('/'):
-                    full_url = split_joint(self.prefix + self.website + self.suffix, url)
-                    yield scrapy.Request(full_url, callback=self.parse)
+                    yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
                 elif url.startswith('http') or url.startswith('www'):
                     yield scrapy.Request(url, callback=self.parse)
