@@ -17,7 +17,11 @@ class AcbTextSpider(scrapy.Spider):
     # scrapy crawl acbText -o gbText.json
     # file_name = 'gb1'
     # scrapy crawl acbText -o huText.json
-    file_name = 'hu1'
+    # file_name = 'hu1'
+    # scrapy crawl acbText -o bwsText.json
+    # file_name = 'bws1'
+    # scrapy crawl acbText -o ddxxText.json
+    file_name = 'ddxx1'
     def start_requests(self):
         f = open("/home/ccg/" + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
         # f = open('E:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象

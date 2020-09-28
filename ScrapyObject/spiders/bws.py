@@ -18,7 +18,6 @@ class BwsSpider(scrapy.Spider):
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/index/home.html']
     # start_urls = ['https://www.bwj7.com/index/home.html']
-    # start_urls = ['https://www.bwj7.com/shipin/list-%E4%BA%9A%E6%B4%B2%E7%94%B5%E5%BD%B1.html']
 
     def __init__(self):
         self.i = 0

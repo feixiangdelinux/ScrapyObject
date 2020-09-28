@@ -16,7 +16,6 @@ class DmSpider(scrapy.Spider):
     name = 'dm'
     allowed_domains = ['www.' + website + '.com']
     start_urls = [prefix + website + suffix]
-
     # start_urls = ['http://www.dm528.com/']
 
     def __init__(self):
@@ -33,18 +32,18 @@ class DmSpider(scrapy.Spider):
             self.i = self.i + 1
             yield get_video_item(id=self.i, url=response.url, vurl=video_url[0].replace("\\/", "/"))
         # 整理图片数据
-        pUrl = response.xpath("//div[@class='thumbnail']//img/@ src").extract()
-        if len(pUrl):
+        pic_url = response.xpath("//div[@class='thumbnail']//img/@ src").extract()
+        if len(pic_url):
             urls = response.xpath("//div[@class='thumbnail']//a/@ href").extract()
             tags = response.xpath("//div[@class='latest_title']/text()").extract()
             name = response.xpath("//div[@class='thumbnail']//img/@ title").extract()
-            for k in pUrl:
-                position = pUrl.index(k)
+            for k in pic_url:
+                position = pic_url.index(k)
                 self.i = self.i + 1
                 yield get_video_item(id=self.i, name=name[position].strip(),
                                      url=split_joint(self.prefix + self.website + self.suffix, urls[position]),
                                      tags=tags[0][2:],
-                                     purl=pUrl[position])
+                                     purl=pic_url[position])
         # 提取url
         for url in url_list:
             if url.endswith('.html') and url.startswith('/'):

@@ -15,7 +15,9 @@ class FqypzxxxSpider(scrapy.Spider):
     suffix = '.com/'
     name = 'fqypzxxx'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['http://www.fqypzxxx.com/']
+    start_urls = [prefix + website + suffix]
+
+    # start_urls = ['http://www.fqypzxxx.com/']
 
     def __init__(self):
         self.i = 0
@@ -30,20 +32,18 @@ class FqypzxxxSpider(scrapy.Spider):
         if len(video_url) and '"' not in video_url[0]:
             self.i = self.i + 1
             yield get_video_item(id=self.i, url=response.url, vurl=format_url_one(video_url[0]))
-        pUrl = response.xpath("//div[@class='film_info clearfix']//img/@ src").extract()
-        if len(pUrl):
+        # 整理图片数据
+        pic_url = response.xpath("//div[@class='film_info clearfix']//img/@ src").extract()
+        if len(pic_url):
             tags = response.xpath("//div[@class='box cat_pos clearfix']//a/text()").extract()
             url = response.xpath("//div[@class='film_bar clearfix']//a/@ href").extract()
             name = response.xpath("//dd[@class='film_title']/text()").extract()
             for k in url:
                 self.i = self.i + 1
                 yield get_video_item(id=self.i, name=name[0].strip(),
-                                     url=split_joint(self.prefix + self.website + self.suffix, k),
-                                     tags=tags[-1],
-                                     purl=pUrl[0])
-        # 从结果中提取所有url
-        url_list = get_url(content)
-        # 把url添加到请求队列中
+                                     url=split_joint(self.prefix + self.website + self.suffix, k), tags=tags[-1],
+                                     purl=pic_url[0])
+        # 提取url
         for url in url_list:
             if not url.endswith(
                     '.css') and url != '/' and '"' not in url and 'www.' not in url and 'javascript' not in url:

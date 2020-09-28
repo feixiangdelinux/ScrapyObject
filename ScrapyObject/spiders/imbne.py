@@ -15,10 +15,10 @@ class ImbneSpider(scrapy.Spider):
     # 后缀
     suffix = '.com/'
     name = 'imbne'
-    allowed_domains = ['www.imbne.com']
-    start_urls = ['http://www.imbne.com/']
-    # start_urls = ['http://www.imbne.com/?m=vod-play-id-46970-src-1-num-1.html']
-    # start_urls = ['http://www.imbne.com/?m=vod-detail-id-46970.html']
+    allowed_domains = ['www.' + website + '.com']
+    start_urls = [prefix + website + suffix]
+
+    # start_urls = ['http://www.imbne.com/']
 
     def __init__(self):
         self.i = 0

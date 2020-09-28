@@ -11,14 +11,13 @@ class JkwhuSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'jkwhu8'
+    website = 'qkzy5g'
     # 后缀
     suffix = '.de/'
     name = 'jkwhu'
-    allowed_domains = ['www.jkwhu8.de']
-    start_urls = ['https://www.jkwhu8.de/home.htm']
-    # start_urls = ['https://www.jkwhu8.de/play.x?stype=mlmoviehd&movieid=2686']
-    # start_urls = ['https://www.jkwhu8.de/mlmovielisthd.x?classid=2&page=4']
+    allowed_domains = ['www.' + website + '.de']
+    start_urls = [prefix + website + suffix+'home.htm']
+    # start_urls = ['https://www.qkzy5g.de/home.htm']
 
     def __init__(self):
         self.i = 0
@@ -59,7 +58,6 @@ class JkwhuSpider(scrapy.Spider):
             if not url.endswith(
                     '.css') and url != '/' and '"' not in url and '\'' not in url and 'javascript' not in url and '#' not in url:
                 if url.startswith('/'):
-                    full_url = split_joint(self.prefix + self.website + self.suffix, url)
-                    yield scrapy.Request(full_url, callback=self.parse)
+                    yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
                 elif url.startswith('http') or url.startswith('www'):
                     yield scrapy.Request(url, callback=self.parse)

@@ -15,11 +15,10 @@ class GbSpider(scrapy.Spider):
     # 后缀
     suffix = '.com/'
     name = 'gb'
-    allowed_domains = ['5g34b.com']
-    start_urls = ['http://5g34b.com/']
+    allowed_domains = [website + '.com']
+    start_urls = [prefix + website + suffix]
 
-    # start_urls = ['https://5g34b.com/h/60426/']
-    # start_urls = ['https://5g34b.com/h/51860/']
+    # start_urls = ['http://5g34b.com/']
 
     def __init__(self):
         self.i = 0

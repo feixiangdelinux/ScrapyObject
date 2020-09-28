@@ -16,10 +16,8 @@ class HuSpider(scrapy.Spider):
     suffix = '.com/'
     name = 'hu'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['http://www.369hu.com/']
-
-    # start_urls = ['http://www.369hu.com/vod/katongdongman/49620/index_1_1.html']
-    # start_urls = ['http://www.369hu.com/vod/katongdongman/index_5.html']
+    start_urls = [prefix + website + suffix]
+    # start_urls = ['http://www.369hu.com/']
 
     def __init__(self):
         self.i = 0
