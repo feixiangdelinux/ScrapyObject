@@ -40,8 +40,8 @@ class UnpgcSpider(scrapy.Spider):
         if len(video_url_one):
             video_url = re.findall(r'"(.*)"', response.xpath("//script/text()").extract()[0], re.IGNORECASE)
             if len(video_url):
-                l2 = list(set(video_url))
-                for k in l2:
+                final_video_url = list(set(video_url))
+                for k in final_video_url:
                     if 'http' in k and '","' in k:
                         aa = k.split('","')
                         for b in aa:

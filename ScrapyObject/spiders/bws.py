@@ -18,6 +18,7 @@ class BwsSpider(scrapy.Spider):
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/index/home.html']
     # start_urls = ['https://www.bwj7.com/index/home.html']
+    # start_urls = ['https://www.bwj7.com/shipin/list-%E4%BA%9A%E6%B4%B2%E7%94%B5%E5%BD%B1.html']
 
     def __init__(self):
         self.i = 0
@@ -34,8 +35,8 @@ class BwsSpider(scrapy.Spider):
         if len(video_url) and len(tags):
             name = response.xpath('/html/head/title/text()').extract()
             pic_url = response.xpath("//div[@class='pull-left pull-left-mobile1']//div//img/@ data-original").extract()
-            l2 = list(set(video_url))
-            for k in l2:
+            final_video_url = list(set(video_url))
+            for k in final_video_url:
                 self.i = self.i + 1
                 yield get_video_item(id=self.i, name=name[0].strip(), url=response.url, tags=tags[0][3:],
                                      purl=pic_url[0], vurl=k)

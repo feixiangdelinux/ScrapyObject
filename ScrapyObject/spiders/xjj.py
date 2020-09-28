@@ -34,8 +34,8 @@ class XjjSpider(scrapy.Spider):
         pic_url = response.xpath("//ul[@class='img']//img/@ src").extract()
         name = response.xpath("//span[@class='btns']/text()").extract()
         if len(video_url) and len(pic_url):
-            l2 = list(set(video_url))
-            for k in l2:
+            final_video_url = list(set(video_url))
+            for k in final_video_url:
                 self.i = self.i + 1
                 yield get_video_item(id=self.i, name=name[0], url=response.url, tags=name[1], purl=pic_url[0], vurl=k)
         # 提取url
