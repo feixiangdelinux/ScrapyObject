@@ -6,6 +6,7 @@ from email.mime.text import MIMEText
 from urllib.request import urlopen
 
 from apscheduler.schedulers.blocking import BlockingScheduler
+from numpy import *
 
 
 def sendmail(title, message):
@@ -33,10 +34,11 @@ def remindsix(currentprice, allprice):
     :param allprice:
     :return:
     """
-    # 发送消息
     if currentprice <= min(allprice):
-        print('当前价格最低' + str(currentprice))
-        sendmail('当前价格最低', currentprice)
+        now = datetime.datetime.now()
+        ts = now.strftime('%Y-%m-%d %H:%M:%S')
+        sendmail('当前价格最低', '当前价格:' + currentprice + '  最低价格:' + str(min(allPrice)) + '  最高价格:' + str(
+            max(allPrice)) + '  平均价格:' + str(round(mean(allPrice), 2)) + '  ' + ts)
 
 
 def saveprice(price):
@@ -45,9 +47,14 @@ def saveprice(price):
     :param price:
     :return:
     """
+    now = datetime.datetime.now()
+    ts = now.strftime('%Y-%m-%d %H:%M:%S')
     if len(allPrice) == 0:
         allPrice.append(float(price))
+        print('当前价格' + price + '  ' + ts)
     else:
+        print('当前价格:' + price + '  最低价格:' + str(min(allPrice)) + '  最高价格:' + str(max(allPrice)) + '  平均价格:' + str(
+            round(mean(allPrice), 2)) + '  ' + ts)
         remindsix(float(price), allPrice)
         if len(allPrice) >= 100:
             allPrice.remove(0)
@@ -58,9 +65,6 @@ def saveprice(price):
 
 
 def func():
-    now = datetime.datetime.now()
-    ts = now.strftime('%Y-%m-%d %H:%M:%S')
-    print(ts)
     url = 'https://api.coinbase.com/v2/prices/ETH-USD/buy'
     svalue = json.loads(urlopen(url).read().decode())
     saveprice(svalue['data']['amount'])
@@ -70,6 +74,8 @@ def dojob():
     scheduler = BlockingScheduler()
     scheduler.add_job(func, 'interval', seconds=900, id='test_job1')
     scheduler.start()
+
+
 f = open('D:/BtcPrice.txt')
 st = f.read()
 allPrice = json.loads(st)
