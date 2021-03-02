@@ -2,22 +2,24 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 
-# https://www.aea3b92f6415.com/shipin/play-109933.html
+# https://www.59ac3eebf2f7.com/index/home.html
 # 创建爬虫
 # scrapy genspider acb www.acb9276ce215.com
 # 运行爬虫
 # scrapy crawl acb -o acb.json
+# https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5
 class AcbSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'b276b8042fbd'
+    website = '59ac3eebf2f7'
     # 后缀
     suffix = '.com/'
     name = 'acb'
     allowed_domains = ['www.' + website + '.com']
     start_urls = [prefix + website + '.com/index/home.html']
-    # start_urls = ['https://www.b276b8042fbd.com/index/home.html']
+
+    # start_urls = ['https://www.59ac3eebf2f7.com/index/home.html']
 
     def __init__(self):
         self.i = 0
@@ -36,9 +38,7 @@ class AcbSpider(scrapy.Spider):
             final_video_url = list(set(video_url_one))
             self.i = self.i + 1
             for k in final_video_url:
-                yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1],
-                                     purl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5',
-                                     vurl=k)
+                yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl='', vurl=k)
         if len(video_url):
             if 'var video' in video_url[0]:
                 pattern = re.compile("'(.*)'")
@@ -46,18 +46,15 @@ class AcbSpider(scrapy.Spider):
                 if str_re1[0].startswith('/'):
                     if 'https://' in str_re1[1]:
                         self.i = self.i + 1
-                        yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1],
-                                             purl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5',
+                        yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl='',
                                              vurl=str_re1[1] + str_re1[0])
                     if 'https://' in str_re1[2]:
                         self.i = self.i + 1
-                        yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1],
-                                             purl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5',
+                        yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl='',
                                              vurl=str_re1[2] + str_re1[0])
                     if 'https://' in str_re1[3]:
                         self.i = self.i + 1
-                        yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1],
-                                             purl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U5Mg==,g_7,xp_5,yp_5',
+                        yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl='',
                                              vurl=str_re1[3] + str_re1[0])
         # 提取url
         for url in url_list:
