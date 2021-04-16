@@ -23,15 +23,12 @@ def format_url_two(video_url):
     return parse.unquote(video_url)
 
 
-def get_video_item(id, name='', url='', tags='', purl='', vurl=''):
+def get_video_item(id, name='', tags='', purl='', vurl=''):
     """ 获取视频数据
     """
     item = VideoBean()
     item['id'] = id
-    item['e'] = ''
-    item['i'] = '0'
     item['name'] = name
-    item['url'] = url
     item['tags'] = tags
     item['pUrl'] = purl
     item['vUrl'] = vurl

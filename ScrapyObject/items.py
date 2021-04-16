@@ -27,7 +27,6 @@ class VideoBean(scrapy.Item):
 
 class VideoInfo(scrapy.Item):
     id = scrapy.Field()
-    status = scrapy.Field()
     vUrl = scrapy.Field()
 
 

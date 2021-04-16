@@ -2,7 +2,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 
-# https://www.59ac3eebf2f7.com/index/home.html
+# https://www.b6215febc80c.com/index/home.html
 # 创建爬虫
 # scrapy genspider acb www.acb9276ce215.com
 # 运行爬虫
@@ -12,14 +12,14 @@ class AcbSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = '59ac3eebf2f7'
+    website = 'b6215febc80c'
     # 后缀
     suffix = '.com/'
     name = 'acb'
     allowed_domains = ['www.' + website + '.com']
     start_urls = [prefix + website + '.com/index/home.html']
 
-    # start_urls = ['https://www.59ac3eebf2f7.com/index/home.html']
+    # start_urls = ['https://www.b6215febc80c.com/index/home.html']
 
     def __init__(self):
         self.i = 0
@@ -38,24 +38,29 @@ class AcbSpider(scrapy.Spider):
             final_video_url = list(set(video_url_one))
             self.i = self.i + 1
             for k in final_video_url:
-                yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl='', vurl=k)
+                yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='', vurl=k)
         if len(video_url):
             if 'var video' in video_url[0]:
                 pattern = re.compile("'(.*)'")
                 str_re1 = pattern.findall(video_url[0])
+                if "?" in str_re1[0]:
+                    ind = str_re1[0].index('?')
+                    suffix_str = str_re1[0][:ind]
+                else:
+                    suffix_str = str_re1[0]
                 if str_re1[0].startswith('/'):
                     if 'https://' in str_re1[1]:
                         self.i = self.i + 1
-                        yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl='',
-                                             vurl=str_re1[1] + str_re1[0])
+                        yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='',
+                                             vurl=str_re1[1] + suffix_str)
                     if 'https://' in str_re1[2]:
                         self.i = self.i + 1
-                        yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl='',
-                                             vurl=str_re1[2] + str_re1[0])
+                        yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='',
+                                             vurl=str_re1[2] + suffix_str)
                     if 'https://' in str_re1[3]:
                         self.i = self.i + 1
-                        yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl='',
-                                             vurl=str_re1[3] + str_re1[0])
+                        yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='',
+                                             vurl=str_re1[3] + suffix_str)
         # 提取url
         for url in url_list:
             if url.endswith('.html') and url.startswith('/'):

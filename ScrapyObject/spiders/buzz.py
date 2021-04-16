@@ -11,14 +11,14 @@ class BuzzSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://www.'
     # 中缀
-    website = '6066919'
+    website = '2780585'
     # 后缀
     suffix = '.buzz/'
     name = 'buzz'
     allowed_domains = ['www.' + website + '.buzz']
 
     start_urls = [prefix + website + suffix]
-    # start_urls = ['http://www.6066919.buzz/']
+    # start_urls = ['http://www.2780585.buzz/']
 
     def __init__(self):
         self.i = 0

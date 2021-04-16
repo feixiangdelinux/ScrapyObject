@@ -20,8 +20,9 @@ class AcbTextSpider(scrapy.Spider):
     # scrapy crawl acbText -o ddxxText.json
     # file_name = 'ddxx1'
     # scrapy crawl acbText -o acbText.json
-    file_name = 'acb1'
-
+    # file_name = 'acb1'
+    # scrapy crawl acbText -o aqdtvText.json
+    file_name = 'aqdtv1'
     def start_requests(self):
         # f = open("/home/ccg/" + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
         f = open('E:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
@@ -38,7 +39,6 @@ class AcbTextSpider(scrapy.Spider):
         if 200 == response.status:
             item = VideoInfo()
             item['id'] = self.i
-            item['status'] = 1
             if response.meta.get('redirect_urls') is None:
                 item['vUrl'] = response.url
             else:

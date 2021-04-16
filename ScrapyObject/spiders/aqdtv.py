@@ -2,22 +2,24 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 
-# https://www.aqdtv131.com/
+# https://vip.aqdtv397.com/
 # 创建爬虫
 # scrapy genspider aqdtv www.aqdtv131.com
 # 运行爬虫
 # scrapy crawl aqdtv -o aqdtv.json
 class AqdtvSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://www.'
+    prefix = 'https://vip.'
     # 中缀
-    website = 'aqdtv106'
+    website = 'aqdtv397'
     # 后缀
     suffix = '.com/'
     name = 'aqdtv'
-    allowed_domains = ['www.' + website + '.com']
+    allowed_domains = ['vip.' + website + '.com']
     start_urls = [prefix + website + suffix]
-    # start_urls = ['https://www.aqdtv106.com/']
+
+    # start_urls = ['https://vip.aqdtv397.com/']
+    # start_urls = ['https://vip.aqdtv397.com/videos/play/1']
 
     def __init__(self):
         self.i = 0
@@ -34,14 +36,13 @@ class AqdtvSpider(scrapy.Spider):
             name = response.xpath("//ol[@class='breadcrumb']//li/text()").extract()
             tags = response.xpath("//ol[@class='breadcrumb']//li//a/text()").extract()
             self.i = self.i + 1
-            yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[-1], purl=pic_url[0][7:-1],
+            yield get_video_item(id=self.i, name=name[0],  tags=tags[-1], purl=pic_url[0][7:-1],
                                  vurl=video_url[0])
         # 提取url
         for url in url_list:
-            if not url.endswith(
-                    '.css') and url != '/' and '"' not in url and 'www.' not in url and 'javascript' not in url:
+            if not url.endswith('.css') and url != '/' and '"' not in url and 'javascript' not in url:
                 if url.startswith('/'):
                     full_url = split_joint(self.prefix + self.website + self.suffix, url)
                     yield scrapy.Request(full_url, callback=self.parse)
-                elif url.startswith('http') or url.startswith('www'):
+                elif url.startswith('http') or url.startswith('vip'):
                     yield scrapy.Request(url, callback=self.parse)
