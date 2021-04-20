@@ -104,31 +104,24 @@ def fly_destination(y, x):
     click_task(1)
 
 
-def replenish_piece(task_flag, spare_flag, buy_flag):
+def replenish_piece(task_flag, spare_flag):
     """
-
+    从随身商店购买飞行棋
     :param task_flag:
     :param spare_flag:
-    :param buy_flag:
     :return:
     """
     task_flag.times_left = task_flag.times_left - 1
     if task_flag.times_left == 0:
+        click_tool_bar(1)
         move_goods_two(spare_flag.goods_position_y, spare_flag.goods_position_x, task_flag.goods_position_y,
                        task_flag.goods_position_x)
         MouseUtil().click_right()
-        task_flag.times_left = 30
-        fly_destination(buy_flag.goods_position_y, buy_flag.goods_position_x)
-        buy_flag.times_left = buy_flag.times_left - 1
-        # 关闭物品栏
-        click_tool_bar(1)
-        # 购买第一个物品
-        if buy_flag.times_left == 0:
-            buy_grocery(1, 1, 2)
-        else:
-            buy_grocery(1, 1, 1)
-        # 打开物品栏
-        click_tool_bar(1)
-        if buy_flag.times_left == 0:
-            right_goods(buy_flag.goods_position_y, buy_flag.goods_position_x)
-            buy_flag.times_left = 30
+        task_flag.times_left = 99
+        click_task(2)
+
+        MouseUtil().left_click(386 + (89 * 3), 560)
+        MouseUtil().left_click(229 + (51 * 1), 131 + (51 * 1))
+        MouseUtil().left_click(229 + (51 * 2), 131 + (51 * 1))
+        MouseUtil().left_click(405, 507)
+        MouseUtil().left_click(562, 115)
