@@ -1,6 +1,7 @@
 from ScrapyObject.spiders.zuotian.util.MouseUtil import MouseUtil
-
-
+from pynput.mouse import Button, Controller
+from pynput.keyboard import Key,Controller as Conter
+import time
 def click_task(x):
     """
     领取任务
@@ -25,27 +26,28 @@ def select_inventory(x):
     :param x: 第几个背包
     :return:
     """
-    MouseUtil().left_click(762, 314 + (x * 51))
+    MouseUtil().left_click(1011, 314 + (x * 51))
 
 
 def right_goods(y, x):
     """
-    右键使用指定位置的物品,比如飞行棋
+    右键使用物品栏中指定位置的物品,比如飞行棋
     :param y: 水平位置(取值范围1-6)
     :param x: 垂直位置(取值范围1-4)
     :return:
     """
-    horizontal_one = 471
+    horizontal_one = 720
     vertical_one = 366
     distance = 51
     horizontal_one = horizontal_one + ((x - 1) * distance)
     vertical_one = vertical_one + ((y - 1) * distance)
-    MouseUtil().right_click(horizontal_one, vertical_one)
+    # MouseUtil().right_click(horizontal_one, vertical_one)
+    MouseUtil().move_to(horizontal_one, vertical_one)
 
 
 def left_goods(y, x):
     """
-    左键选择指定位置的物品
+    左键点击物品栏中指定位置的物品
     :param y: 水平位置(取值范围1-6)
     :param x: 垂直位置(取值范围1-4)
     :return:
@@ -60,22 +62,18 @@ def left_goods(y, x):
 
 def buy_grocery(y, x, num):
     """
-    杂货店购买物品
+    从随身商店购买飞行棋
     :param y: 第几行
     :param x: 第几个
     :return:
     """
-    # 点击npc
-    MouseUtil().left_click(585, 400)
-    # 点击第一个购买物品
-    click_task(1)
-    # 鼠标移动到对应的飞行棋上面
-    MouseUtil().left_click(229 + (51 * x), 131 + (51 * y))
+    MouseUtil().left_click(386+250 + (89 * 3), 560)
+    MouseUtil().left_click(349 + (51 * 1), 125 + (51 * 1))
+    MouseUtil().left_click(349 + (51 * x), 125 + (51 * y))
     # 购买
     for i in range(num):
-        MouseUtil().left_click(405, 507)
-    # 关闭
-    MouseUtil().left_click(568, 120)
+        MouseUtil().left_click(534, 504)
+    MouseUtil().left_click(687, 119)
 
 
 def move_goods_two(start_y, start_x, end_y, end_x):
@@ -102,6 +100,32 @@ def fly_destination(y, x):
     """
     right_goods(y, x)
     click_task(1)
+
+
+def clean_your_backpack():
+    mouse = Controller()
+    keyboard = Conter()
+    mouse.position = (530, 150)
+    mouse.press(Button.left)
+    mouse.position = (860, 150)
+    mouse.release(Button.left)
+    for i in range(3):
+        MouseUtil().left_click(1011, 203 + (51 * i))
+        for y in range(4):
+            for x in range(6):
+                MouseUtil().left_click(722 + (51 * x), 202 + (51 * y))
+                mouse.position = (830, 412)
+                mouse.press(Button.left)
+                mouse.position = (818, 412)
+                time.sleep(0.4)
+                keyboard.press('1')
+                keyboard.release('1')
+                mouse.release(Button.left)
+                MouseUtil().left_click(921, 479)
+
+
+
+
 
 
 def replenish_piece(task_flag, spare_flag):
