@@ -11,20 +11,20 @@ class MouseUtil:
         :param int dx: 水平位置.
         :param int dy: 垂直位置.
         """
-        time.sleep(0.4)
+        time.sleep(1)
         self.mouse.position = (dx, dy)
 
     def click_left(self):
         """点击鼠标左键(一次)
         """
-        time.sleep(0.4)
+        time.sleep(1)
         self.mouse.press(Button.left)
         self.mouse.release(Button.left)
 
     def click_left_two(self):
         """点击鼠标左键(两次)
         """
-        time.sleep(0.4)
+        time.sleep(1)
         self.mouse.press(Button.left)
         self.mouse.release(Button.left)
         self.mouse.press(Button.left)
@@ -33,7 +33,7 @@ class MouseUtil:
     def click_right(self):
         """点击鼠标右键(一次)
         """
-        time.sleep(0.4)
+        time.sleep(1)
         self.mouse.press(Button.right)
         self.mouse.release(Button.right)
 

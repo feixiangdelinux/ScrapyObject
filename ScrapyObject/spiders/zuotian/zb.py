@@ -11,7 +11,8 @@ def zuo_tian():
     """
     print("开始")
     t = time.time()
-    for i in range(1):
+    for i in range(99999):
+        print(i + 1)
         lis = get_flight_flag_info('./a979899.txt')
         click_tool_bar(1)
         spare_flag = get_flag_name(lis, '长安杂货店(14,11)')
@@ -72,13 +73,14 @@ def recovery_goods():
     回收物品
     """
     for i in range(5):
-        MouseUtil().left_click(131+(160*i), 1060)
+        MouseUtil().left_click(131 + (160 * i), 1060)
         click_tool_bar(4)
         MouseUtil().move_to(590, 210)
         MouseUtil().click_left()
         clean_your_backpack()
 
 
-
 if __name__ == '__main__':
     print("开始")
+    zuo_tian()
+    # MouseUtil().move_to(290, 270 + (1 * 18))

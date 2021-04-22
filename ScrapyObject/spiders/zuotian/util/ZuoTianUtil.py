@@ -1,14 +1,18 @@
-from ScrapyObject.spiders.zuotian.util.MouseUtil import MouseUtil
-from pynput.mouse import Button, Controller
-from pynput.keyboard import Key,Controller as Conter
 import time
+
+from pynput.keyboard import Controller as Conter
+from pynput.mouse import Button, Controller
+
+from ScrapyObject.spiders.zuotian.util.MouseUtil import MouseUtil
+
+
 def click_task(x):
     """
     领取任务
     :param x: 领取第几个任务
     :return:
     """
-    MouseUtil().left_click(165, 270 + (x * 18))
+    MouseUtil().left_click(290, 270 + (x * 18))
 
 
 def click_tool_bar(x):
@@ -41,8 +45,7 @@ def right_goods(y, x):
     distance = 51
     horizontal_one = horizontal_one + ((x - 1) * distance)
     vertical_one = vertical_one + ((y - 1) * distance)
-    # MouseUtil().right_click(horizontal_one, vertical_one)
-    MouseUtil().move_to(horizontal_one, vertical_one)
+    MouseUtil().right_click(horizontal_one, vertical_one)
 
 
 def left_goods(y, x):
@@ -67,7 +70,7 @@ def buy_grocery(y, x, num):
     :param x: 第几个
     :return:
     """
-    MouseUtil().left_click(386+250 + (89 * 3), 560)
+    MouseUtil().left_click(386 + 250 + (89 * 3), 560)
     MouseUtil().left_click(349 + (51 * 1), 125 + (51 * 1))
     MouseUtil().left_click(349 + (51 * x), 125 + (51 * y))
     # 购买
@@ -122,10 +125,6 @@ def clean_your_backpack():
                 keyboard.release('1')
                 mouse.release(Button.left)
                 MouseUtil().left_click(921, 479)
-
-
-
-
 
 
 def replenish_piece(task_flag, spare_flag):
