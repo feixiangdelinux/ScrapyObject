@@ -11,7 +11,7 @@ def zuo_tian():
     """
     print("开始")
     t = time.time()
-    for i in range(99999):
+    for i in range(20):
         print(i + 1)
         lis = get_flight_flag_info('./a979899.txt')
         click_tool_bar(1)
@@ -60,10 +60,10 @@ def zuo_tian():
         fly_destination(task_flag.goods_position_y, task_flag.goods_position_x)
         time.sleep(2)
         replenish_piece(task_flag, spare_flag)
+        save_flight_flag(lis, './a979899.txt')
         MouseUtil().left_click(300, 240)
         click_task(1)
         time.sleep(15)
-        save_flight_flag(lis, './a979899.txt')
     a = time.time()
     print(int(a) - int(t))
 

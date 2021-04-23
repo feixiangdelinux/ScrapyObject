@@ -30,7 +30,7 @@ class DmSpider(scrapy.Spider):
         video_url = get_video_url_one(content)
         if len(video_url) and '"' not in video_url[0]:
             self.i = self.i + 1
-            yield get_video_item(id=self.i, url=response.url, vurl=video_url[0].replace("\\/", "/"))
+            yield get_video_item(id=self.i, vurl=video_url[0].replace("\\/", "/"))
         # 整理图片数据
         pic_url = response.xpath("//div[@class='thumbnail']//img/@ src").extract()
         if len(pic_url):
@@ -40,10 +40,7 @@ class DmSpider(scrapy.Spider):
             for k in pic_url:
                 position = pic_url.index(k)
                 self.i = self.i + 1
-                yield get_video_item(id=self.i, name=name[position].strip(),
-                                     url=split_joint(self.prefix + self.website + self.suffix, urls[position]),
-                                     tags=tags[0][2:],
-                                     purl=pic_url[position])
+                yield get_video_item(id=self.i, name=name[position].strip(),tags=tags[0][2:],purl=pic_url[position])
         # 提取url
         for url in url_list:
             if url.endswith('.html') and url.startswith('/'):

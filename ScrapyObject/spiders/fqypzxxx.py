@@ -31,7 +31,7 @@ class FqypzxxxSpider(scrapy.Spider):
         video_url = get_video_url_one(content)
         if len(video_url) and '"' not in video_url[0]:
             self.i = self.i + 1
-            yield get_video_item(id=self.i, url=response.url, vurl=format_url_one(video_url[0]))
+            yield get_video_item(id=self.i, vurl=format_url_one(video_url[0]))
         # 整理图片数据
         pic_url = response.xpath("//div[@class='film_info clearfix']//img/@ src").extract()
         if len(pic_url):
@@ -40,15 +40,12 @@ class FqypzxxxSpider(scrapy.Spider):
             name = response.xpath("//dd[@class='film_title']/text()").extract()
             for k in url:
                 self.i = self.i + 1
-                yield get_video_item(id=self.i, name=name[0].strip(),
-                                     url=split_joint(self.prefix + self.website + self.suffix, k), tags=tags[-1],
-                                     purl=pic_url[0])
+                yield get_video_item(id=self.i, name=name[0].strip(),tags=tags[-1],purl=pic_url[0])
         # 提取url
         for url in url_list:
             if not url.endswith(
                     '.css') and url != '/' and '"' not in url and 'www.' not in url and 'javascript' not in url:
                 if url.startswith('/'):
-                    yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url),
-                                         callback=self.parse)
+                    yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url),callback=self.parse)
                 elif url.startswith('http') or url.startswith('www'):
                     yield scrapy.Request(url, callback=self.parse)

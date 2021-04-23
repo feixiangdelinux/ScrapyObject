@@ -11,14 +11,15 @@ class BuzzSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://www.'
     # 中缀
-    website = '2780585'
+    website = 'hzz01zb9ov'
     # 后缀
     suffix = '.buzz/'
     name = 'buzz'
     allowed_domains = ['www.' + website + '.buzz']
 
     start_urls = [prefix + website + suffix]
-    # start_urls = ['http://www.2780585.buzz/']
+
+    # start_urls = ['http://www.hzz01zb9ov.buzz/']
 
     def __init__(self):
         self.i = 0
@@ -33,9 +34,9 @@ class BuzzSpider(scrapy.Spider):
         if len(video_url):
             self.i = self.i + 1
             if response.url.endswith('/'):
-                yield get_video_item(id=self.i, url=response.url[:-1], vurl=format_url_two(video_url[0]))
+                yield get_video_item(id=self.i, vurl=format_url_two(video_url[0]))
             else:
-                yield get_video_item(id=self.i, url=response.url, vurl=format_url_two(video_url[0]))
+                yield get_video_item(id=self.i, vurl=format_url_two(video_url[0]))
         # 整理图片数据
         tags = response.xpath("//li[@class='n1']//b/text()").extract()
         name = response.xpath("//div[@class='post']//a/@ title").extract()
@@ -46,13 +47,9 @@ class BuzzSpider(scrapy.Spider):
                 position = pUrl.index(k)
                 self.i = self.i + 1
                 if len(tags):
-                    yield get_video_item(id=self.i, name=name[position],
-                                         url=split_joint(self.prefix + self.website + self.suffix, url[position]),
-                                         tags=tags[0], purl=pUrl[position])
+                    yield get_video_item(id=self.i, name=name[position], tags=tags[0], purl=pUrl[position])
                 else:
-                    yield get_video_item(id=self.i, name=name[position],
-                                         url=split_joint(self.prefix + self.website + self.suffix, url[position]),
-                                         tags='综合', purl=pUrl[position])
+                    yield get_video_item(id=self.i, name=name[position], tags='综合', purl=pUrl[position])
 
         # 提取url
         for url in url_list:

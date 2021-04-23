@@ -51,16 +51,13 @@ class AcbSpider(scrapy.Spider):
                 if str_re1[0].startswith('/'):
                     if 'https://' in str_re1[1]:
                         self.i = self.i + 1
-                        yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='',
-                                             vurl=str_re1[1] + suffix_str)
+                        yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='', vurl=str_re1[1] + suffix_str)
                     if 'https://' in str_re1[2]:
                         self.i = self.i + 1
-                        yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='',
-                                             vurl=str_re1[2] + suffix_str)
+                        yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='', vurl=str_re1[2] + suffix_str)
                     if 'https://' in str_re1[3]:
                         self.i = self.i + 1
-                        yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='',
-                                             vurl=str_re1[3] + suffix_str)
+                        yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl='', vurl=str_re1[3] + suffix_str)
         # 提取url
         for url in url_list:
             if url.endswith('.html') and url.startswith('/'):

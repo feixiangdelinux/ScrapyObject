@@ -17,6 +17,7 @@ class BwsSpider(scrapy.Spider):
     name = 'bws'
     allowed_domains = ['www.' + website + '.com']
     start_urls = ['https://www.' + website + '.com/index/home.html']
+
     # start_urls = ['https://www.bwj7.com/index/home.html']
 
     def __init__(self):
@@ -37,8 +38,7 @@ class BwsSpider(scrapy.Spider):
             final_video_url = list(set(video_url))
             for k in final_video_url:
                 self.i = self.i + 1
-                yield get_video_item(id=self.i, name=name[0].strip(), url=response.url, tags=tags[0][3:],
-                                     purl=pic_url[0], vurl=k)
+                yield get_video_item(id=self.i, name=name[0].strip(), tags=tags[0][3:], purl=pic_url[0], vurl=k)
         # 提取url
         for url in url_list:
             if url.endswith('.html') and url.startswith('/'):
