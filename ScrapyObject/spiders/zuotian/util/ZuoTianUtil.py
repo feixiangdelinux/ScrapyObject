@@ -55,7 +55,7 @@ def left_goods(y, x):
     :param x: 垂直位置(取值范围1-4)
     :return:
     """
-    horizontal_one = 471
+    horizontal_one = 720
     vertical_one = 366
     distance = 51
     horizontal_one = horizontal_one + ((x - 1) * distance)
@@ -112,7 +112,7 @@ def clean_your_backpack():
     mouse.press(Button.left)
     mouse.position = (860, 150)
     mouse.release(Button.left)
-    for i in range(3):
+    for i in range(2):
         MouseUtil().left_click(1011, 203 + (51 * i))
         for y in range(4):
             for x in range(6):
@@ -142,9 +142,8 @@ def replenish_piece(task_flag, spare_flag):
         MouseUtil().click_right()
         task_flag.times_left = 99
         click_task(2)
-
-        MouseUtil().left_click(386 + (89 * 3), 560)
-        MouseUtil().left_click(229 + (51 * 1), 131 + (51 * 1))
-        MouseUtil().left_click(229 + (51 * 2), 131 + (51 * 1))
-        MouseUtil().left_click(405, 507)
-        MouseUtil().left_click(562, 115)
+        MouseUtil().left_click(386+249 + (89 * 3), 560)
+        MouseUtil().left_click(229+125 + (51 * 1), 131 + (51 * 1))
+        MouseUtil().left_click(229+125 + (51 * 2), 131 + (51 * 1))
+        MouseUtil().left_click(405+125, 507)
+        MouseUtil().left_click(562+125, 115)
