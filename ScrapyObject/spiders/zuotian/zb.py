@@ -11,7 +11,7 @@ def zuo_tian():
     做天
     """
     t = time.time()
-    for i in range(9999):
+    for i in range(100):
         lis = get_flight_flag_info('./a979899.txt')
         click_tool_bar(1)
         spare_flag = get_flag_name(lis, '长安杂货店(14,11)')
@@ -31,7 +31,7 @@ def zuo_tian():
         replenish_piece(task_flag, spare_flag)
         MouseUtil().left_click(190, 230)
         click_task(1)
-        time.sleep(25)
+        time.sleep(24)
 
         # 杀黑山妖王85,10
         click_tool_bar(1)
@@ -41,7 +41,7 @@ def zuo_tian():
         replenish_piece(task_flag, spare_flag)
         MouseUtil().left_click(220, 170)
         click_task(1)
-        time.sleep(15)
+        time.sleep(24)
 
         # 杀蓝色妖王108,39
         click_tool_bar(1)
@@ -51,7 +51,7 @@ def zuo_tian():
         replenish_piece(task_flag, spare_flag)
         MouseUtil().left_click(225, 150)
         click_task(1)
-        time.sleep(15)
+        time.sleep(24)
 
         # 杀万年熊王106,66
         click_tool_bar(1)
@@ -63,7 +63,7 @@ def zuo_tian():
         click_task(1)
         save_flight_flag(lis, './a979899.txt')
         print(i + 1)
-        time.sleep(15)
+        time.sleep(24)
     a = time.time()
     print(int(a) - int(t))
 
@@ -89,5 +89,5 @@ def mai_dongxi():
 
 if __name__ == '__main__':
     print("开始")
-    # zuo_tian()
-    mai_dongxi()
+    zuo_tian()
+    # mai_dongxi()
