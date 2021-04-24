@@ -2,21 +2,23 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 
-# http://ddxx88.com/htm/mv9/73589.htm
+# http://88nnkk.com/htm/mv9/73589.htm
 # 创建爬虫
-# scrapy genspider ddxx ddxx88.com
+# scrapy genspider ddxx 88nnkk.com
 # 运行爬虫
+# scrapy crawl ddxx -o ddxx.json
 class DdxxSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://'
     # 中缀
-    website = 'ddxx88'
+    website = '88nnkk'
     # 后缀
     suffix = '.com/'
     name = 'ddxx'
     allowed_domains = [website + '.com']
     start_urls = [prefix + website + suffix]
-    # start_urls = ['http://ddxx88.com/']
+
+    # start_urls = ['http://88nnkk.com/']
 
     def __init__(self):
         self.i = 0
@@ -32,7 +34,7 @@ class DdxxSpider(scrapy.Spider):
         if len(video_url_one) and 'var src =' in video_url_one[0]:
             video_url = get_video_url_one(video_url_one[-1])
             self.i = self.i + 1
-            yield get_video_item(id=self.i, url=response.url, vurl=video_url[0].replace("\\/", "/"))
+            yield get_video_item(id=self.i, vurl=video_url[0].replace("\\/", "/"))
         # 整理图片数据
         pic_url = response.xpath("//div[@class='col-md-9']//img/@ src").extract()
         if len(pic_url):
@@ -40,8 +42,7 @@ class DdxxSpider(scrapy.Spider):
             name = response.xpath("//div[@class='player_title']//h1/text()").extract()
             tags = response.xpath("//div[@class='player_title']//div//a/text()").extract()
             self.i = self.i + 1
-            yield get_video_item(id=self.i, name=name[0],
-                                 url=split_joint(self.prefix + self.website + self.suffix, url[0]), tags=tags[-1],
+            yield get_video_item(id=self.i, name=name[0], tags=tags[-1],
                                  purl=split_joint(self.prefix + self.website + self.suffix, pic_url[0]))
         # 提取url
         for url in url_list:

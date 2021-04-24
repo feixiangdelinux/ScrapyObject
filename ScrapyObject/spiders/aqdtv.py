@@ -36,8 +36,7 @@ class AqdtvSpider(scrapy.Spider):
             name = response.xpath("//ol[@class='breadcrumb']//li/text()").extract()
             tags = response.xpath("//ol[@class='breadcrumb']//li//a/text()").extract()
             self.i = self.i + 1
-            yield get_video_item(id=self.i, name=name[0],  tags=tags[-1], purl=pic_url[0][7:-1],
-                                 vurl=video_url[0])
+            yield get_video_item(id=self.i, name=name[0], tags=tags[-1], purl=pic_url[0][7:-1], vurl=video_url[0])
         # 提取url
         for url in url_list:
             if not url.endswith('.css') and url != '/' and '"' not in url and 'javascript' not in url:

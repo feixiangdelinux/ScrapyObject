@@ -35,9 +35,7 @@ class GbSpider(scrapy.Spider):
             name = response.xpath("//div[@class='b_t']/text()").extract()
             tags = response.xpath("//li[@class='on']//a/text()").extract()
             self.i = self.i + 1
-            yield get_video_item(id=self.i, name=name[0], url=response.url, tags=tags[0],
-                                 purl=split_joint(self.prefix + self.website + self.suffix, pic_url[0]),
-                                 vurl='https://5g717g.com/mp4/' + video_url[0])
+            yield get_video_item(id=self.i, name=name[0],  tags=tags[0],purl=split_joint(self.prefix + self.website + self.suffix, pic_url[0]),vurl='https://5g717g.com/mp4/' + video_url[0])
         # 提取url
         for url in url_list:
             if url.endswith('.html') and url.startswith('/'):
