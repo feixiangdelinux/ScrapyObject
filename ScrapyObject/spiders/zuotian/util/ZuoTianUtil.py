@@ -105,18 +105,19 @@ def fly_destination(y, x):
     click_task(1)
 
 
-def clean_your_backpack():
+def clean_your_backpack(beibao=1):
     mouse = Controller()
     keyboard = Conter()
+    time.sleep(0.4)
     mouse.position = (530, 150)
     mouse.press(Button.left)
     mouse.position = (860, 150)
     mouse.release(Button.left)
-    for i in range(2):
-        MouseUtil().left_click(1011, 203 + (51 * i))
+    for i in range(beibao):
+        MouseUtil().left_click(1011, 203 + (51 * i), duration=0.4)
         for y in range(4):
             for x in range(6):
-                MouseUtil().left_click(722 + (51 * x), 202 + (51 * y))
+                MouseUtil().left_click(722 + (51 * x), 202 + (51 * y), duration=0.2)
                 mouse.position = (830, 412)
                 mouse.press(Button.left)
                 mouse.position = (818, 412)
@@ -124,7 +125,7 @@ def clean_your_backpack():
                 keyboard.press('1')
                 keyboard.release('1')
                 mouse.release(Button.left)
-                MouseUtil().left_click(921, 479)
+                MouseUtil().left_click(921, 479, duration=0.1)
 
 
 def replenish_piece(task_flag, spare_flag):
@@ -142,8 +143,8 @@ def replenish_piece(task_flag, spare_flag):
         MouseUtil().click_right()
         task_flag.times_left = 99
         click_task(2)
-        MouseUtil().left_click(386+249 + (89 * 3), 560)
-        MouseUtil().left_click(229+125 + (51 * 1), 131 + (51 * 1))
-        MouseUtil().left_click(229+125 + (51 * 2), 131 + (51 * 1))
-        MouseUtil().left_click(405+125, 507)
-        MouseUtil().left_click(562+125, 115)
+        MouseUtil().left_click(386 + 249 + (89 * 3), 560)
+        MouseUtil().left_click(229 + 125 + (51 * 1), 131 + (51 * 1))
+        MouseUtil().left_click(229 + 125 + (51 * 2), 131 + (51 * 1))
+        MouseUtil().left_click(405 + 125, 507)
+        MouseUtil().left_click(562 + 125, 115)
