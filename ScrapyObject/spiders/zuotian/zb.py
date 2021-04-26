@@ -80,14 +80,14 @@ def recovery_goods():
         clean_your_backpack()
 
 
-def mai_dongxi():
+def mai_dongxi(beibao):
     click_tool_bar(4)
     MouseUtil().move_to(590, 210)
     MouseUtil().click_left()
-    clean_your_backpack()
+    clean_your_backpack(beibao)
 
 
 if __name__ == '__main__':
     print("开始")
     zuo_tian()
-    # mai_dongxi()
+    # mai_dongxi(1)

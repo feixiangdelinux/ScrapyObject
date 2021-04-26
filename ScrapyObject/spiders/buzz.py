@@ -11,7 +11,7 @@ class BuzzSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://www.'
     # 中缀
-    website = 'hzz01zb9ov'
+    website = '16li96oib3'
     # 后缀
     suffix = '.buzz/'
     name = 'buzz'
@@ -19,7 +19,7 @@ class BuzzSpider(scrapy.Spider):
 
     start_urls = [prefix + website + suffix]
 
-    # start_urls = ['http://www.hzz01zb9ov.buzz/']
+    # start_urls = ['http://www.16li96oib3.buzz/']
 
     def __init__(self):
         self.i = 0

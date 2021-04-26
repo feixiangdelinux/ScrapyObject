@@ -2,7 +2,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 
-# https://vip.aqdtv397.com/
+# https://vip.aqdmv93.com/
 # 创建爬虫
 # scrapy genspider aqdtv www.aqdtv131.com
 # 运行爬虫
@@ -11,15 +11,15 @@ class AqdtvSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://vip.'
     # 中缀
-    website = 'aqdtv397'
+    website = 'aqdmv93'
     # 后缀
     suffix = '.com/'
     name = 'aqdtv'
     allowed_domains = ['vip.' + website + '.com']
     start_urls = [prefix + website + suffix]
 
-    # start_urls = ['https://vip.aqdtv397.com/']
-    # start_urls = ['https://vip.aqdtv397.com/videos/play/1']
+    # start_urls = ['https://vip.aqdmv93.com/']
+    # start_urls = ['https://vip.aqdmv93.com/videos/play/1']
 
     def __init__(self):
         self.i = 0

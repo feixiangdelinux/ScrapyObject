@@ -117,7 +117,7 @@ def clean_your_backpack(beibao=1):
         MouseUtil().left_click(1011, 203 + (51 * i), duration=0.4)
         for y in range(4):
             for x in range(6):
-                MouseUtil().left_click(722 + (51 * x), 202 + (51 * y), duration=0.2)
+                MouseUtil().left_click(722 + (51 * x), 202 + (51 * y), duration=0.5)
                 mouse.position = (830, 412)
                 mouse.press(Button.left)
                 mouse.position = (818, 412)

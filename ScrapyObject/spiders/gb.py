@@ -2,23 +2,24 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 
-# https://5g34b.com/h/67672/
+# https://5g1ogm.com/h/67672/
 # 创建爬虫
-# scrapy genspider gb 5g34b.com
+# scrapy genspider gb 5g1ogm.com
 # 运行爬虫
 # scrapy crawl gb -o gb.json
+# https://5g1ogm.xyz:1443/
 class GbSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://'
     # 中缀
-    website = '5g34b'
+    website = '5g1ogm'
     # 后缀
-    suffix = '.com/'
+    suffix = '.xyz/'
     name = 'gb'
-    allowed_domains = [website + '.com']
+    allowed_domains = [website + '.xyz']
     start_urls = [prefix + website + suffix]
 
-    # start_urls = ['http://5g34b.com/']
+    # start_urls = ['http://5g1ogm.xyz/']
 
     def __init__(self):
         self.i = 0
