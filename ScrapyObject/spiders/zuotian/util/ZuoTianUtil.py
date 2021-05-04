@@ -12,7 +12,7 @@ def click_task(x):
     :param x: 领取第几个任务
     :return:
     """
-    MouseUtil().left_click(290, 270 + (x * 18))
+    MouseUtil().left_click(290, 270 + (x * 18), 2)
 
 
 def click_tool_bar(x):
@@ -103,6 +103,20 @@ def fly_destination(y, x):
     """
     right_goods(y, x)
     click_task(1)
+
+
+def dian_dang_your_backpack():
+    mouse = Controller()
+    time.sleep(1)
+    mouse.position = (530, 150)
+    mouse.press(Button.left)
+    mouse.position = (860, 150)
+    mouse.release(Button.left)
+    for y in range(4):
+        for x in range(6):
+            MouseUtil().left_click(722 + (51 * x), 202 + (51 * y), duration=0.2)
+            MouseUtil().click_right(duration=0.1)
+            MouseUtil().left_click(850, 479, duration=0.1)
 
 
 def clean_your_backpack(beibao=1):

@@ -3,7 +3,7 @@ import time
 from ScrapyObject.spiders.zuotian.entity.DaHuaBean import get_flight_flag_info, get_flag_name, save_flight_flag
 from ScrapyObject.spiders.zuotian.util.MouseUtil import MouseUtil
 from ScrapyObject.spiders.zuotian.util.ZuoTianUtil import fly_destination, click_task, click_tool_bar, replenish_piece, \
-    clean_your_backpack
+    clean_your_backpack, dian_dang_your_backpack
 
 
 def zuo_tian():
@@ -11,59 +11,59 @@ def zuo_tian():
     做天
     """
     t = time.time()
-    for i in range(100):
+    for i in range(999):
         lis = get_flight_flag_info('./a979899.txt')
-        click_tool_bar(1)
         spare_flag = get_flag_name(lis, '长安杂货店(14,11)')
+        click_tool_bar(1)
         task_flag = get_flag_name(lis, '天宫(97,48)')
         fly_destination(task_flag.goods_position_y, task_flag.goods_position_x)
         replenish_piece(task_flag, spare_flag)
-        time.sleep(2)
-        MouseUtil().left_click(202, 150)
+        time.sleep(3)
+        MouseUtil().left_click(202, 210)
         click_task(4)
-        time.sleep(1)
+        time.sleep(2)
 
         # 杀三头魔王24,32
         click_tool_bar(1)
         task_flag = get_flag_name(lis, '御马监(27,35)')
         fly_destination(task_flag.goods_position_y, task_flag.goods_position_x)
-        time.sleep(2)
+        time.sleep(4)
         replenish_piece(task_flag, spare_flag)
-        MouseUtil().left_click(190, 230)
+        MouseUtil().left_click(170, 280)
         click_task(1)
-        time.sleep(24)
+        time.sleep(17)
 
         # 杀黑山妖王85,10
         click_tool_bar(1)
         task_flag = get_flag_name(lis, '御马监(87,13)')
         fly_destination(task_flag.goods_position_y, task_flag.goods_position_x)
-        time.sleep(2)
+        time.sleep(4)
         replenish_piece(task_flag, spare_flag)
-        MouseUtil().left_click(220, 170)
+        MouseUtil().left_click(205, 200)
         click_task(1)
-        time.sleep(24)
+        time.sleep(17)
 
         # 杀蓝色妖王108,39
         click_tool_bar(1)
         task_flag = get_flag_name(lis, '御马监(111,42)')
         fly_destination(task_flag.goods_position_y, task_flag.goods_position_x)
-        time.sleep(2)
+        time.sleep(4)
         replenish_piece(task_flag, spare_flag)
-        MouseUtil().left_click(225, 150)
+        MouseUtil().left_click(240, 210)
         click_task(1)
-        time.sleep(24)
+        time.sleep(17)
 
         # 杀万年熊王106,66
         click_tool_bar(1)
         task_flag = get_flag_name(lis, '御马监(110,69)')
         fly_destination(task_flag.goods_position_y, task_flag.goods_position_x)
-        time.sleep(2)
+        time.sleep(4)
         replenish_piece(task_flag, spare_flag)
-        MouseUtil().left_click(180, 200)
+        MouseUtil().left_click(180, 270)
         click_task(1)
         save_flight_flag(lis, './a979899.txt')
         print(i + 1)
-        time.sleep(24)
+        time.sleep(17)
     a = time.time()
     print(int(a) - int(t))
 
@@ -87,7 +87,12 @@ def mai_dongxi(beibao):
     clean_your_backpack(beibao)
 
 
+
 if __name__ == '__main__':
     print("开始")
+    # MouseUtil().move_to(850, 479)
     zuo_tian()
     # mai_dongxi(1)
+    # dian_dang_your_backpack()
+
+
