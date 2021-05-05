@@ -12,7 +12,7 @@ def click_task(x):
     :param x: 领取第几个任务
     :return:
     """
-    MouseUtil().left_click(290, 270 + (x * 18), 2)
+    MouseUtil().left_click(290, 270 + (x * 18))
 
 
 def click_tool_bar(x):
@@ -128,6 +128,8 @@ def clean_your_backpack(beibao=1):
     mouse.position = (860, 150)
     mouse.release(Button.left)
     for i in range(beibao):
+        # if i == 0:
+        #     continue
         MouseUtil().left_click(1011, 203 + (51 * i), duration=0.4)
         for y in range(4):
             for x in range(6):
