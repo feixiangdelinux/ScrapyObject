@@ -6,22 +6,22 @@ from pynput.mouse import Button, Controller
 from ScrapyObject.spiders.zuotian.util.MouseUtil import MouseUtil
 
 
-def click_task(x):
+def click_task(x, duration=1):
     """
     领取任务
     :param x: 领取第几个任务
     :return:
     """
-    MouseUtil().left_click(290, 270 + (x * 18))
+    MouseUtil().left_click(290, 270 + (x * 18), duration)
 
 
-def click_tool_bar(x):
+def click_tool_bar(x, duration=1):
     """
     打开物品栏
     :param x: 点第几个栏
     :return:
     """
-    MouseUtil().left_click(493 + (x * 30), 615)
+    MouseUtil().left_click(493 + (x * 30), 615, duration)
 
 
 def select_inventory(x):
@@ -33,7 +33,7 @@ def select_inventory(x):
     MouseUtil().left_click(1011, 314 + (x * 51))
 
 
-def right_goods(y, x):
+def right_goods(y, x, duration=1):
     """
     右键使用物品栏中指定位置的物品,比如飞行棋
     :param y: 水平位置(取值范围1-6)
@@ -45,7 +45,7 @@ def right_goods(y, x):
     distance = 51
     horizontal_one = horizontal_one + ((x - 1) * distance)
     vertical_one = vertical_one + ((y - 1) * distance)
-    MouseUtil().right_click(horizontal_one, vertical_one)
+    MouseUtil().right_click(horizontal_one, vertical_one, duration)
 
 
 def left_goods(y, x):
@@ -94,15 +94,15 @@ def move_goods_two(start_y, start_x, end_y, end_x):
     left_goods(end_y, end_x)
 
 
-def fly_destination(y, x):
+def fly_destination(y, x, duration=1):
     """
     使用物品栏指定位置的飞行棋飞到目的地
     :param y: 飞行棋所在第几行
     :param x: 飞行棋是第几个
     :return:
     """
-    right_goods(y, x)
-    click_task(1)
+    right_goods(y, x, duration)
+    click_task(1, duration)
 
 
 def dian_dang_your_backpack():

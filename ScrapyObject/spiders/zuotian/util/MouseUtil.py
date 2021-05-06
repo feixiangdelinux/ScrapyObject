@@ -45,10 +45,10 @@ class MouseUtil:
         self.move_to(dx, dy, duration)
         self.click_left(duration)
 
-    def right_click(self, dx, dy):
+    def right_click(self, dx, dy, duration=1):
         """右键点击指定位置
         :param int dx: 水平位置.
         :param int dy: 垂直位置.
         """
-        self.move_to(dx, dy)
-        self.click_right()
+        self.move_to(dx, dy, duration)
+        self.click_right(duration)
