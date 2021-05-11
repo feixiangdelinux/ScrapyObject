@@ -3,7 +3,7 @@ import time
 from ScrapyObject.spiders.zuotian.entity.DaHuaBean import get_flight_flag_info, get_flag_name, save_flight_flag
 from ScrapyObject.spiders.zuotian.util.MouseUtil import MouseUtil
 from ScrapyObject.spiders.zuotian.util.ZuoTianUtil import fly_destination, click_task, click_tool_bar, replenish_piece, \
-    clean_your_backpack
+    clean_your_backpack, select_inventory
 
 
 def zuo_tian():
@@ -68,7 +68,7 @@ def zuo_tian():
     print(int(a) - int(t))
 
 
-def zuo_tian_kuai(duration=1, cishu=1):
+def zuo_tian_kuai(duration=1.0, cishu=1):
     """
     做天
     """
@@ -148,10 +148,21 @@ def mai_dongxi(beibao):
     clean_your_backpack(beibao)
 
 
+def dakabutong():
+    for i in range(5):
+        if i != 0:
+            MouseUtil().left_click(122 + (160 * i), 880, 0.5)
+        mai_dongxi(3)
+        MouseUtil().left_click(122 + (160 * i), 880, 0.5)
+    MouseUtil().left_click(122, 880, 0.5)
+
+
 if __name__ == '__main__':
     print("开始")
-    # MouseUtil().move_to(850, 479)
-    # zuo_tian()
-    zuo_tian_kuai(0.5, 999)
-    # mai_dongxi(3)
-    # dian_dang_your_backpack()
+    zuo_tian_kuai(0.5, 99)
+    click_tool_bar(1)
+    fly_destination(2, 1)
+    dakabutong()
+    click_tool_bar(1)
+    select_inventory(1)
+    click_tool_bar(1)

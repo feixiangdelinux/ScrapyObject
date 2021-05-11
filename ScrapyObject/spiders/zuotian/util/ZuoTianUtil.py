@@ -24,13 +24,13 @@ def click_tool_bar(x, duration=1):
     MouseUtil().left_click(493 + (x * 30), 615, duration)
 
 
-def select_inventory(x):
+def select_inventory(x, duration=1):
     """
     选择背包
     :param x: 第几个背包
     :return:
     """
-    MouseUtil().left_click(1011, 314 + (x * 51))
+    MouseUtil().left_click(1011, 314 + (x * 51), duration)
 
 
 def right_goods(y, x, duration=1):
@@ -123,9 +123,9 @@ def clean_your_backpack(beibao=1):
     mouse = Controller()
     keyboard = Conter()
     time.sleep(0.4)
-    mouse.position = (530, 150)
+    mouse.position = (530 - 180, 150)
     mouse.press(Button.left)
-    mouse.position = (860, 150)
+    mouse.position = (860 - 180, 150)
     mouse.release(Button.left)
     for i in range(beibao):
         # if i == 0:
