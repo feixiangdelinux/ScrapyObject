@@ -48,7 +48,7 @@ def right_goods(y, x, duration=1):
     MouseUtil().right_click(horizontal_one, vertical_one, duration)
 
 
-def left_goods(y, x):
+def left_goods(y, x, duration=1):
     """
     左键点击物品栏中指定位置的物品
     :param y: 水平位置(取值范围1-6)
@@ -60,7 +60,7 @@ def left_goods(y, x):
     distance = 51
     horizontal_one = horizontal_one + ((x - 1) * distance)
     vertical_one = vertical_one + ((y - 1) * distance)
-    MouseUtil().left_click(horizontal_one, vertical_one)
+    MouseUtil().left_click(horizontal_one, vertical_one, duration)
 
 
 def buy_grocery(y, x, num):
@@ -117,6 +117,32 @@ def dian_dang_your_backpack():
             MouseUtil().left_click(722 + (51 * x), 202 + (51 * y), duration=0.2)
             MouseUtil().click_right(duration=0.1)
             MouseUtil().left_click(850, 479, duration=0.1)
+
+
+def lian_hua(num=2):
+    mouse = Controller()
+    if num == 1:
+        mouse.position = (500, 100)
+        mouse.press(Button.left)
+        mouse.position = (820, 110)
+        mouse.release(Button.left)
+    left_goods(1, 1, 0.3)
+    left_goods(1, 2, 0.2)
+    left_goods(1, 3, 0.2)
+    left_goods(1, 4, 0.2)
+    MouseUtil().left_click(930, 215, duration=0.2)
+    horizontal_one = 720
+    vertical_one = 366
+    distance = 51
+    horizontal_one = horizontal_one + ((1 - 1) * distance)
+    vertical_one = vertical_one + ((1 - 1) * distance)
+    time.sleep(1)
+    mouse.position = (horizontal_one, vertical_one)
+    time.sleep(3)
+    mouse.move(20, -20)
+    time.sleep(0.2)
+    mouse.position = (1630, 40)
+
 
 
 def clean_your_backpack(beibao=1):
