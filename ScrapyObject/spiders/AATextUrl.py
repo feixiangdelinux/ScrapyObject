@@ -9,20 +9,8 @@ from ScrapyObject.items import VideoBean, VideoInfo
 # 运行爬虫
 class AcbTextSpider(scrapy.Spider):
     name = 'acbText'
-    # scrapy crawl acbText -o baihuzuText.json
-    # file_name = 'baihuzu1'
-    # scrapy crawl acbText -o gbText.json
-    # file_name = 'gb1'
-    # scrapy crawl acbText -o huText.json
-    # file_name = 'hu1'
-    # scrapy crawl acbText -o bwsText.json
-    # file_name = 'bws1'
-    # scrapy crawl acbText -o ddxxText.json
-    # file_name = 'ddxx1'
-    # scrapy crawl acbText -o acbText.json
-    # file_name = 'acb1'
-    # scrapy crawl acbText -o aqdtvText.json
-    file_name = 'aqdtv1'
+    # scrapy crawl acbText -o ckText.json
+    file_name = 'ck1'
     def start_requests(self):
         # f = open("/home/ccg/" + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
         f = open('E:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
