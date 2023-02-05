@@ -6,15 +6,15 @@ from ScrapyObject.spiders.utils.url_utils import *
 # scrapy crawl buzz -o buzz.json
 class BuzzSpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://www.'
+    prefix = 'https://www.'
     # 中缀
     website = 'xjjcaiji'
     # 后缀
     suffix = '.com/'
     name = 'buzz'
     allowed_domains = ['www.' + website + '.com']
+    # start_urls = [prefix + website + suffix + 'home/index.html']
     start_urls = ['https://www.xjjcaiji.com/home/index.html']
-
     def __init__(self):
         self.i = 0
 
