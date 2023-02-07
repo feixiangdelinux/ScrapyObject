@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 from ScrapyObject.spiders.utils.url_utils import *
 
+# 已完成
 # 运行爬虫
 # scrapy crawl acb -o acb.json
 class AcbSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = '3b5g8'
+    website = 'bc39n'
     # 后缀
     suffix = '.com/'
     name = 'acb'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['https://www.3b5g8.com/index/home.html']
+    start_urls = [prefix + website + suffix + 'index/home.html']
 
     def __init__(self):
         self.i = 0

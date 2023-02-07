@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 from ScrapyObject.spiders.utils.url_utils import *
 
-# 创建爬虫
-# scrapy genspider aqdtv www.aqdtv131.com
+# 已完成
+# https://www.5d86b.com/index/home.html
 # 运行爬虫
 # scrapy crawl aqdtv -o aqdtv.json
 class AqdtvSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://'
     # 中缀
-    website = '4545e'
+    website = '5d86b'
     # 后缀
     suffix = '.com/'
     name = 'aqdtv'
     allowed_domains = [website + '.com']
-    start_urls = ['https://4545e.com/index/home.html']
+    start_urls = [prefix + website + suffix + 'index/home.html']
 
     def __init__(self):
         self.i = 0

@@ -4,13 +4,18 @@ import json
 import scrapy
 
 from ScrapyObject.items import VideoBean, VideoInfo
-
-
-# 运行爬虫
+# 创建爬虫
+# scrapy genspider langyouone http://2202av.com
 class AcbTextSpider(scrapy.Spider):
     name = 'acbText'
+    # scrapy crawl acbText -o aqdtvText.json
+    # file_name = 'aqdtv1'
     # scrapy crawl acbText -o ckText.json
-    file_name = 'ck1'
+    # file_name = 'ck1'
+    # scrapy crawl acbText -o buzzText.json
+    file_name = 'buzz1'
+    # scrapy crawl acbText -o seText.json
+    # file_name = 'se1'
     def start_requests(self):
         # f = open("/home/ccg/" + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
         f = open('E:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象

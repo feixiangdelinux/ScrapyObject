@@ -39,9 +39,7 @@ def get_video_item(id, tags='', url='', name='', pUrl='', vUrl=''):
 def get_video_url_one(content):
     """ 获取视频地址
     """
-    return re.findall(
-        r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP',
-        content, re.IGNORECASE)
+    return re.findall(r'http.*?\.M3U8|http.*?\.MP4|http.*?\.WMV|http.*?\.MOV|http.*?\.AVI|http.*?\.MKV|http.*?\.FLV|http.*?\.RMVB|http.*?\.3GP', content, re.IGNORECASE)
 
 
 # 得到返回结果

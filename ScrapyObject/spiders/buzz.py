@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from ScrapyObject.spiders.utils.url_utils import *
 
-
+# 已完成
 # 运行爬虫ok
 # scrapy crawl buzz -o buzz.json
 class BuzzSpider(scrapy.Spider):
@@ -13,7 +13,7 @@ class BuzzSpider(scrapy.Spider):
     suffix = '.com/'
     name = 'buzz'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = ['https://www.xjjcaiji.com/home/index.html']
+    start_urls = [prefix + website + suffix + 'home/index.html']
 
     def __init__(self):
         self.i = 0

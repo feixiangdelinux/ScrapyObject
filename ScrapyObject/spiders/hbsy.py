@@ -4,12 +4,20 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 '''
 scrapy crawl hbsy -o hbsy.json
-星期四 上午 11:17
+http://www.yeyehai30.vip/
 '''
+
+
 class HbsySpider(scrapy.Spider):
+    # 前缀
+    prefix = 'http://www.'
+    # 中缀
+    website = 'yeyehai30'
+    # 后缀
+    suffix = '.vip/'
     name = 'hbsy'
-    allowed_domains = ['www.yeyehai30.vip']
-    start_urls = ['http://www.yeyehai30.vip/']
+    allowed_domains = [website + '.vip']
+    start_urls = [prefix + website + suffix]
 
     def __init__(self):
         self.i = 0
@@ -22,7 +30,7 @@ class HbsySpider(scrapy.Spider):
         if len(v_url_list):
             self.i = self.i + 1
             yield get_video_item(id=self.i, url=response.url, vUrl=v_url_list[0])
-        elif len(tags) == 1:
+        if len(tags) == 1 and tags[0].strip() != '猜你喜欢':
             url_list = response.xpath("//a[@class='myui-vodlist__thumb lazyload']/@ href").extract()
             name_list = response.xpath("//a[@class='myui-vodlist__thumb lazyload']/@ title").extract()
             pic_list = response.xpath("//a[@class='myui-vodlist__thumb lazyload']/@ data-original").extract()
@@ -34,4 +42,4 @@ class HbsySpider(scrapy.Spider):
         # 提取url
         for url in url_list:
             if url.endswith('.html') and url.startswith('/'):
-                yield scrapy.Request(split_joint('http://www.yeyehai30.vip/', url), callback=self.parse)
+                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
