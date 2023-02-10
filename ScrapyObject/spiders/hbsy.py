@@ -30,16 +30,17 @@ class HbsySpider(scrapy.Spider):
         if len(v_url_list):
             self.i = self.i + 1
             yield get_video_item(id=self.i, url=response.url, vUrl=v_url_list[0])
-        if len(tags) == 1 and tags[0].strip() != '猜你喜欢':
+        elif len(tags) == 1 and tags[0].strip() != '猜你喜欢':
             url_list = response.xpath("//a[@class='myui-vodlist__thumb lazyload']/@ href").extract()
             name_list = response.xpath("//a[@class='myui-vodlist__thumb lazyload']/@ title").extract()
             pic_list = response.xpath("//a[@class='myui-vodlist__thumb lazyload']/@ data-original").extract()
             for index, value in enumerate(url_list):
                 self.i = self.i + 1
                 yield get_video_item(id=self.i, tags=tags[0].strip(), url=split_joint('http://www.yeyehai30.vip/', value), name=name_list[index], pUrl=pic_list[index])
-        # 从网页中提取url链接
-        url_list = get_url(content)
-        # 提取url
-        for url in url_list:
-            if url.endswith('.html') and url.startswith('/'):
-                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+        if len(v_url_list) == 0:
+            # 从网页中提取url链接
+            url_list = get_url(content)
+            # 提取url
+            for url in url_list:
+                if url.endswith('.html') and url.startswith('/'):
+                    yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)

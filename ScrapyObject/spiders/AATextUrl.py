@@ -5,15 +5,17 @@ import scrapy
 
 from ScrapyObject.items import VideoBean, VideoInfo
 # 创建爬虫
-# scrapy genspider langyouone http://2202av.com
+# scrapy genspider aqdav http://aqdav121.com
 class AcbTextSpider(scrapy.Spider):
     name = 'acbText'
+    # scrapy crawl acbText -o aqdavText.json
+    file_name = 'aqdav1'
     # scrapy crawl acbText -o aqdtvText.json
     # file_name = 'aqdtv1'
     # scrapy crawl acbText -o ckText.json
     # file_name = 'ck1'
     # scrapy crawl acbText -o buzzText.json
-    file_name = 'buzz1'
+    # file_name = 'buzz1'
     # scrapy crawl acbText -o seText.json
     # file_name = 'se1'
     def start_requests(self):
