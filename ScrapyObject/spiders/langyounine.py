@@ -29,7 +29,7 @@ class LangyounineSpider(scrapy.Spider):
         tag = response.xpath("//div[@class='text-muted']/text()").extract()
         if len(video_url):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, tags=tag[-1].strip()[:tag[-1].strip().index(' /')], url=response.url, name=name[0], pUrl=p_url[0], vUrl=video_url[0][5:])
+            yield get_video_item(id=self.i, tags=tag[-1].strip()[:tag[-1].strip().index(' /')], url='', name=name[0], pUrl=p_url[0], vUrl=video_url[0][5:])
         url_list = get_url(content)
         for url in url_list:
             if url.startswith('/') and url.endswith('.html'):

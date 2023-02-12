@@ -5,7 +5,14 @@ import scrapy
 
 from ScrapyObject.items import VideoBean, VideoInfo
 # 创建爬虫
-# scrapy genspider aqdav http://aqdav121.com
+# scrapy genspider rottweilerchat https://rottweilerchat.com
+"""
+https://d2xb.com
+https://acbcn.com
+https://abpg.net
+https://aicespade23.top
+
+"""
 class AcbTextSpider(scrapy.Spider):
     name = 'acbText'
     # scrapy crawl acbText -o aqdavText.json

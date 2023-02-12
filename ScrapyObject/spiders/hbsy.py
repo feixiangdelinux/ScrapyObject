@@ -44,3 +44,5 @@ class HbsySpider(scrapy.Spider):
             for url in url_list:
                 if url.endswith('.html') and url.startswith('/'):
                     yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+
+
