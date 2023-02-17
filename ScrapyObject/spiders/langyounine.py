@@ -1,21 +1,21 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
+'''
+scrapy crawl langyounine -o langyounine.json
+http://6222dy.com
+'''
 
-# 完成开发
-# 运行爬虫
-# scrapy crawl langyounine -o langyounine.json
-# http://6222dy.com
+
 class LangyounineSpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://'
+    prefix = 'https://'
     # 中缀
     website = '6222dy'
     # 后缀
     suffix = '.com/'
     name = 'langyounine'
     allowed_domains = [website + '.com']
-    start_urls = [prefix + website + suffix]
-    # start_urls = ['https://6222dy.com/play/75110-0-0.html']
+    start_urls = [prefix + website + suffix + 'index.php']
 
     def __init__(self):
         self.i = 0

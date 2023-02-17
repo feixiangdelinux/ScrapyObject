@@ -1,10 +1,11 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
+'''
+scrapy crawl langyouone -o langyouone.json
+http://2202av.com
+'''
 
-# 完成开发
-# 运行爬虫
-# scrapy crawl langyouone -o langyouone.json
-# http://2202av.com/
+
 class LangyouoneSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://'

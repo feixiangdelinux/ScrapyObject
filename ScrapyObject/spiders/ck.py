@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 from ScrapyObject.spiders.utils.url_utils import *
 
-# 已完成
-# http://pahsck.cc/
-# 运行爬虫
-# scrapy crawl ck -o ck.json
+'''
+已完成
+scrapy crawl ck -o ck.json
+http://pjhsck.cc
+'''
+
+
 class CkSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://'
     # 中缀
-    website = 'pahsck'
+    website = 'pjhsck'
     # 后缀
     suffix = '.cc/'
     name = 'ck'

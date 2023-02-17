@@ -2,9 +2,8 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-https://94se.net/
-运行爬虫
 scrapy crawl se -o se.json
+https://94se.net
 '''
 
 
@@ -17,7 +16,7 @@ class SeSpider(scrapy.Spider):
     suffix = '.net/'
     name = 'se'
     allowed_domains = [website + '.net']
-    start_urls = [prefix + website + '.net/']
+    start_urls = [prefix + website + suffix]
 
     def __init__(self):
         self.i = 0

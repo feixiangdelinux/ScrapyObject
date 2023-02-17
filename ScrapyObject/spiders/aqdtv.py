@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 from ScrapyObject.spiders.utils.url_utils import *
 
-# 已完成
-# https://www.5d86b.com/index/home.html
-# 运行爬虫
-# scrapy crawl aqdtv -o aqdtv.json
+'''
+已完成
+scrapy crawl aqdtv -o aqdtv.json
+https://www.84cad.com
+'''
+
+
 class AqdtvSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://'
     # 中缀
-    website = '5d86b'
+    website = '84cad'
     # 后缀
     suffix = '.com/'
     name = 'aqdtv'

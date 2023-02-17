@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from ScrapyObject.spiders.utils.url_utils import *
 
+'''
+已完成
+scrapy crawl aqdav -o aqdav.json
+https://vip.aqdz42.com
+'''
 
-# 进行中
-# 运行爬虫
-# scrapy crawl aqdav -o aqdav.json
-# http://aqdav121.com
+
 class AqdavSpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://'
+    prefix = 'https://vip.'
     # 中缀
-    website = 'aqdav121'
+    website = 'aqdz42'
     # 后缀
     suffix = '.com/'
     name = 'aqdav'

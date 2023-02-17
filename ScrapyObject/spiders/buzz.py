@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 from ScrapyObject.spiders.utils.url_utils import *
 
-# 已完成
-# 运行爬虫ok
-# scrapy crawl buzz -o buzz.json
+'''
+已完成
+scrapy crawl buzz -o buzz.json
+http://www.xjjcaiji.com
+'''
+
+
 class BuzzSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://www.'
@@ -32,7 +36,6 @@ class BuzzSpider(scrapy.Spider):
                 p_url = tags[2]
             else:
                 p_url = split_joint(self.prefix + self.website + self.suffix, tags[2])
-            print('https://xjjjt.hmpicimage.com/' in tags[2])
             self.i = self.i + 1
             yield get_video_item(id=self.i, tags=tags[1], url="", name=tags[0], pUrl=p_url, vUrl=video_url[0])
         # 提取url
