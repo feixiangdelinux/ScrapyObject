@@ -2,6 +2,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
+网站无法显示http://www.7000.me
 scrapy crawl md -o md.json
 https://www.9191md.me
 '''

@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 ''''
 已完成
 scrapy crawl acb -o acb.json
-https://www.bf4b4a9797e7.com/
+https://www.db498fec0620.com/
 '''
 
 
@@ -12,7 +12,7 @@ class AcbSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'bf4b4a9797e7'
+    website = 'db498fec0620'
     # 后缀
     suffix = '.com/'
     name = 'acb'
