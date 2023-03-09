@@ -2,7 +2,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-网站无法显示
+已完成
 scrapy crawl ck -o ck.json
 http://cki1.cc
 '''

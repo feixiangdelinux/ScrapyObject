@@ -3,7 +3,7 @@ import json
 from ScrapyObject.spiders.utils.url_utils import *
 
 """
-进行中
+已完成
 scrapy crawl aicespade -o aicespade.json
 https://aicespade23.top
 """

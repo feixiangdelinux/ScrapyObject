@@ -17,6 +17,9 @@ class AcbTextSpider(scrapy.Spider):
     # scrapy crawl acbText -o acbText.json
     # file_name = 'acb1'
 
+    # scrapy crawl acbText -o aicespadeText.json
+    file_name = 'aicespade1'
+
     # scrapy crawl acbText -o aqdavText.json
     # file_name = 'aqdav1'
 
@@ -27,7 +30,7 @@ class AcbTextSpider(scrapy.Spider):
     # file_name = 'buzz1'
 
     # scrapy crawl acbText -o ckText.json
-    file_name = 'ck1'
+    # file_name = 'ck1'
 
     # scrapy crawl acbText -o hbsyText.json
     # file_name = 'hbsy1'

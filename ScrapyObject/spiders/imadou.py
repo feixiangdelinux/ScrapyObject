@@ -2,6 +2,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
+已完成
 scrapy crawl imadou -o imadou.json
 https://xkcm.cc
 '''
