@@ -3,13 +3,13 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl langyouthree -o langyouthree.json
-http://6630av.com
+https://6630av.com/
 '''
 
 
 class LangyouthreeSpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://'
+    prefix = 'https://'
     # 中缀
     website = '6630av'
     # 后缀

@@ -2,9 +2,9 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-网站无法显示http://www.7000.me
+发布地址http://www.7000.me/
 scrapy crawl md -o md.json
-https://www.9191md.me
+http://53894.com/
 '''
 
 
@@ -12,11 +12,11 @@ class MdSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = '9191md'
+    website = '53894'
     # 后缀
-    suffix = '.me/'
+    suffix = '.com/'
     name = 'md'
-    allowed_domains = [website + '.me']
+    allowed_domains = [website + '.com']
     start_urls = [prefix + website + suffix]
 
     def __init__(self):

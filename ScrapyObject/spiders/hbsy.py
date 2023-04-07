@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl hbsy -o hbsy.json
-http://www.yeyehai30.vip
+http://www.yeyehai32.vip/
 '''
 
 
@@ -12,7 +12,7 @@ class HbsySpider(scrapy.Spider):
     # 前缀
     prefix = 'http://www.'
     # 中缀
-    website = 'yeyehai30'
+    website = 'yeyehai32'
     # 后缀
     suffix = '.vip/'
     name = 'hbsy'

@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 ''''
 已完成
 scrapy crawl acb -o acb.json
-https://www.f64e01e24628.com/index/home.html
+https://www.f90ae541db59.com/index/home.html
 '''
 
 
@@ -12,7 +12,7 @@ class AcbSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'f64e01e24628'
+    website = 'f90ae541db59'
     # 后缀
     suffix = '.com/'
     name = 'acb'
@@ -36,7 +36,7 @@ class AcbSpider(scrapy.Spider):
         url_list = get_url(content)
         # 提取url
         for url in url_list:
-            if url.endswith('.html') and url.startswith('/'):
+            if url.endswith('.html') and url.startswith('/') and 'shipin' in url:
                 yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
-            elif url.startswith('http') or url.startswith('www'):
+            elif url.startswith('http') or url.startswith('www') and 'shipin' in url:
                 yield scrapy.Request(url, callback=self.parse)

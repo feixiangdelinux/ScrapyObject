@@ -4,15 +4,14 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl aqdav -o aqdav.json
-https://vip.aqdz110.com
+https://vip.aqdw82.com/
 '''
-
 
 class AqdavSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://vip.'
     # 中缀
-    website = 'aqdz110'
+    website = 'aqdw82'
     # 后缀
     suffix = '.com/'
     name = 'aqdav'
@@ -23,14 +22,17 @@ class AqdavSpider(scrapy.Spider):
         self.i = 0
 
     def parse(self, response):
+        # 获取字符串类型的网页内容
         content = get_data(response)
-        aa = re.findall(r'video:(?:.|\n)*?}', content, re.IGNORECASE)
-        if len(aa):
-            name = response.xpath("//ol[@class='breadcrumb']//li/text()").extract()
-            tags = response.xpath("//ol[@class='breadcrumb']//li//a/text()").extract()
-            bb = re.findall(r'http.*?\'', aa[0], re.IGNORECASE)
-            self.i = self.i + 1
-            yield get_video_item(id=self.i, tags=tags[-1], url='', name=name[0], pUrl=bb[-1][:-1], vUrl=bb[0][:-1])
+        name = response.xpath("//script/text()").extract()
+        for url in name:
+            if ".m3u8" in url:
+                p_url = re.findall(r'http.*?\.jpg', url, re.IGNORECASE)
+                video_url = get_video_url_one(url)
+                name = response.xpath("//ol[@class='breadcrumb']//li/text()").extract()
+                tags = response.xpath("//ol[@class='breadcrumb']//li//a/text()").extract()
+                self.i = self.i + 1
+                yield get_video_item(id=self.i, tags=tags[-1], url='', name=name[0], pUrl=p_url[0], vUrl=video_url)
         url_list = get_url(content)
         # 提取url
         for url in url_list:
