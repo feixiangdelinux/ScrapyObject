@@ -3,7 +3,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 网址无法打开
 scrapy crawl langyousix -o langyousix.json
-http://094dy.com
+http://094dy.com/
 '''
 
 

@@ -15,7 +15,7 @@ http://www.imadou.cc
 class AcbTextSpider(scrapy.Spider):
     name = 'acbText'
     # scrapy crawl acbText -o acbText.json
-    # file_name = 'acb1'
+    file_name = 'acb1'
 
     # scrapy crawl acbText -o aicespadeText.json
     # file_name = 'aicespade1'
@@ -36,7 +36,7 @@ class AcbTextSpider(scrapy.Spider):
     # file_name = 'hbsy1'
 
     # scrapy crawl acbText -o hsexText.json
-    file_name = 'hsex1'
+    # file_name = 'hsex1'
 
     # scrapy crawl acbText -o imadouText.json
     # file_name = 'imadou1'

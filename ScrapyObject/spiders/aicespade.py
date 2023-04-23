@@ -5,7 +5,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 """
 这个网站不行,待重修
 scrapy crawl aicespade -o aicespade.json
-https://aicespade23.top
+https://aicespade23.top/
 """
 
 

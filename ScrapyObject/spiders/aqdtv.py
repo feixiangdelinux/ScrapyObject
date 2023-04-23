@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl aqdtv -o aqdtv.json
-https://www.n8yw3.com/index/home.html
+https://www.e757b.com/index/home.html
 '''
 
 
@@ -12,7 +12,7 @@ class AqdtvSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://'
     # 中缀
-    website = 'n8yw3'
+    website = 'e757b'
     # 后缀
     suffix = '.com/'
     name = 'aqdtv'

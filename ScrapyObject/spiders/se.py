@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl se -o se.json
-https://94se.net
+https://94se.net/
 '''
 
 

@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl buzz -o buzz.json
-http://www.xjjcaiji.com
+http://www.xjjcaiji.com/home/index.html
 '''
 
 

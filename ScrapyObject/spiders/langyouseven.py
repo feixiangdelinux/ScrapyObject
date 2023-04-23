@@ -3,7 +3,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 网站不显示
 scrapy crawl langyouseven -o langyouseven.json
-http://6613dy.com
+http://6613dy.com/
 '''
 
 

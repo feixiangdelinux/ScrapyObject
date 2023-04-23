@@ -3,20 +3,20 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl langyoufive -o langyoufive.json
-http://6691av.com
+https://6691av.com/index.html
 '''
 
 
 class LangyoufiveSpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://'
+    prefix = 'https://'
     # 中缀
     website = '6691av'
     # 后缀
     suffix = '.com/'
     name = 'langyoufive'
     allowed_domains = [website + '.com']
-    start_urls = [prefix + website + suffix]
+    start_urls = [prefix + website + suffix + 'index.html']
 
     def __init__(self):
         self.i = 0

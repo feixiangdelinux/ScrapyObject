@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl ck -o ck.json
-http://ckv8.cc/
+http://3chsck.cc/
 '''
 
 
@@ -12,7 +12,7 @@ class CkSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://'
     # 中缀
-    website = 'ckv8'
+    website = '3chsck'
     # 后缀
     suffix = '.cc/'
     name = 'ck'
