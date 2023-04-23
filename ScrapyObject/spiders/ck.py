@@ -3,7 +3,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 '''
 已完成
-scrapy crawl ck -o ck1.json
+scrapy crawl ck -o ck.json
 http://ckv8.cc/
 '''
 

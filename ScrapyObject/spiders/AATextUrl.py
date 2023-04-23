@@ -7,7 +7,7 @@ from ScrapyObject.items import VideoBean, VideoInfo
 
 """
 创建爬虫
-scrapy genspider imadou http://www.imadou.cc
+scrapy genspider ya http://www.544ya.com
 http://www.imadou.cc
 """
 
@@ -15,7 +15,7 @@ http://www.imadou.cc
 class AcbTextSpider(scrapy.Spider):
     name = 'acbText'
     # scrapy crawl acbText -o acbText.json
-    file_name = 'acb1'
+    # file_name = 'acb1'
 
     # scrapy crawl acbText -o aicespadeText.json
     # file_name = 'aicespade1'
@@ -34,6 +34,9 @@ class AcbTextSpider(scrapy.Spider):
 
     # scrapy crawl acbText -o hbsyText.json
     # file_name = 'hbsy1'
+
+    # scrapy crawl acbText -o hsexText.json
+    file_name = 'hsex1'
 
     # scrapy crawl acbText -o imadouText.json
     # file_name = 'imadou1'
@@ -62,6 +65,9 @@ class AcbTextSpider(scrapy.Spider):
     # scrapy crawl acbText -o langyouthreeText.json
     # file_name = 'langyouthree1'
 
+    # scrapy crawl acbText -o mdText.json
+    # file_name = 'md1'
+
     # scrapy crawl acbText -o langyouoneText.json
     # file_name = 'langyouone1'
 
@@ -70,6 +76,12 @@ class AcbTextSpider(scrapy.Spider):
 
     # scrapy crawl acbText -o xsmdlText.json
     # file_name = 'xsmdl1'
+
+    # scrapy crawl acbText -o yaText.json
+    # file_name = 'ya1'
+
+    # scrapy crawl acbText -o yrefText.json
+    # file_name = 'yref1'
     def start_requests(self):
         # f = open("/home/ccg/" + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
         f = open('E:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象

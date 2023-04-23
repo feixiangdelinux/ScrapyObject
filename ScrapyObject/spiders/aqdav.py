@@ -32,7 +32,7 @@ class AqdavSpider(scrapy.Spider):
                 name = response.xpath("//ol[@class='breadcrumb']//li/text()").extract()
                 tags = response.xpath("//ol[@class='breadcrumb']//li//a/text()").extract()
                 self.i = self.i + 1
-                yield get_video_item(id=self.i, tags=tags[-1], url='', name=name[0], pUrl=p_url[0], vUrl=video_url)
+                yield get_video_item(id=self.i, tags=tags[-1], url='', name=name[0], pUrl=p_url[0], vUrl=video_url[0])
         url_list = get_url(content)
         # 提取url
         for url in url_list:
