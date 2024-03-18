@@ -2,21 +2,27 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-发布地址http://www.7000.me/
+已完成
+发布地址http://www.x95.cc/
 scrapy crawl md -o md.json
-http://53894.com/
+https://5151md.me/
+
+https://66sex.tv/
+http://chujia.cc/
+https://mogu.club/
+https://59z.cc/
 '''
 
 
 class MdSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://www.'
+    prefix = 'https://'
     # 中缀
-    website = '53894'
+    website = '5151md'
     # 后缀
-    suffix = '.com/'
+    suffix = '.me/'
     name = 'md'
-    allowed_domains = [website + '.com']
+    allowed_domains = [website + '.me']
     start_urls = [prefix + website + suffix]
 
     def __init__(self):

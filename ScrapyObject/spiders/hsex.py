@@ -3,25 +3,21 @@ from ScrapyObject.spiders.utils.url_utils import *
 
 ''''
 已完成
-修改settings.py里# DOWNLOAD_DELAY = 3
-改成1,意思是一秒访问一次
-DOWNLOAD_DELAY = 1
-
 scrapy crawl hsex -o hsex.json
-https://hsex.icu/
+http://www.743hh8.cfd/AAyidong/index.html
 '''
 
 
 class HsexSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://'
+    prefix = 'http://www.'
     # 中缀
-    website = 'hsex'
+    website = '743hh8'
     # 后缀
-    suffix = '.icu/'
+    suffix = '.cfd/'
     name = "hsex"
-    allowed_domains = [website + '.icu']
-    start_urls = [prefix + website + suffix]
+    allowed_domains = [website + '.cfd']
+    start_urls = [prefix + website + suffix + 'AAyidong/index.html']
 
     def __init__(self):
         self.i = 0
@@ -29,13 +25,19 @@ class HsexSpider(scrapy.Spider):
     def parse(self, response):
         # 获取字符串类型的网页内容
         content = get_data(response)
-        name = response.xpath("//h3[@class='panel-title']/text()").extract()
-        p_url = response.xpath("//video[@id='video-play']/@ poster").extract()
-        v_url = response.xpath("//source[@type='application/x-mpegURL']/@ src").extract()
-        if len(p_url) and len(v_url) and len(name):
+        video_url = get_video_url_one(content)
+        if len(video_url):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, tags='综合', url=response.url, name=name[0], pUrl=p_url[0], vUrl=v_url[0][:v_url[0].index('?')])
+            yield get_video_item(id=self.i, tags='', url=response.url, name='', pUrl='', vUrl=format_url_one(video_url[0]))
+        pUrls = response.xpath("//div[@class='thum']//div/@ style").extract()
+        urls = response.xpath("//div[@class='thum']//div//a/@ href").extract()
+        names = response.xpath("//div[@class='thum']//div//a//b/text()").extract()
+        tags = response.xpath("//h2[@class='location']/text()").extract()
+        if len(urls) and len(pUrls) and len(names) and len(tags):
+            for i in range(len(pUrls)):
+                self.i = self.i + 1
+                yield get_video_item(id=self.i, tags=tags[0], url=split_joint(self.prefix + self.website + self.suffix, urls[i]), name=names[i], pUrl=pUrls[i][pUrls[i].find('(') + 1: pUrls[i].find(')')].strip())
         url_list = get_url(content)
         for url in url_list:
-            if url.endswith('.htm'):
+            if url.startswith('/'):
                 yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)

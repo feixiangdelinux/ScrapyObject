@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl ck -o ck.json
-http://545hsck.cc/
+http://hsck798.cc/
 '''
 
 
@@ -12,7 +12,7 @@ class CkSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://'
     # 中缀
-    website = '545hsck'
+    website = 'hsck798'
     # 后缀
     suffix = '.cc/'
     name = 'ck'
@@ -28,13 +28,12 @@ class CkSpider(scrapy.Spider):
         soup = BeautifulSoup(content, 'html.parser')  # 文档对象
         info = soup.find_all('h3', class_='title')
         if len(info) == 2:
-            tag = info[-1].text[0:15].strip()
+            aaa = info[-1].text
+            tag = aaa[:aaa.find('极品嫩模')]
             for k in soup.find_all('a'):
                 if (type(k.get('title')) == str) and (type(k.get('data-original')) == str):
                     self.i = self.i + 1
-                    yield get_video_item(id=self.i, name=k.get('title'), tags=tag,
-                                         url=split_joint(self.prefix + self.website + self.suffix, k.get('href')),
-                                         pUrl=k.get('data-original'))
+                    yield get_video_item(id=self.i, name=k.get('title'), tags=tag, url=split_joint(self.prefix + self.website + self.suffix, k.get('href')), pUrl=k.get('data-original'))
         video_url_one = response.xpath("//div[@class='stui-player__video clearfix']//script/text()").extract()
         if len(video_url_one):
             temp_url_one = video_url_one[0][video_url_one[0].index("http"):-1]

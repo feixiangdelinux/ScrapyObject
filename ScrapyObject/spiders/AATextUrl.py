@@ -7,15 +7,18 @@ from ScrapyObject.items import VideoBean, VideoInfo
 
 """
 创建爬虫
-scrapy genspider ya http://www.544ya.com
+scrapy genspider uu https://www.372uu.com
 http://www.imadou.cc
+scrapy
+beautifulsoup4
+chardet
 """
 
 
 class AcbTextSpider(scrapy.Spider):
     name = 'acbText'
     # scrapy crawl acbText -o acbText.json
-    file_name = 'acb1'
+    # file_name = 'acb1'
 
     # scrapy crawl acbText -o aicespadeText.json
     # file_name = 'aicespade1'
@@ -42,7 +45,7 @@ class AcbTextSpider(scrapy.Spider):
     # file_name = 'imadou1'
 
     # scrapy crawl acbText -o langyouText.json
-    # file_name = 'langyou1'
+    file_name = 'langyou1'
 
     # scrapy crawl acbText -o langyoueightText.json
     # file_name = 'langyoueight1'
@@ -82,9 +85,12 @@ class AcbTextSpider(scrapy.Spider):
 
     # scrapy crawl acbText -o yrefText.json
     # file_name = 'yref1'
+
+    # scrapy crawl acbText -o zzkyText.json
+    # file_name = 'zzky1'
     def start_requests(self):
         # f = open("/home/ccg/" + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
-        f = open('E:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
+        f = open('D:\\' + self.file_name + '.json', "r", encoding='UTF-8')  # 设置文件对象
         str = f.read()  # 将txt文件的所有内容读入到字符串str中
         f.close()  # 将文件关闭
         inp_dict = json.loads(str, object_hook=VideoBean)

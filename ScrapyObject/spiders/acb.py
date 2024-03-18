@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+
+import base64
+
 from ScrapyObject.spiders.utils.url_utils import *
 
 ''''
 已完成
 scrapy crawl acb -o acb.json
-https://www.fe6190e2ded1.com/index/home.html
+https://www.x5hyp.com/Enter/home.html
 '''
 
 
@@ -12,31 +15,41 @@ class AcbSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'fe6190e2ded1'
+    website = 'x5hyp'
     # 后缀
     suffix = '.com/'
     name = 'acb'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = [prefix + website + suffix + 'index/home.html']
-
+    start_urls = [prefix + website + suffix + 'Enter/home.html']
     def __init__(self):
         self.i = 0
-
     def parse(self, response):
         # 获取字符串类型的网页内容
+        tag = ''
         content = get_data(response)
-        aa = re.findall(r'var m3u8_host.*?;', content, re.IGNORECASE)
-        bb = re.findall(r'const dplayer_video_url.*?;', content, re.IGNORECASE)
-        if len(aa) and len(bb):
-            cc = re.findall(re.compile(r"'(.*?)'"), aa[0])[0] + re.findall(re.compile(r"'(.*?)'"), bb[0])[0]
-            name = response.xpath("//div[@class='row title-row']//h3/text()").extract()
-            tags = response.xpath("//span[@class='info-time']//a/text()").extract()
-            self.i = self.i + 1
-            yield get_video_item(id=self.i, name=name[0], tags=tags[0], url="", pUrl="https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc", vUrl=cc)
+        video_url = get_video_url_one(content)
+        if len(video_url):
+            str_re1 = response.xpath('/html/head/title/text()').extract()
+            tags = response.xpath("//div[@class='textlink']//a//script/text()").extract()
+            tags_two = response.xpath("//div[@class='textlink']//a/text()").extract()
+            if len(tags):
+                if 'document.write(d(' in tags[-1]:
+                    split1 = tags[-1].split("d('")
+                    split2 = split1[1].split("'))")
+                    if len(split2) > 0:
+                        content = split2[0]
+                    tag = base64.b64decode(content).decode("utf-8")
+            elif len(tags_two):
+                tag = tags_two[-1]
+            for url_list in video_url:
+                self.i = self.i + 1
+                yield get_video_item(id=self.i, tags=tag, url='', name=str_re1[0], pUrl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc', vUrl=url_list)
         url_list = get_url(content)
         # 提取url
         for url in url_list:
-            if url.endswith('.html') and url.startswith('/') and 'shipin' in url:
+            if url.startswith('/') and url.endswith('.html'):
                 yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
-            elif url.startswith('http') or url.startswith('www') and 'shipin' in url:
+            elif url.startswith('/') and url.endswith('/'):
+                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+            elif url.startswith('http') or url.startswith('www'):
                 yield scrapy.Request(url, callback=self.parse)

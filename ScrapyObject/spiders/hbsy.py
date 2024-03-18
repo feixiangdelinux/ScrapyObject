@@ -4,19 +4,19 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl hbsy -o hbsy.json
-http://www.yeyehai33.vip/
+https://www.dym01.cc:2008/
 '''
 
 
 class HbsySpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://www.'
+    prefix = 'https://www.'
     # 中缀
-    website = 'yeyehai33'
+    website = 'dym01'
     # 后缀
-    suffix = '.vip/'
+    suffix = '.cc:2008/'
     name = 'hbsy'
-    allowed_domains = [website + '.vip']
+    allowed_domains = [website + '.cc']
     start_urls = [prefix + website + suffix]
 
     def __init__(self):
@@ -25,22 +25,19 @@ class HbsySpider(scrapy.Spider):
     def parse(self, response):
         # 获取字符串类型的网页内容
         content = get_data(response)
-        tags = response.xpath("//h3[@class='title']/text()").extract()
-        v_url_list = get_video_url_one(content)
+        v_url_list = re.findall(r'=http.*?\.m3u8', content, re.IGNORECASE)
         if len(v_url_list):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, url=response.url, vUrl=format_url_one(v_url_list[0]))
-        elif len(tags) == 1 and tags[0].strip() != '猜你喜欢':
-            url_list = response.xpath("//a[@class='myui-vodlist__thumb lazyload']/@ href").extract()
-            name_list = response.xpath("//a[@class='myui-vodlist__thumb lazyload']/@ title").extract()
-            pic_list = response.xpath("//a[@class='myui-vodlist__thumb lazyload']/@ data-original").extract()
-            for index, value in enumerate(url_list):
-                self.i = self.i + 1
-                yield get_video_item(id=self.i, tags=tags[0].strip(), url=split_joint(self.prefix + self.website + self.suffix, value), name=name_list[index], pUrl=pic_list[index])
-        if len(v_url_list) == 0:
-            # 从网页中提取url链接
-            url_list = get_url(content)
-            # 提取url
-            for url in url_list:
-                if url.endswith('.html') and url.startswith('/'):
-                    yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+            yield get_video_item(id=self.i, tags='', url=response.url, name='', pUrl='', vUrl=v_url_list[0][1:])
+        pUrls = response.xpath("//div[@class='col-md-9']//img/@ src").extract()
+        names = response.xpath("//div[@class='col-md-9']//img/@ title").extract()
+        tags = response.xpath("//div[@class='info']//p//a/text()").extract()
+        urls = response.xpath("//a[@title='在线播放']/@ href").extract()
+        if len(pUrls) and len(names) and len(tags) and len(urls):
+            self.i = self.i + 1
+            yield get_video_item(id=self.i, tags=tags[0], url=split_joint(self.prefix + self.website + self.suffix, urls[0]), name=names[0], pUrl=pUrls[0], vUrl='')
+        url_list = get_url(content)
+        # 提取url
+        for url in url_list:
+            if url.startswith('/') and url.endswith('.html'):
+                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)

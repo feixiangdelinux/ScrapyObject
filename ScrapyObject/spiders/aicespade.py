@@ -3,24 +3,24 @@ import json
 from ScrapyObject.spiders.utils.url_utils import *
 
 """
-这个网站不行,待重修
+已完成
 scrapy crawl aicespade -o aicespade.json
-https://aicespade23.top/
+https://www.fulizx18.cc/
 """
 
 
 class AicespadeSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://'
+    prefix = 'https://www.'
     # 中缀
-    website = 'aicespade23'
+    website = 'fulizx18'
     # 后缀
-    suffix = '.top/'
+    suffix = '.cc/'
     name = 'aicespade'
-    allowed_domains = [website + '.top']
+    allowed_domains = [website + '.cc']
     start_urls = [prefix + website + suffix]
 
-    # start_urls = ['https://aicespade23.top/video_search/paco/174/index.html']
+
     def __init__(self):
         self.i = 0
 
@@ -28,18 +28,20 @@ class AicespadeSpider(scrapy.Spider):
         content = response.body.decode('utf-8')
         video_url = get_video_url_one(content)
         if len(video_url):
-            p_url = response.xpath("//iframe[@id='play']/@ style").extract()
-            if len(p_url):
-                name = response.xpath("//div[@class='textlink fn-left']//a/text()").extract()
+            self.i = self.i + 1
+            yield get_video_item(id=self.i, tags='', url=response.url, name='', pUrl='', vUrl=format_url_one(video_url[0]))
+        pUrls = response.xpath("//div[@class='content']//a//img/@ src").extract()
+        urls = response.xpath("//div[@class='content']//a[@target='_blank']/@ href").extract()
+        names = response.xpath("//div[@class='content']//a//img/@ title").extract()
+        tags = response.xpath("//div[@class='subtitle text-ellipsis']//a/@ title").extract()
+        if len(urls) and len(pUrls) and len(names) and len(tags):
+            for i in range(len(urls)):
+                index = int(i / 2)
                 self.i = self.i + 1
-                yield get_video_item(id=self.i, tags=name[0], url='', name=name[1], pUrl=p_url[0][p_url[0].find('(') + 1:p_url[0].find(')')], vUrl=video_url[0])
-        url_list = re.findall(r'var pop.*?];', content, re.IGNORECASE)
-        if len(url_list):
-            datat = json.loads(url_list[0][8:-1])
-            for url_list in datat:
-                if len(url_list) == 6:
-                    if url_list[1].startswith('/') and url_list[1].endswith('.html'):
-                        yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url_list[1]), callback=self.parse)
+                pUrl = pUrls[index]
+                if pUrl.startswith('/'):
+                    pUrl = split_joint(self.prefix + self.website + self.suffix, pUrl)
+                yield get_video_item(id=self.i, tags=tags[index], url=split_joint(self.prefix + self.website + self.suffix, urls[i]), name=names[index], pUrl=pUrl, vUrl='')
         url_list = get_url(content)
         # 提取url
         for url in url_list:

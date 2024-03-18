@@ -4,20 +4,20 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl buzz -o buzz.json
-http://www.xjjcaiji.com/home/index.html
+https://www.xjjcjz.com
 '''
 
 
 class BuzzSpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://www.'
+    prefix = 'https://www.'
     # 中缀
-    website = 'xjjcaiji'
+    website = 'xjjcjz'
     # 后缀
     suffix = '.com/'
     name = 'buzz'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = [prefix + website + suffix + 'home/index.html']
+    start_urls = [prefix + website + suffix]
 
     def __init__(self):
         self.i = 0
@@ -25,8 +25,7 @@ class BuzzSpider(scrapy.Spider):
     def parse(self, response):
         # 获取字符串类型的网页内容
         content = get_data(response)
-        # 从网页中提取url链接
-        url_list = get_url(content)
+
         # 整理视频数据
         video_url = get_video_url_one(content)
         if len(video_url):
@@ -37,10 +36,12 @@ class BuzzSpider(scrapy.Spider):
             else:
                 p_url = split_joint(self.prefix + self.website + self.suffix, tags[2])
             self.i = self.i + 1
-            yield get_video_item(id=self.i, tags=tags[1], url="", name=tags[0], pUrl=p_url, vUrl=video_url[0])
+            yield get_video_item(id=self.i, tags=tags[1], url="", name=tags[0], pUrl=p_url, vUrl=video_url[-1])
+        # 从网页中提取url链接
+        url_list = get_url(content)
         # 提取url
         for url in url_list:
-            if url.endswith('.html') and url.startswith('/'):
+            if url.startswith('/'):
                 yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
             elif url.startswith('http') or url.startswith('www'):
                 yield scrapy.Request(url, callback=self.parse)

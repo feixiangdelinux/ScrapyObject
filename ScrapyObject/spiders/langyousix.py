@@ -1,42 +1,42 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-网址无法打开
+已完成
 scrapy crawl langyousix -o langyousix.json
-http://094dy.com/
+http://www.7uun.com/
 '''
 
 
 class LangyousixSpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://'
+    prefix = 'http://www.'
     # 中缀
-    website = '094dy'
+    website = '7uun'
     # 后缀
     suffix = '.com/'
     name = 'langyousix'
     allowed_domains = [website + '.com']
     start_urls = [prefix + website + suffix]
 
+
     def __init__(self):
         self.i = 0
 
     def parse(self, response):
-        # 获取字符串类型的网页内容
         content = get_data(response)
-        video_url = re.findall(r'now="http.*?\.m3u8', content, re.IGNORECASE)
+        video_url = get_video_url_one(content)
         if len(video_url):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, tags='', url=response.url, name='', pUrl="", vUrl=video_url[0][5:])
-        p_url = response.xpath("//img[@class='img-responsive lazyload']/@ data-original").extract()
-        if len(p_url):
-            url = response.xpath("//a[@class='pic']/@ href").extract()
-            name = response.xpath("//a[@class='pic']/@ title").extract()
-            tags = response.xpath("//p[@class='data']//a/text()").extract()
+            yield get_video_item(id=self.i, url=response.url, vUrl=format_url_one(video_url[0]))
+        tags = response.xpath("//ul[@class='detail-actor clearfix']//li/text()").extract()
+        urls = response.xpath("//div[@class='detail-poster']//a/@ href").extract()
+        pUrls = response.xpath("//div[@class='detail-poster']//a//img/@ src").extract()
+        names = response.xpath("//div[@class='detail-poster']//a//img/@ alt").extract()
+        if len(urls) and len(pUrls) and len(names) and len(tags):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, tags=tags[0], url=split_joint(self.prefix + self.website + self.suffix, url[0]), name=name[0], pUrl=p_url[0], vUrl='')
+            yield get_video_item(id=self.i, tags=tags[1], url=split_joint(self.prefix + self.website + self.suffix, urls[0]), name=names[0], pUrl=pUrls[0], vUrl='')
         url_list = get_url(content)
         # 提取url
         for url in url_list:
-            if url.startswith('/') and (url.endswith('.html') or url.endswith('/')):
+            if url.startswith('/') and url.endswith('.html'):
                 yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
