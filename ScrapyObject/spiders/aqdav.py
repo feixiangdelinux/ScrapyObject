@@ -2,7 +2,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-已完成
+未完成
 scrapy crawl aqdav -o aqdav.json
 https://66.td-seo-0-26.top/
 '''

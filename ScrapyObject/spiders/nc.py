@@ -3,19 +3,19 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 进行中
 scrapy crawl nc -o nc.json
-https://nc996-999.996f996.xyz/index.html
+https://nc4rrcvp4d.com/index.html
 '''
 
 
 class NcSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://nc996-999.'
+    prefix = 'https://'
     # 中缀
-    website = '996f996'
+    website = 'nc4rrcvp4d'
     # 后缀
-    suffix = '.xyz/'
+    suffix = '.com/'
     name = 'nc'
-    allowed_domains = [website + '.xyz']
+    allowed_domains = [website + '.com']
     start_urls = [prefix + website + suffix + 'index.html']
 
     def __init__(self):

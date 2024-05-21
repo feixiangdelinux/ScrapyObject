@@ -2,7 +2,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-已完成
+已失效
 scrapy crawl se -o se.json
 http://yu293.com/
 '''

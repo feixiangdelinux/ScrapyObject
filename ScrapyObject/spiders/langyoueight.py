@@ -1,7 +1,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-已完成
+已失效
 scrapy crawl langyoueight -o langyoueight.json
 https://www.751mm.com/
 '''

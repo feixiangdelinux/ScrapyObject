@@ -5,21 +5,20 @@ from ScrapyObject.spiders.utils.url_utils import *
 """
 已完成
 scrapy crawl aicespade -o aicespade.json
-https://www.fulizx18.cc/
+https://fulizxc1.cc/
 """
 
 
 class AicespadeSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://www.'
+    prefix = 'https://'
     # 中缀
-    website = 'fulizx18'
+    website = 'fulizxc1'
     # 后缀
     suffix = '.cc/'
     name = 'aicespade'
     allowed_domains = [website + '.cc']
     start_urls = [prefix + website + suffix]
-
 
     def __init__(self):
         self.i = 0

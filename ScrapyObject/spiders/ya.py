@@ -6,7 +6,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 ''''
 已完成
 scrapy crawl ya -o ya.json
-https://maomidy.com/
+https://21maoaj.com/
 '''
 
 
@@ -14,7 +14,7 @@ class YaSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://'
     # 中缀
-    website = 'maomidy'
+    website = '21maoaj'
     # 后缀
     suffix = '.com/'
     name = 'ya'

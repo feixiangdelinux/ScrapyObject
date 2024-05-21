@@ -5,19 +5,19 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl uu -o uu.json
-https://992-kp.trr71trr.work/index.html
+https://992kp7.992kp9k.xyz/index.html
 '''
 
 
 class UuSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://992-kp.'
+    prefix = 'https://992kp7.'
     # 中缀
-    website = 'trr71trr'
+    website = '992kp9k'
     # 后缀
-    suffix = '.work/'
+    suffix = '.xyz/'
     name = 'uu'
-    allowed_domains = [website + '.work']
+    allowed_domains = [website + '.xyz']
     start_urls = [prefix + website + suffix + 'index.html']
 
     def __init__(self):

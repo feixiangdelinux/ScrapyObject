@@ -2,7 +2,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 ''''
-已完成
+已失效
 scrapy crawl yref -o yref.json
 http://www.as84.com/
 '''

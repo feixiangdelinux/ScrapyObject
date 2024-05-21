@@ -6,15 +6,15 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl aqdtv -o aqdtv.json
-http://y9zz.com/
+http://www.8655z.com/
 '''
 
 
 class AqdtvSpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://'
+    prefix = 'http://www.'
     # 中缀
-    website = 'y9zz'
+    website = '8655z'
     # 后缀
     suffix = '.com/'
     name = 'aqdtv'
