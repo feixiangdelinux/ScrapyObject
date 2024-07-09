@@ -7,7 +7,7 @@ import base64
 """
 已完成
 scrapy crawl xyz -o xyz.json
-https://www.999eei.com/
+https://www.555iis.com/
 """
 
 
@@ -15,7 +15,7 @@ class XyzSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = '999eei'
+    website = '555iis'
     # 后缀
     suffix = '.com/'
     name = 'xyz'

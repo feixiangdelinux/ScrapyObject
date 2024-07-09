@@ -8,7 +8,6 @@ from ScrapyObject.spiders.utils.url_utils import *
 scrapy crawl xsmdl -o xsmdl.json
 https://javmenu.one/zh
 
-
 scrapy genspider lnalbumqqo https://lnalbumqqo.xyz
 
 https://lnalbumqqo.xyz:16888/index.html

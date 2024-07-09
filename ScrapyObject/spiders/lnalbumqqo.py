@@ -1,7 +1,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-已完成
+已失效
 scrapy crawl lnalbumqqo -o lnalbumqqo.json
 https://lnalbumqqo.xyz:16888/index.html
 '''

@@ -6,7 +6,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 ''''
 已完成
 scrapy crawl ya -o ya.json
-https://21maoaj.com/
+https://21maoaj.com/index.html
 '''
 
 
@@ -19,7 +19,7 @@ class YaSpider(scrapy.Spider):
     suffix = '.com/'
     name = 'ya'
     allowed_domains = [website + '.com']
-    start_urls = [prefix + website + suffix]
+    start_urls = [prefix + website + suffix + 'index.html']
 
     def __init__(self):
         self.i = 0

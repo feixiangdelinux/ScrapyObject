@@ -4,7 +4,7 @@ import urllib.parse
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-已完成
+未完成
 scrapy crawl aqdtv -o aqdtv.json
 http://www.8655z.com/
 '''

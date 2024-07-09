@@ -1,23 +1,21 @@
-import json
-
 from ScrapyObject.spiders.utils.url_utils import *
 
 """
 已完成
 scrapy crawl aicespade -o aicespade.json
-https://fulizxc1.cc/
+https://www.fulizxc14.xyz/
 """
 
 
 class AicespadeSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://'
+    prefix = 'https://www.'
     # 中缀
-    website = 'fulizxc1'
+    website = 'fulizxc14'
     # 后缀
-    suffix = '.cc/'
+    suffix = '.xyz/'
     name = 'aicespade'
-    allowed_domains = [website + '.cc']
+    allowed_domains = [website + '.xyz']
     start_urls = [prefix + website + suffix]
 
     def __init__(self):
@@ -44,5 +42,5 @@ class AicespadeSpider(scrapy.Spider):
         url_list = get_url(content)
         # 提取url
         for url in url_list:
-            if url.startswith('/') and url.endswith('.html'):
+            if url.startswith('/') and url.endswith('.html') and '/art/' not in url:
                 yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)

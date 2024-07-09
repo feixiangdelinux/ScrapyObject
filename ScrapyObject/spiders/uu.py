@@ -5,15 +5,15 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl uu -o uu.json
-https://992kp7.992kp9k.xyz/index.html
+https://992kp5.kkpp6zz.xyz/index.html
 '''
 
 
 class UuSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://992kp7.'
+    prefix = 'https://992kp5.'
     # 中缀
-    website = '992kp9k'
+    website = 'kkpp6zz'
     # 后缀
     suffix = '.xyz/'
     name = 'uu'

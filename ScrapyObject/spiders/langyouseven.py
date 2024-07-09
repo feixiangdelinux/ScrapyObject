@@ -3,7 +3,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl langyouseven -o langyouseven.json
-http://www.165433497.xyz:20199/
+http://www.394443294.xyz:20199/
 '''
 
 
@@ -11,7 +11,7 @@ class LangyousevenSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://www.'
     # 中缀
-    website = '165433497'
+    website = '394443294'
     # 后缀
     suffix = '.xyz:20199/'
     name = 'langyouseven'

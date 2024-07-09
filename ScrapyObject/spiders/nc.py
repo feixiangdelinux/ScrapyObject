@@ -3,15 +3,15 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 进行中
 scrapy crawl nc -o nc.json
-https://nc4rrcvp4d.com/index.html
+https://ncao12.nccm0m1.com/index.html
 '''
 
 
 class NcSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://'
+    prefix = 'https://ncao12.'
     # 中缀
-    website = 'nc4rrcvp4d'
+    website = 'nccm0m1'
     # 后缀
     suffix = '.com/'
     name = 'nc'
