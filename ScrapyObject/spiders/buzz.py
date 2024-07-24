@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl buzz -o buzz.json
-https://www.xjjcjz.com/
+https://www.kss822.vip/
 '''
 
 
@@ -12,11 +12,11 @@ class BuzzSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'xjjcjz'
+    website = 'kss822'
     # 后缀
-    suffix = '.com/'
+    suffix = '.vip/'
     name = 'buzz'
-    allowed_domains = ['www.' + website + '.com']
+    allowed_domains = ['www.' + website + '.vip']
     start_urls = [prefix + website + suffix]
 
     def __init__(self):
@@ -24,19 +24,20 @@ class BuzzSpider(scrapy.Spider):
 
     def parse(self, response):
         # 获取字符串类型的网页内容
-        content = get_data(response)
-
+        content = response.body.decode('utf-8')
         # 整理视频数据
         video_url = get_video_url_one(content)
-        if len(video_url):
-            tags = response.xpath("//span[@class='btns']/text()").extract()
-            p_url = ''
-            if 'https://xjjjt.hmpicimage.com/' in tags[2]:
-                p_url = tags[2]
-            else:
-                p_url = split_joint(self.prefix + self.website + self.suffix, tags[2])
+        tag_list = response.xpath("//h1//a/text()").extract()
+        if len(video_url) and len(tag_list):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, tags=tags[1], url="", name=tags[0], pUrl=p_url, vUrl=video_url[-1])
+            yield get_video_item(id=self.i, tags=tag_list[-1], url=response.url, name='', pUrl='', vUrl=format_url_one(video_url[0]))
+        url_list = response.xpath("//a[@class='stui-vodlist__thumb lazyload']/@ href").extract()
+        title_list = response.xpath("//a[@class='stui-vodlist__thumb lazyload']/@ title").extract()
+        pic_list = response.xpath("//a[@class='stui-vodlist__thumb lazyload']/@ data-original").extract()
+        if len(url_list) and len(title_list) and len(pic_list):
+            for index, value in enumerate(url_list):
+                self.i = self.i + 1
+                yield get_video_item(id=self.i, url=split_joint(self.prefix + self.website + self.suffix, url_list[index]), name=title_list[index], pUrl=pic_list[index])
         # 从网页中提取url链接
         url_list = get_url(content)
         # 提取url

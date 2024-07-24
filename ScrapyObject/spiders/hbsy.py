@@ -17,7 +17,8 @@ class HbsySpider(scrapy.Spider):
     suffix = '.cc:2008/'
     name = 'hbsy'
     allowed_domains = [website + '.cc']
-    start_urls = [prefix + website + suffix]
+    # start_urls = [prefix + website + suffix]
+    start_urls = ['https://www.dym03.cc:2008/index.php/vod/play/id/TUGCCS/sid/1/nid/1.html']
 
     def __init__(self):
         self.i = 0
@@ -36,8 +37,8 @@ class HbsySpider(scrapy.Spider):
         if len(pUrls) and len(names) and len(tags) and len(urls):
             self.i = self.i + 1
             yield get_video_item(id=self.i, tags=tags[0], url=split_joint(self.prefix + self.website + self.suffix, urls[0]), name=names[0], pUrl=pUrls[0], vUrl='')
-        url_list = get_url(content)
-        # 提取url
-        for url in url_list:
-            if url.startswith('/') and url.endswith('.html'):
-                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+        # url_list = get_url(content)
+        # # 提取url
+        # for url in url_list:
+        #     if url.startswith('/') and url.endswith('.html'):
+        #         yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)

@@ -2,21 +2,21 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-未完成
+已完成
 scrapy crawl aqdav -o aqdav.json
-https://66.td-seo-0-26.top/
+https://ugzaawjque.sbs/
 '''
 
 
 class AqdavSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://66.'
+    prefix = 'https://'
     # 中缀
-    website = 'td-seo-0-26'
+    website = 'ugzaawjque'
     # 后缀
-    suffix = '.top/'
+    suffix = '.sbs/'
     name = 'aqdav'
-    allowed_domains = [website + '.top']
+    allowed_domains = [website + '.sbs']
     start_urls = [prefix + website + suffix]
 
     def __init__(self):
@@ -25,16 +25,11 @@ class AqdavSpider(scrapy.Spider):
     def parse(self, response):
         content = get_data(response)
         video_url = get_video_url_one(content)
-        if len(video_url):
+        pUrls = re.findall(r'thumbnailUrl.*?",', content, re.IGNORECASE)
+        str_re1 = response.xpath("//span[@aria-current='page']//a/@ title").extract()
+        if len(video_url) and len(pUrls) and len(str_re1):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, tags='', url=response.url, name='', pUrl='', vUrl=format_url_one(video_url[0]))
-        tags = response.xpath("/html/head/meta[@name='keywords']/@ content").extract()[0]
-        pUrls = response.xpath("//div[@class='detail-poster']//a//img/@ src").extract()
-        names = response.xpath("//div[@class='detail-poster']//a//img/@ alt").extract()
-        urls = response.xpath("//div[@class='detail-poster']//a/@ href").extract()
-        if len(pUrls) and len(names) and len(urls):
-            self.i = self.i + 1
-            yield get_video_item(id=self.i, tags=tags[:tags.find(names[0])], url=split_joint(self.prefix + self.website + self.suffix, urls[0]), name=names[0], pUrl=pUrls[0])
+            yield get_video_item(id=self.i, tags=str_re1[0], url="", name=str_re1[-1][:-3], pUrl=pUrls[0][16:-2], vUrl=video_url[0])
         url_list = get_url(content)
         # 提取url
         for url in url_list:

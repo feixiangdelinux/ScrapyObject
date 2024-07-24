@@ -18,7 +18,7 @@ chardet
 class AcbTextSpider(scrapy.Spider):
     name = 'acbText'
     # scrapy crawl acbText -o acbText.json
-    file_name = 'acb1'
+    # file_name = 'acb1'
 
     # scrapy crawl acbText -o aicespadeText.json
     # file_name = 'aicespade1'
@@ -27,7 +27,7 @@ class AcbTextSpider(scrapy.Spider):
     # file_name = 'aqdav1'
 
     # scrapy crawl acbText -o aqdtvText.json
-    # file_name = 'aqdtv1'
+    file_name = 'aqdtv1'
 
     # scrapy crawl acbText -o buzzText.json
     # file_name = 'buzz1'
