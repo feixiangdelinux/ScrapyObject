@@ -3,7 +3,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已失效
 scrapy crawl lnalbumqqo -o lnalbumqqo.json
-https://lnalbumqqo.xyz:16888/index.html
+https://179na.com/
 '''
 
 
@@ -11,12 +11,12 @@ class LnalbumqqoSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://'
     # 中缀
-    website = 'lnalbumqqo'
+    website = '179na'
     # 后缀
-    suffix = '.xyz:16888/'
+    suffix = '.com/'
     name = "lnalbumqqo"
-    allowed_domains = [website + '.xyz:16888']
-    start_urls = [prefix + website + suffix + 'index.html']
+    allowed_domains = [website + '.com']
+    start_urls = [prefix + website + suffix]
 
     def __init__(self):
         self.i = 0
@@ -24,20 +24,30 @@ class LnalbumqqoSpider(scrapy.Spider):
     def parse(self, response):
         # 获取字符串类型的网页内容
         content = get_data(response)
-        video_url = get_video_url_one(content)
+        video_url = re.findall(r'source:.*?\.M3U8|source:.*?\.MP4|source:.*?\.WMV|source:.*?\.MOV|source:.*?\.AVI|source:.*?\.MKV|source:.*?\.FLV|source:.*?\.RMVB|source:.*?\.3GP', content, re.IGNORECASE)
         if len(video_url):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, url=response.url, vUrl=video_url[0])
-        tags = response.xpath("//div[@class='title']//h1//a/text()").extract()
-        urls = response.xpath("//div[@class='listpic']//a/@href").extract()
-        pUrls = response.xpath("//div[@class='listpic']//a//div/@data-original").extract()
-        names = response.xpath("//div[@class='vodname']/text()").extract()
-        if len(tags) and len(urls) and len(pUrls) and len(names):
-            for index in range(len(urls)):
-                self.i = self.i + 1
-                yield get_video_item(id=self.i, tags=tags[-1], url=split_joint(self.prefix + self.website + self.suffix, urls[index]), name=names[index], pUrl=pUrls[index], vUrl='')
+            vsdfasd = ''
+            if 'https://' in video_url[0]:
+                vsdfasd = video_url[0].replace('source: \'', '')
+            else:
+                vsdfasd = video_url[0].replace('source: \'', 'https:')
+            yield get_video_item(id=self.i, url=response.url, vUrl=vsdfasd)
+        else:
+            img_list = response.xpath("//div[@class='video-elem']//a[@class='display d-block']//div[@class='img']/@style").extract()
+            url_list = response.xpath("//div[@class='video-elem']//a[@class='title text-sub-title mt-2 mb-3']/@href").extract()
+            name_list = response.xpath("//div[@class='video-elem']//a[@class='title text-sub-title mt-2 mb-3']/text()").extract()
+            tag_list = response.xpath('/html/head/title/text()').extract()
+            print(tag_list)
+            if len(img_list) and len(url_list) and len(name_list) and (len(tag_list) and '-' in tag_list):
+                for index in range(len(img_list)):
+                    self.i = self.i + 1
+                    picture_url = 'https:' + re.findall(r'background-image:.*?url\((.*?)\)', img_list[index], re.IGNORECASE)[0].replace('\'', '')
+                    picture_url = picture_url.replace('https://img5.aiaixx.top/', 'https://img5.biqugecn.cc/')
+                    tag = tag_list[0][:tag_list[0].index('-')].strip()
+                    yield get_video_item(id=self.i, tags=tag, url=split_joint(self.prefix + self.website + self.suffix, url_list[index]), name=name_list[index], pUrl=picture_url)
         url_list = get_url(content)
         # 提取url
         for url in url_list:
-            if url.startswith('/') and url.endswith('.html'):
+            if url.startswith('/'):
                 yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)

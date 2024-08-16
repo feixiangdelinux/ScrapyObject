@@ -4,7 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 ''''
 已完成
 scrapy crawl hsex -o hsex.json
-http://www.191ffhs.xyz/AAyidong/index.html
+http://www.118jjhs.xyz/AAyidong/index.html
 '''
 
 
@@ -12,7 +12,7 @@ class HsexSpider(scrapy.Spider):
     # 前缀
     prefix = 'http://www.'
     # 中缀
-    website = '191ffhs'
+    website = '118jjhs'
     # 后缀
     suffix = '.xyz/'
     name = "hsex"

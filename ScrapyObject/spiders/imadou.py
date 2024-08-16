@@ -2,7 +2,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-已完成
+需要翻墙
 scrapy crawl imadou -o imadou.json
 https://www.mogu.club/
 '''

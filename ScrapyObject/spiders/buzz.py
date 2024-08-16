@@ -4,15 +4,13 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 已完成
 scrapy crawl buzz -o buzz.json
-https://www.kss822.vip/
+https://www.kss928.vip/
 '''
-
-
 class BuzzSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'kss822'
+    website = 'kss928'
     # 后缀
     suffix = '.vip/'
     name = 'buzz'

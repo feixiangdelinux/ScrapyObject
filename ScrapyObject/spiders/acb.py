@@ -7,7 +7,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 ''''
 已完成
 scrapy crawl acb -o acb.json
-https://www.w4nsa.com/Enter/home.html
+https://www.yb7fge.com/Enter/home.html
 '''
 
 
@@ -15,14 +15,18 @@ class AcbSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'w4nsa'
+    website = 'yb7fge'
     # 后缀
     suffix = '.com/'
     name = 'acb'
     allowed_domains = ['www.' + website + '.com']
-    start_urls = [prefix + website + suffix + 'Enter/home.html']
+    # start_urls = [prefix + website + suffix + 'Enter/home.html']
+    # start_urls = ['https://www.yb7fge.com/video/zipai/index_2.html']
+    start_urls = ['https://www.yb7fge.com/html/202408/90058.html']
+
     def __init__(self):
         self.i = 0
+
     def parse(self, response):
         # 获取字符串类型的网页内容
         tag = ''
@@ -43,13 +47,20 @@ class AcbSpider(scrapy.Spider):
                 tag = tags_two[-1]
             for url_list in video_url:
                 self.i = self.i + 1
-                yield get_video_item(id=self.i, tags=tag, url='', name=str_re1[0], pUrl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc', vUrl=url_list)
-        url_list = get_url(content)
-        # 提取url
-        for url in url_list:
-            if url.startswith('/') and url.endswith('.html'):
-                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
-            elif url.startswith('/') and url.endswith('/'):
-                yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
-            elif url.startswith('http') or url.startswith('www'):
-                yield scrapy.Request(url, callback=self.parse)
+
+
+                print(tag)
+                print(str_re1)
+                print(url_list)
+
+
+                # yield get_video_item(id=self.i, tags=tag, url='', name=str_re1[0], pUrl='https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352a87460b265043fbf2b2118bfc', vUrl=url_list)
+        # url_list = get_url(content)
+        # # 提取url
+        # for url in url_list:
+        #     if url.startswith('/') and url.endswith('.html'):
+        #         yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+        #     elif url.startswith('/') and url.endswith('/'):
+        #         yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)
+        #     elif url.startswith('http') or url.startswith('www'):
+        #         yield scrapy.Request(url, callback=self.parse)

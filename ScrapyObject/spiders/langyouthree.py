@@ -1,21 +1,21 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-已失效
+已完成
 scrapy crawl langyouthree -o langyouthree.json
-https://tangxin18.space/
+https://www.tangxinshipin.live/
 '''
 
 
 class LangyouthreeSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://'
+    prefix = 'https://www.'
     # 中缀
-    website = 'tangxin18'
+    website = 'tangxinshipin'
     # 后缀
-    suffix = '.space/'
+    suffix = '.live/'
     name = 'langyouthree'
-    allowed_domains = [website + '.space']
+    allowed_domains = [website + '.live']
     start_urls = [prefix + website + suffix]
 
     def __init__(self):

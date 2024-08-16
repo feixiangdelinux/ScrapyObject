@@ -3,21 +3,27 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-已完成
+网站似乎失效
 scrapy crawl aqdtv -o aqdtv.json
-https://hgxzrh.jpds6.pics/cn/home/web/
+https://www.jpds6.pics/cn/home/web/
+
+https://ddi.avnyg4.makeup/cn/home/web/
+https://lsu.avdz9.motorcycles/cn/home/web/
+https://qxe.lkhsp9.hair/lkhsp/
+
+
+https://bxp.avjingling3.yachts/cn/home/web/
+
 '''
-
-
 class AqdtvSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://hgxzrh.'
+    prefix = 'https://ddi.'
     # 中缀
-    website = 'jpds6'
+    website = 'avnyg4'
     # 后缀
-    suffix = '.pics/'
+    suffix = '.makeup/'
     name = 'aqdtv'
-    allowed_domains = [website + '.pics']
+    allowed_domains = [website + '.makeup']
     start_urls = [prefix + website + suffix + '/cn/home/web/']
 
     def __init__(self):
@@ -29,7 +35,10 @@ class AqdtvSpider(scrapy.Spider):
         tag_list = response.xpath("//div[@class='inputA']//span/text()").extract()
         if len(video_url) and len(tag_list):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, tags=tag_list[-1][tag_list[-1].index('标签：') + 3:-1].strip(), url=response.url, vUrl=video_url[-1])
+            mTag = tag_list[-1][tag_list[-1].index('标签：') + 3:-1].strip()
+            if ',' in mTag:
+                mTag = mTag[mTag.rfind(',') + 1:]
+            yield get_video_item(id=self.i, tags=mTag, url=response.url, vUrl=video_url[-1])
         url_list = response.xpath("//div[@class='col-md-3 portfolio-item new-video']//a/@ href").extract()
         name_list = response.xpath("//div[@class='col-md-3 portfolio-item new-video']//a/@ title").extract()
         pUrl_list = response.xpath("//div[@class='col-md-3 portfolio-item new-video']//a//img/@ src").extract()

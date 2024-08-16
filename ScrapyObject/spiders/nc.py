@@ -4,6 +4,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 进行中
 scrapy crawl nc -o nc.json
 https://ncao12.nccm0m1.com/index.html
+https://ncao9.ncfu2qu.xyz/index.html
 '''
 
 
@@ -11,11 +12,11 @@ class NcSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://ncao12.'
     # 中缀
-    website = 'nccm0m1'
+    website = 'ncfu2qu'
     # 后缀
-    suffix = '.com/'
+    suffix = '.xyz/'
     name = 'nc'
-    allowed_domains = [website + '.com']
+    allowed_domains = [website + '.xyz']
     start_urls = [prefix + website + suffix + 'index.html']
 
     def __init__(self):

@@ -3,7 +3,7 @@ from ScrapyObject.spiders.utils.url_utils import *
 """
 已完成
 scrapy crawl aicespade -o aicespade.json
-https://www.fulizxc14.xyz/
+https://www.fulizxc17.xyz/
 """
 
 
@@ -11,7 +11,7 @@ class AicespadeSpider(scrapy.Spider):
     # 前缀
     prefix = 'https://www.'
     # 中缀
-    website = 'fulizxc14'
+    website = 'fulizxc17'
     # 后缀
     suffix = '.xyz/'
     name = 'aicespade'

@@ -1,7 +1,7 @@
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-已完成
+有问题
 scrapy crawl langyousix -o langyousix.json
 http://www.7uun.com/
 '''
