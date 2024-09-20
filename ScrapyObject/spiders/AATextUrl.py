@@ -24,10 +24,10 @@ class AcbTextSpider(scrapy.Spider):
     # file_name = 'aicespade1'
 
     # scrapy crawl acbText -o aqdavText.json
-    # file_name = 'aqdav1'
+    file_name = 'aqdav1'
 
     # scrapy crawl acbText -o aqdtvText.json
-    file_name = 'aqdtv1'
+    # file_name = 'aqdtv1'
 
     # scrapy crawl acbText -o buzzText.json
     # file_name = 'buzz1'

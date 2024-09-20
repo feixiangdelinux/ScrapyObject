@@ -19,23 +19,11 @@ class ZzzSpider(scrapy.Spider):
     start_urls = [prefix + website + suffix + 'forum']
 
     # start_urls = ["https://www.cdnbus.help/forum/"]
-    start_urls = ["https://www.cdnbus.help/forum/forum.php?mod=forumdisplay&fid=36"]
+    start_urls = ["http://121.4.179.184:8800/game/index.html"]
 
     def parse(self, response):
         content = get_data(response)
-        if "1IdAkan9yBCHptdn" in content:
-            print('*********************************')
-            print('*********************************')
-            print('*********************************')
-            print('*********************************')
-            print('*********************************')
-            print(response.url)
-            print('*********************************')
-            print('*********************************')
-            print('*********************************')
-            print('*********************************')
-        url_list = get_url(content)
-        for url in url_list:
-            print(url)
+        print(content)
+
             # if url.startswith('/') and url.endswith('.html'):
             #     yield scrapy.Request(split_joint(self.prefix + self.website + self.suffix, url), callback=self.parse)

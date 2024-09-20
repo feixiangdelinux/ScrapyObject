@@ -1,40 +1,37 @@
+import base64
+
 from ScrapyObject.spiders.utils.url_utils import *
 
 '''
-有问题
+已完成
 scrapy crawl langyousix -o langyousix.json
-http://www.7uun.com/
+https://20240819.13mei1.buzz/13mei/detail/186171103.html
 '''
 
 
 class LangyousixSpider(scrapy.Spider):
     # 前缀
-    prefix = 'http://www.'
+    prefix = 'https://20240819.'
     # 中缀
-    website = '7uun'
+    website = '13mei1'
     # 后缀
-    suffix = '.com/'
+    suffix = '.buzz/'
     name = 'langyousix'
-    allowed_domains = [website + '.com']
-    start_urls = [prefix + website + suffix]
-
+    allowed_domains = [website + '.buzz']
+    start_urls = [prefix + website + suffix + '13mei/?index=index']
 
     def __init__(self):
         self.i = 0
 
     def parse(self, response):
         content = get_data(response)
-        video_url = get_video_url_one(content)
-        if len(video_url):
+        video_url = re.findall(r"var playUrl = 'http.*?\.M3U8|var playUrl = 'http.*?\.MP4|var playUrl = 'http.*?\.WMV|var playUrl = 'http.*?\.MOV|var playUrl = 'http.*?\.AVI|var playUrl = 'http.*?\.MKV|var playUrl = 'http.*?\.FLV|var playUrl = 'http.*?\.RMVB|var playUrl = 'http.*?\.3GP", content, re.IGNORECASE)
+        tags = response.xpath("//div[@class='play_date']//span//script/text()").extract()
+        names = response.xpath("//div[@class='play_title van-multi-ellipsis--l2 break']//script/text()").extract()
+        image_url = re.findall(r'"cover":"http.*?\.jpg', content, re.IGNORECASE)
+        if len(video_url) and len(tags) and len(names) and len(image_url):
             self.i = self.i + 1
-            yield get_video_item(id=self.i, url=response.url, vUrl=format_url_one(video_url[0]))
-        tags = response.xpath("//ul[@class='detail-actor clearfix']//li/text()").extract()
-        urls = response.xpath("//div[@class='detail-poster']//a/@ href").extract()
-        pUrls = response.xpath("//div[@class='detail-poster']//a//img/@ src").extract()
-        names = response.xpath("//div[@class='detail-poster']//a//img/@ alt").extract()
-        if len(urls) and len(pUrls) and len(names) and len(tags):
-            self.i = self.i + 1
-            yield get_video_item(id=self.i, tags=tags[1], url=split_joint(self.prefix + self.website + self.suffix, urls[0]), name=names[0], pUrl=pUrls[0], vUrl='')
+            yield get_video_item(id=self.i, tags=base64.b64decode(tags[0].replace("document.write(d_d('", '').replace("'));", '')).decode('utf-8'), url='', name=base64.b64decode(names[0].replace("document.write(d_d('", '').replace("'));", '')).decode('utf-8'), pUrl=image_url[0].replace('"cover":"', ''), vUrl=video_url[0].replace("var playUrl = '", ''))
         url_list = get_url(content)
         # 提取url
         for url in url_list:

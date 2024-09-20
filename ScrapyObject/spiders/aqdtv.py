@@ -5,26 +5,27 @@ from ScrapyObject.spiders.utils.url_utils import *
 '''
 网站似乎失效
 scrapy crawl aqdtv -o aqdtv.json
-https://www.jpds6.pics/cn/home/web/
+https://www.jpds6.pics/cn/home/web/index.php
 
 https://ddi.avnyg4.makeup/cn/home/web/
 https://lsu.avdz9.motorcycles/cn/home/web/
 https://qxe.lkhsp9.hair/lkhsp/
-
-
 https://bxp.avjingling3.yachts/cn/home/web/
 
 '''
+
+
 class AqdtvSpider(scrapy.Spider):
     # 前缀
-    prefix = 'https://ddi.'
+    prefix = 'https://www.'
     # 中缀
-    website = 'avnyg4'
+    website = 'jpds6'
     # 后缀
-    suffix = '.makeup/'
+    suffix = '.pics/'
     name = 'aqdtv'
-    allowed_domains = [website + '.makeup']
-    start_urls = [prefix + website + suffix + '/cn/home/web/']
+    allowed_domains = [website + '.pics']
+    # start_urls = [prefix + website + suffix + '/cn/home/web/index.php']
+    start_urls = ['https://www.jpds6.pics/cn/home/web/index.php/vod/type/id/20.html']
 
     def __init__(self):
         self.i = 0

@@ -16,7 +16,8 @@ class LnalbumqqoSpider(scrapy.Spider):
     suffix = '.com/'
     name = "lnalbumqqo"
     allowed_domains = [website + '.com']
-    start_urls = [prefix + website + suffix]
+    # start_urls = [prefix + website + suffix]
+    start_urls = ['https://179na.com/179na-movie/toupaizipai/index_2/']
 
     def __init__(self):
         self.i = 0
@@ -38,11 +39,10 @@ class LnalbumqqoSpider(scrapy.Spider):
             url_list = response.xpath("//div[@class='video-elem']//a[@class='title text-sub-title mt-2 mb-3']/@href").extract()
             name_list = response.xpath("//div[@class='video-elem']//a[@class='title text-sub-title mt-2 mb-3']/text()").extract()
             tag_list = response.xpath('/html/head/title/text()').extract()
-            print(tag_list)
-            if len(img_list) and len(url_list) and len(name_list) and (len(tag_list) and '-' in tag_list):
+            if len(img_list) and len(url_list) and len(name_list) and (len(tag_list) and '-' in tag_list[0]):
                 for index in range(len(img_list)):
                     self.i = self.i + 1
-                    picture_url = 'https:' + re.findall(r'background-image:.*?url\((.*?)\)', img_list[index], re.IGNORECASE)[0].replace('\'', '')
+                    picture_url = 'https:' + re.findall(r"background-image:.*?url\((.*?)'\)", img_list[index], re.IGNORECASE)[0].replace('\'', '')
                     picture_url = picture_url.replace('https://img5.aiaixx.top/', 'https://img5.biqugecn.cc/')
                     tag = tag_list[0][:tag_list[0].index('-')].strip()
                     yield get_video_item(id=self.i, tags=tag, url=split_joint(self.prefix + self.website + self.suffix, url_list[index]), name=name_list[index], pUrl=picture_url)
